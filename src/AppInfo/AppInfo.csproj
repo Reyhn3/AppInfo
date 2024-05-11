@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>AppInfo</PackageId>
+    <AssemblyName>AppInfo</AssemblyName>
+    <Product>AppInfo</Product>
+    <Description>Collects, displays and optionally saves information about the host application during startup.</Description>
+  </PropertyGroup>
+
+</Project>
