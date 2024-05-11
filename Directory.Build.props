@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Björn Bengtsson</Authors>
+    <!--    <Company></Company>-->
+    <Copyright>Copyright © Björn Bengtsson 2024</Copyright>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
