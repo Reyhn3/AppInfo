@@ -1,11 +1,13 @@
-﻿using AppInfo;
-
-Console.WriteLine("Hello, AppInfo!");
+﻿using AppInfo.Builders.AppInfo;
 
 //TODO: Change namespace
-var appInfo = AppInfo.AppInfo
+var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
 	.WithIdentities()
 	.AddTimestamp()
-	.WriteToConsole()
+	.WithOutput(output => output
+		.ToConsole()
+		.ToTrace())
 	.Build();
+
+//TODO: Inject appInfo into Generic Host
