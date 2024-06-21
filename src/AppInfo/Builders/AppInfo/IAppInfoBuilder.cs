@@ -5,21 +5,21 @@ namespace AppInfo.Builders.AppInfo;
 
 
 public interface IAppInfoBuilder :
-	IAppIdentity,
-	IAppTimestamp,
-	IAppOutput
+	IAppInfoIdentity,
+	IAppInfoTimestamp,
+	IAppInfoOutput
 {
 	IAppInfo Build();
 }
 
 
-public interface IAppIdentity
+public interface IAppInfoIdentity
 {
 	IAppInfoBuilder WithIdentities();
 }
 
 
-public interface IAppTimestamp
+public interface IAppInfoTimestamp
 {
 	IAppInfoBuilder AddTimestamp();
 }
