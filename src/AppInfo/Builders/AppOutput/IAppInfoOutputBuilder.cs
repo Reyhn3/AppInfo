@@ -7,7 +7,9 @@ namespace AppInfo.Builders.AppOutput;
 public interface IAppInfoOutputBuilder :
 	IAppOutputConsole,
 	IAppOutputTrace,
-	IAppOutputLog;
+	IAppOutputLog,
+	IAppOutputTextFile,
+	IAppOutputJsonFile;
 
 
 public interface IAppOutputConsole
@@ -24,6 +26,18 @@ public interface IAppOutputTrace
 public interface IAppOutputLog
 {
 	IAppInfoOutputBuilder ToLog(Action<string> logger);
+}
+
+
+public interface IAppOutputTextFile
+{
+	IAppInfoOutputBuilder ToTextFile();
+}
+
+
+public interface IAppOutputJsonFile
+{
+	IAppInfoOutputBuilder ToJsonFile();
 }
 
 
