@@ -10,14 +10,23 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 
 	public IAppInfoOutputBuilder ToConsole()
 	{
-		_output.AddOutput(Console.WriteLine);
+//TODO: Remove prefix
+		// _output.AddOutput(Console.WriteLine);
+		_output.AddOutput(s => Console.WriteLine("StdOut: {0}", s));
 		return this;
 	}
 
 	public IAppInfoOutputBuilder ToTrace()
 	{
+//TODO: Remove prefix
 //TODO: Add category
-		_output.AddOutput(s => Trace.WriteLine(s));
+		_output.AddOutput(s => Trace.WriteLine("Trace: " + s));
+		return this;
+	}
+
+	public IAppInfoOutputBuilder ToLog(Action<string> logger)
+	{
+		_output.AddOutput(logger);
 		return this;
 	}
 
