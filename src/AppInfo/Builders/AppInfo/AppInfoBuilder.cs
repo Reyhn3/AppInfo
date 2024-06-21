@@ -19,7 +19,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 	public IAppInfo Build()
 	{
 //TODO: Move fragment compilation to formatter class
-		var compiled = string.Join(" + ↲" + Environment.NewLine, _fragments.Select(f => f.Value));
+		var compiled = string.Join(" ␍␊ ", _fragments.Select(f => f.Value));
 		var appInfo = new global::AppInfo.AppInfo
 			{
 				Formatted = compiled

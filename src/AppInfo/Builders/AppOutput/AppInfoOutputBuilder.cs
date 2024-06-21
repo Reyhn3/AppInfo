@@ -30,6 +30,20 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		return this;
 	}
 
+	public IAppInfoOutputBuilder ToTextFile()
+	{
+//TODO: Write to plain text file
+		_output.AddOutput(s => Console.WriteLine("Text file: {0}", s));
+		return this;
+	}
+
+	public IAppInfoOutputBuilder ToJsonFile()
+	{
+//TODO: Write to JSON text file
+		_output.AddOutput(s => Console.WriteLine("JSON file: {0}", s));
+		return this;
+	}
+
 	internal AppInfoOutput Build() =>
 		_output;
 }
