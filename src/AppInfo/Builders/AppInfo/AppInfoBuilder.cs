@@ -37,6 +37,18 @@ public class AppInfoBuilder : IAppInfoBuilder
 		AddFragment(new Fragment("My timestamp"));
 
 
+	public IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras)
+	{
+		if (extras.Length == 0)
+			return this;
+
+//TODO: Filter away empty extras
+//TODO: Trim label and value
+		foreach (var (label, value) in extras)
+			AddFragment(new Fragment($"{label}: {value}"));
+
+		return this;
+	}
 	public IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure)
 	{
 		var builder = new AppInfoOutputBuilder();

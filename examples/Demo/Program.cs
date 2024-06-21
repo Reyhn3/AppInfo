@@ -1,10 +1,15 @@
-﻿using AppInfo.Builders.AppInfo;
+﻿using AppInfo;
+using AppInfo.Builders.AppInfo;
 
 //TODO: Change namespace
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
 	.WithIdentities()
 	.AddTimestamp()
+	.AddExtras(("Custom", "abc"))
+	.AddExtras(
+		("Custom", "def"),
+		("Feature", "Disabled"))
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()
