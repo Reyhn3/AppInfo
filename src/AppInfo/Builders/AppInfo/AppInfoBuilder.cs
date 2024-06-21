@@ -1,3 +1,4 @@
+using System.Reflection;
 using AppInfo.Builders.AppOutput;
 using AppInfo.Fragments;
 
@@ -49,6 +50,11 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 		return this;
 	}
+
+//TODO: Get assembly name, version etc.
+	public IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripCommitHash = false) =>
+		AddFragment(new Fragment(assembly.GetName().Name));
+
 	public IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure)
 	{
 		var builder = new AppInfoOutputBuilder();
