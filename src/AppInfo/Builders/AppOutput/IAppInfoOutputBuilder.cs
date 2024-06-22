@@ -1,7 +1,4 @@
-using AppInfo.Builders.AppInfo;
-
-
-namespace AppInfo.Builders.AppOutput;
+namespace AppInfo;
 
 
 public interface IAppInfoOutputBuilder :

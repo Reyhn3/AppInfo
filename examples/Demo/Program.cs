@@ -1,5 +1,4 @@
 ﻿using AppInfo;
-using AppInfo.Builders.AppInfo;
 
 //TODO: Change namespace
 var appInfo = AppInfoBuilder

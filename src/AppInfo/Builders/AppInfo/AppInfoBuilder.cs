@@ -1,9 +1,8 @@
 using System.Reflection;
-using AppInfo.Builders.AppOutput;
 using AppInfo.Fragments;
 
 
-namespace AppInfo.Builders.AppInfo;
+namespace AppInfo;
 
 
 public class AppInfoBuilder : IAppInfoBuilder
