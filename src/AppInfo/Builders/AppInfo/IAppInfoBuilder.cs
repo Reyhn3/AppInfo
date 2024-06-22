@@ -1,8 +1,7 @@
 using System.Reflection;
-using AppInfo.Builders.AppOutput;
 
 
-namespace AppInfo.Builders.AppInfo;
+namespace AppInfo;
 
 
 public interface IAppInfoBuilder :

@@ -1,7 +1,7 @@
 using System.Diagnostics;
 
 
-namespace AppInfo.Builders.AppOutput;
+namespace AppInfo;
 
 
 public class AppInfoOutputBuilder : IAppInfoOutputBuilder
