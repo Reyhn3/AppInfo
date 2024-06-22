@@ -1,4 +1,4 @@
 namespace AppInfo.Fragments;
 
 
-internal sealed record Fragment(string Value);
+public sealed record Fragment(string Value);

@@ -6,7 +6,10 @@ public interface IAppInfoOutputBuilder :
 	IAppOutputTrace,
 	IAppOutputLog,
 	IAppOutputTextFile,
-	IAppOutputJsonFile;
+	IAppOutputJsonFile
+{
+	AppOutput Build();
+}
 
 
 public interface IAppOutputConsole
@@ -20,6 +23,7 @@ public interface IAppOutputTrace
 	IAppInfoOutputBuilder ToTrace();
 }
 
+
 public interface IAppOutputLog
 {
 	IAppInfoOutputBuilder ToLog(Action<string> logger);
@@ -32,13 +36,15 @@ public interface IAppOutputTextFile
 }
 
 
+//TODO: Rename to IAddOutputJsonFile?
 public interface IAppOutputJsonFile
 {
 	IAppInfoOutputBuilder ToJsonFile();
 }
 
 
-public interface IAppInfoOutput
+//TODO: Rename to IAddOutput?
+public interface IAppOutput
 {
 	IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure);
 }

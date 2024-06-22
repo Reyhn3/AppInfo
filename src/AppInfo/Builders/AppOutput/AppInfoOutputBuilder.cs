@@ -6,13 +6,15 @@ namespace AppInfo;
 
 public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 {
-	private readonly AppInfoOutput _output = new();
+	private readonly List<Action<string>> _writers = [];
+
+	public static AppOutput Default { get; } = new AppInfoOutputBuilder().ToConsole().Build();
 
 	public IAppInfoOutputBuilder ToConsole()
 	{
 //TODO: Remove prefix
-		// _output.AddOutput(Console.WriteLine);
-		_output.AddOutput(s => Console.WriteLine("StdOut: {0}", s));
+		// __writers.Add(Console.WriteLine);
+		_writers.Add(s => Console.WriteLine("StdOut: {0}", s));
 		return this;
 	}
 
@@ -20,49 +22,36 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 	{
 //TODO: Remove prefix
 //TODO: Add category
-		_output.AddOutput(s => Trace.WriteLine("Trace: " + s));
+		_writers.Add(s => Trace.WriteLine("Trace: " + s));
 		return this;
 	}
 
 	public IAppInfoOutputBuilder ToLog(Action<string> logger)
 	{
-		_output.AddOutput(logger);
+		_writers.Add(logger);
 		return this;
 	}
 
 	public IAppInfoOutputBuilder ToTextFile()
 	{
 //TODO: Write to plain text file
-		_output.AddOutput(s => Console.WriteLine("Text file: {0}", s));
+		_writers.Add(s => Console.WriteLine("Text file: {0}", s));
 		return this;
 	}
 
 	public IAppInfoOutputBuilder ToJsonFile()
 	{
 //TODO: Write to JSON text file
-		_output.AddOutput(s => Console.WriteLine("JSON file: {0}", s));
+		_writers.Add(s => Console.WriteLine("JSON file: {0}", s));
 		return this;
 	}
 
-	internal AppInfoOutput Build() =>
-		_output;
-}
-
-
-internal class AppInfoOutput
-{
-	private List<Action<string>> _writers = [];
-
-	public void AddOutput(Action<string> writer) =>
-		_writers.Add(writer);
-
-//TODO: Make async
-//TODO: Make safe
-	public void Execute(IAppInfo appInfo)
+	public AppOutput Build()
 	{
+		var output = new AppOutput();
 		foreach (var writer in _writers)
-		{
-			writer(appInfo.Formatted);
-		}
+			output.AddOutput(writer);
+
+		return output;
 	}
 }
