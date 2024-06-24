@@ -8,24 +8,26 @@ namespace AppInfo;
 public class AppInfoBuilder : IAppInfoBuilder
 {
 	private readonly List<Fragment> _fragments = [];
-	private AppInfoOutput _output;
 
-	public static IAppInfoBuilder CreateDefaultBuilder()
-	{
-		AppInfoBuilder builder = new();
-		return builder;
-	}
+	public IEnumerable<Fragment> Fragments => _fragments.AsEnumerable();
+	public AppOutput Output { get; private set; }
+
+	public static IAppInfoBuilder CreateDefaultBuilder() =>
+		new AppInfoBuilder
+			{
+				Output = AppInfoOutputBuilder.Default
+			};
 
 	public IAppInfo Build()
 	{
 //TODO: Move fragment compilation to formatter class
 		var compiled = string.Join(" ␍␊ ", _fragments.Select(f => f.Value));
-		var appInfo = new global::AppInfo.AppInfo
+		var appInfo = new AppInfo
 			{
-				Formatted = compiled
+				Formatted = compiled,
 			};
 
-		_output.Execute(appInfo);
+		Output.Execute(appInfo);
 
 		return appInfo;
 	}
@@ -58,7 +60,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 	{
 		var builder = new AppInfoOutputBuilder();
 		configure(builder);
-		_output = builder.Build();
+		Output = builder.Build();
 		return this;
 	}
 

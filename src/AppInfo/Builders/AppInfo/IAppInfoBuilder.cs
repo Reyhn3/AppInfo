@@ -1,4 +1,5 @@
 using System.Reflection;
+using AppInfo.Fragments;
 
 
 namespace AppInfo;
@@ -9,9 +10,11 @@ public interface IAppInfoBuilder :
 	IAppInfoTimestamp,
 	IAppInfoExtras,
 	IAppInfoAssembly,
-	IAppInfoOutput
+	IAppOutput
 {
 	IAppInfo Build();
+	IEnumerable<Fragment> Fragments { get; }
+	AppOutput Output { get; }
 }
 
 
