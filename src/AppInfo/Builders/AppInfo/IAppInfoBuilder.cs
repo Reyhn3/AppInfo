@@ -30,7 +30,7 @@ public interface IAppInfoIdentity
 	IAppInfoBuilder WithIdentities(
 		string appId,
 		string? instanceId = null,
-		string? scopeId = null);
+		Func<object?>? scopeIdFactory = null);
 }
 
 

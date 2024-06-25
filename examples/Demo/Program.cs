@@ -5,6 +5,7 @@ using AppInfo;
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
 	.WithIdentities("MyAppId")
+//TODO:Add WithNames (service name, instance name)
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
