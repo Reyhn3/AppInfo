@@ -84,37 +84,16 @@ public class IdentityExtractorTests
 	}
 
 	[Test]
-	public void Extract_shall_yield_random_scope_ID_if_factory_is_null()
-	{
-		var sut = new IdentityExtractor("dummy", null, null);
-
-
-		var result = sut.Extract().ToArray();
-
-
-		result.ShouldNotBeNull();
-		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label)
-			&& f.Value.Single()! is long);
-	}
+	public void GetScopeId_shall_yield_random_scope_ID_if_factory_is_null() =>
+		IdentityExtractor.GetScopeId(null)
+			.ShouldNotBeNull()
+			.ShouldBeOfType<long>();
 
 	[Test]
-	public void Extract_shall_yield_random_scope_ID_if_factory_produces_null()
-	{
-		Func<object?> factory = () => null;
-		var sut = new IdentityExtractor("dummy", null, factory);
-
-
-		var result = sut.Extract().ToArray();
-
-
-		result.ShouldNotBeNull();
-		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label)
-			&& f.Value.Single()! is long);
-	}
+	public void GetScopeId_shall_yield_random_scope_ID_if_factory_produces_null() =>
+		IdentityExtractor.GetScopeId((Func<object?>)(() => null))
+			.ShouldNotBeNull()
+			.ShouldBeOfType<long>();
 
 	[Test]
 	public void Extract_shall_trim_values()

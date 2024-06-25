@@ -36,8 +36,8 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return appInfo;
 	}
 
-	public IAppInfoBuilder WithIdentities(string appId, string? instanceId = null, Func<object?>? scopeIdFactory = null) =>
-		AddExtractors(new IdentityExtractor(appId, instanceId, scopeIdFactory));
+	public IAppInfoBuilder WithIdentities(string appId, string? instanceId = null, Func<object?>? scopeIdFactory = null, params string[] args) =>
+		AddExtractors(new IdentityExtractor(appId, instanceId, scopeIdFactory, args));
 
 	public IAppInfoBuilder AddTimestamp() =>
 		AddExtractors(new TimestampExtractor());
