@@ -1,9 +1,10 @@
-﻿using AppInfo;
+﻿using System.Globalization;
+using AppInfo;
 
 //TODO: Change namespace
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
-	.WithIdentities()
+	.WithIdentities("MyAppId")
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
@@ -19,6 +20,7 @@ var appInfo = AppInfoBuilder
 		.ToLog(info => Console.WriteLine("Log: {0}", info))
 		.ToTextFile()
 		.ToJsonFile())
+	.UseCulture(CultureInfo.CurrentCulture)
 	.Build();
 
 //TODO: Inject appInfo into Generic Host
