@@ -1,4 +1,4 @@
-namespace AppInfo.Fragments;
+namespace AppInfo;
 
 
 public sealed class Fragment
