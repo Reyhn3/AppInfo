@@ -21,8 +21,8 @@ public class AppInfoBuilderTests
 		AppInfoBuilder.CreateDefaultBuilder().Output.ShouldNotBeNull();
 
 	[Test]
-	public void CreateDefaultBuilder_shall_set_default_fragments() =>
-		AppInfoBuilder.CreateDefaultBuilder().Fragments.ShouldNotBeNull();
+	public void CreateDefaultBuilder_shall_set_default_extractors() =>
+		((AppInfoBuilder)AppInfoBuilder.CreateDefaultBuilder())._extractors.ShouldNotBeNull();
 
 	[Test]
 	public void Build_shall_create_an_instance_of_AppInfo() =>

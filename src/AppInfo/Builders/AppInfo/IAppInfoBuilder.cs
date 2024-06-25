@@ -1,5 +1,5 @@
+using System.Globalization;
 using System.Reflection;
-using AppInfo.Fragments;
 
 
 namespace AppInfo;
@@ -10,17 +10,28 @@ public interface IAppInfoBuilder :
 	IAppInfoTimestamp,
 	IAppInfoExtras,
 	IAppInfoAssembly,
+	IAppInfoCulture,
 	IAppOutput
 {
 	IAppInfo Build();
-	IEnumerable<Fragment> Fragments { get; }
+	CultureInfo Culture { get; }
 	AppOutput Output { get; }
+}
+
+
+public interface IAppInfoCulture
+{
+	IAppInfoBuilder UseCulture(CultureInfo cultureInfo);
 }
 
 
 public interface IAppInfoIdentity
 {
-	IAppInfoBuilder WithIdentities();
+	IAppInfoBuilder WithIdentities(
+		string appId,
+		string? instanceId = null,
+		Func<object?>? scopeIdFactory = null,
+		params string[] args);
 }
 
 
@@ -38,5 +49,5 @@ public interface IAppInfoExtras
 
 public interface IAppInfoAssembly
 {
-	IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripCommitHash = false);
+	IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripSourceRevision = false);
 }

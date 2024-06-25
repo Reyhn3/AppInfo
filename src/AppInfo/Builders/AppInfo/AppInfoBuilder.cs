@@ -1,5 +1,6 @@
+using System.Globalization;
 using System.Reflection;
-using AppInfo.Fragments;
+using AppInfo.Extractors;
 
 
 namespace AppInfo;
@@ -7,9 +8,9 @@ namespace AppInfo;
 
 public class AppInfoBuilder : IAppInfoBuilder
 {
-	private readonly List<Fragment> _fragments = [];
+	internal readonly List<IExtractor> _extractors = [];
 
-	public IEnumerable<Fragment> Fragments => _fragments.AsEnumerable();
+	public CultureInfo Culture { get; private set; }
 	public AppOutput Output { get; private set; }
 
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
@@ -20,11 +21,14 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 	public IAppInfo Build()
 	{
-//TODO: Move fragment compilation to formatter class
-		var compiled = string.Join(" ␍␊ ", _fragments.Select(f => f.Value));
+		var fragments = _extractors.SelectMany(e => e.Extract());
+//TODO: #11: Move fragment compilation to formatter class
+//TODO: #11: Inject culture when formatting
+//TODO: #11: Trim label and value
+		var formatted = string.Join(" ␍␊ ", fragments.Select(f => string.Join('/', f.Value)));
 		var appInfo = new AppInfo
 			{
-				Formatted = compiled,
+				Formatted = formatted
 			};
 
 		Output.Execute(appInfo);
@@ -32,29 +36,35 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return appInfo;
 	}
 
-	public IAppInfoBuilder WithIdentities() =>
-		AddFragment(new Fragment("My identities"));
+	public IAppInfoBuilder WithIdentities(
+		string appId,
+		string? instanceId = null,
+		Func<object?>? scopeIdFactory = null,
+		params string[] args) =>
+		AddExtractors(new IdentityExtractor(
+			appId,
+			instanceId,
+			() => AppSettingsReader.ReadTopLevelKeyFromAppSettings(IdentityExtractor.InstanceIdLabel),
+			scopeIdFactory,
+			args));
 
 	public IAppInfoBuilder AddTimestamp() =>
-		AddFragment(new Fragment("My timestamp"));
+		AddExtractors(new TimestampExtractor());
 
+	public IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras) =>
+		AddExtractors(new ExtrasExtractor(extras));
 
-	public IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras)
+	public IAppInfoBuilder AddAssembly(
+		Assembly assembly,
+		string? shortName = null,
+		bool stripSourceRevision = false) =>
+		AddExtractors(new AssemblyExtractor(assembly, shortName, stripSourceRevision));
+
+	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
 	{
-		if (extras.Length == 0)
-			return this;
-
-//TODO: Filter away empty extras
-//TODO: Trim label and value
-		foreach (var (label, value) in extras)
-			AddFragment(new Fragment($"{label}: {value}"));
-
+		Culture = cultureInfo;
 		return this;
 	}
-
-//TODO: Get assembly name, version etc.
-	public IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripCommitHash = false) =>
-		AddFragment(new Fragment(assembly.GetName().Name));
 
 	public IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure)
 	{
@@ -64,9 +74,9 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return this;
 	}
 
-	private AppInfoBuilder AddFragment(Fragment fragment)
+	private AppInfoBuilder AddExtractors(params IExtractor[] extractors)
 	{
-		_fragments.Add(fragment);
+		_extractors.AddRange(extractors);
 		return this;
 	}
 }
