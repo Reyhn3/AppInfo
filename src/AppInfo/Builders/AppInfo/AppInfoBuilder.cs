@@ -25,7 +25,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 //TODO: Move fragment compilation to formatter class
 //TODO: Inject culture when formatting
 //TODO: Trim label and value
-		var formatted = string.Join(" ␍␊ ", fragments.Select(f => f.Value));
+		var formatted = string.Join(" ␍␊ ", fragments.Select(f => string.Join('/', f.Value)));
 		var appInfo = new AppInfo
 			{
 				Formatted = formatted
@@ -45,8 +45,8 @@ public class AppInfoBuilder : IAppInfoBuilder
 	public IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras) =>
 		AddExtractors(new ExtrasExtractor(extras));
 
-	public IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripCommitHash = false) =>
-		AddExtractors(new AssemblyExtractor(assembly, shortName, stripCommitHash));
+	public IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripSourceRevision = false) =>
+		AddExtractors(new AssemblyExtractor(assembly, shortName, stripSourceRevision));
 
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
 	{

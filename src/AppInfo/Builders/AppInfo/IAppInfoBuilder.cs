@@ -48,5 +48,5 @@ public interface IAppInfoExtras
 
 public interface IAppInfoAssembly
 {
-	IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripCommitHash = false);
+	IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripSourceRevision = false);
 }

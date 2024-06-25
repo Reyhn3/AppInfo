@@ -20,7 +20,7 @@ public class TimestampExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(TimestampExtractor.TimestampLabel, f.Label)
-			&& f.Value is DateTime);
+			&& f.Value.Single() is DateTime);
 	}
 
 	[Test]
@@ -36,6 +36,6 @@ public class TimestampExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(TimestampExtractor.TimestampUtcLabel, f.Label)
-			&& f.Value is DateTime);
+			&& f.Value.Single() is DateTime);
 	}
 }

@@ -10,8 +10,8 @@ var appInfo = AppInfoBuilder
 	.AddExtras(
 		("Custom", "def"),
 		("Feature", "Disabled"))
-	.AddAssembly(typeof(IAppInfo).Assembly, "AppInfo", stripCommitHash: true)
-	.AddAssembly(typeof(IAppInfo).Assembly, stripCommitHash: true)
+	.AddAssembly(typeof(IAppInfo).Assembly, "AppInfo", stripSourceRevision: true)
+	.AddAssembly(typeof(IAppInfo).Assembly, stripSourceRevision: true)
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()

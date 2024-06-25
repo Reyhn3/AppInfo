@@ -17,9 +17,9 @@ public class ExtrasExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
-		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value, 1));
-		result.ShouldContain(f => string.Equals(f.Label, "second") && Equals(f.Value, 2));
-		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value, 3));
+		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value.Single(), 1));
+		result.ShouldContain(f => string.Equals(f.Label, "second") && Equals(f.Value.Single(), 2));
+		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value.Single(), 3));
 	}
 
 	[TestCase(null)]
@@ -34,10 +34,10 @@ public class ExtrasExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.Length.ShouldBe(2);
-		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value, 1));
+		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value.Single(), 1));
 		result.ShouldNotContain(f => string.Equals(f.Label, label));
-		result.ShouldNotContain(f => Equals(f.Value, 2));
-		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value, 3));
+		result.ShouldNotContain(f => Equals(f.Value.Single(), 2));
+		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value.Single(), 3));
 	}
 
 	[TestCase(null)]
@@ -52,8 +52,9 @@ public class ExtrasExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
-		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value, 1));
-		result.ShouldContain(f => string.Equals(f.Label, "second") && Equals(f.Value, value));
-		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value, 3));
+		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value.Single(), 1));
+		result.ShouldContain(f => string.Equals(f.Label, "second")
+			&& value == null ? !f.Value.Any() : Equals(f.Value.Single(), value));
+		result.ShouldContain(f => string.Equals(f.Label, "third") && Equals(f.Value.Single(), 3));
 	}
 }

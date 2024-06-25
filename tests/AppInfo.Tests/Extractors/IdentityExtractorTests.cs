@@ -27,7 +27,7 @@ public class IdentityExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(IdentityExtractor.ApplicationIdLabel, f.Label)
-			&& string.Equals(appId, (string?)f.Value));
+			&& string.Equals(appId, (string?)f.Value.Single()));
 	}
 
 	[Test]
@@ -44,7 +44,7 @@ public class IdentityExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(IdentityExtractor.InstanceIdLabel, f.Label)
-			&& string.Equals(value, (string?)f.Value));
+			&& string.Equals(value, (string?)f.Value.Single()));
 	}
 
 	[TestCase(null)]
@@ -62,7 +62,7 @@ public class IdentityExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(IdentityExtractor.InstanceIdLabel, f.Label)
-			&& string.Equals(Constants.NA, (string?)f.Value));
+			&& string.Equals(Constants.NA, (string?)f.Value.Single()));
 	}
 
 	[Test]
@@ -78,7 +78,8 @@ public class IdentityExtractorTests
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label) && string.Equals(value, (string?)f.Value));
+		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label)
+			&& string.Equals(value, (string?)f.Value.Single()));
 	}
 
 	[TestCase(null)]
@@ -96,7 +97,7 @@ public class IdentityExtractorTests
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label)
-			&& string.Equals(Constants.NA, (string?)f.Value));
+			&& string.Equals(Constants.NA, (string?)f.Value.Single()));
 	}
 
 	[Test]
@@ -119,8 +120,11 @@ public class IdentityExtractorTests
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
 		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.ApplicationIdLabel) && string.Equals(appId, (string?)f.Value));
-		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.InstanceIdLabel) && string.Equals(instanceId, (string?)f.Value));
-		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.ScopeIdLabel) && string.Equals(scopeId, (string?)f.Value));
+		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.ApplicationIdLabel)
+			&& string.Equals(appId, (string?)f.Value.Single()));
+		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.InstanceIdLabel)
+			&& string.Equals(instanceId, (string?)f.Value.Single()));
+		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.ScopeIdLabel)
+			&& string.Equals(scopeId, (string?)f.Value.Single()));
 	}
 }
