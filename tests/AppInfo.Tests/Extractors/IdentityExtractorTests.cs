@@ -31,56 +31,85 @@ public class IdentityExtractorTests
 	}
 
 	[Test]
-	public void Extract_shall_yield_instance_ID_if_not_null_or_empty()
+	public void GetInstanceId_shall_yield_first_cli_then_config_then_argument()
 	{
-		const string value = "not empty";
-		var sut = new IdentityExtractor("dummy", value, null);
+		const string expectedCli = "from-cli";
+		const string expectedFactory = "from-settings";
+		const string expectedArg = "from-argument";
+
+		var fromCliWithoutValue = Array.Empty<string>();
+		var fromCliWithValidValue = new[]{"--" + IdentityExtractor.InstanceIdLabel, expectedCli};
+		Func<object?> fromFactoryWithoutValue = () => null;
+		Func<object?> fromFactoryWithValidValue = () => expectedFactory;
+		const string? fromArgumentWithoutValue = (string?)null;
+		const string fromArgumentWithValidValue = expectedArg;
 
 
-		var result = sut.Extract().ToArray();
+		// CLI wins
+		var result1 = IdentityExtractor.GetInstanceId(fromCliWithValidValue, fromFactoryWithValidValue, fromArgumentWithValidValue);
+		result1.ShouldNotBeNull().ShouldBe(expectedCli);
 
+		// Factory wins
+		var result2 = IdentityExtractor.GetInstanceId(fromCliWithoutValue, fromFactoryWithValidValue, fromArgumentWithValidValue);
+		result2.ShouldNotBeNull().ShouldBe(expectedFactory);
 
-		result.ShouldNotBeNull();
-		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.InstanceIdLabel, f.Label)
-			&& string.Equals(value, (string?)f.Value.Single()));
-	}
+		// Argument wins
+		var result3 = IdentityExtractor.GetInstanceId(fromCliWithoutValue, fromFactoryWithoutValue, fromArgumentWithValidValue);
+		result3.ShouldNotBeNull().ShouldBe(expectedArg);
 
-	[TestCase(null)]
-	[TestCase("")]
-	[TestCase("\t")]
-	public void Extract_shall_yield_instance_ID_with_NA_value_if_null_or_empty(string? value)
-	{
-		var sut = new IdentityExtractor("dummy", value, null);
-
-
-		var result = sut.Extract().ToArray();
-
-
-		result.ShouldNotBeNull();
-		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.InstanceIdLabel, f.Label)
-			&& string.Equals(Constants.NA, (string?)f.Value.Single()));
+		// Fallback wins
+		var result4 = IdentityExtractor.GetInstanceId(fromCliWithoutValue, fromFactoryWithoutValue, fromArgumentWithoutValue);
+		result4.ShouldBeNull();
 	}
 
 	[Test]
-	public void Extract_shall_yield_scope_ID_if_not_null_or_empty()
+	public void GetInstanceId_shall_yield_instance_ID_from_cli()
 	{
-		const string expected = "test-scope-id";
-		Func<object?> factory = () => expected;
-		var sut = new IdentityExtractor("dummy", null, factory);
-
-
-		var result = sut.Extract().ToArray();
+		const string expected = "instance-id-from-cli";
+		var result = IdentityExtractor.GetInstanceId(["--" + IdentityExtractor.InstanceIdLabel, expected], null, null);
 
 
 		result.ShouldNotBeNull();
-		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
-		result.ShouldContain(f => string.Equals(IdentityExtractor.ScopeIdLabel, f.Label)
-			&& string.Equals(expected, (string?)f.Value.Single()));
+		result.ShouldBe(expected);
+	}
+
+	[Test]
+	public void GetInstanceId_shall_yield_instance_ID_from_factory()
+	{
+		const string expected = "instance-id-from-factory";
+		Func<object?> factory = () => expected;
+		var result = IdentityExtractor.GetInstanceId(null, factory, null);
+
+
+		result.ShouldNotBeNull();
+		result.ShouldBe(expected);
+	}
+
+	[Test]
+	public void GetInstanceId_shall_yield_instance_ID_from_argument()
+	{
+		const string expected = "not empty";
+
+
+		var result = IdentityExtractor.GetInstanceId(null, null, expected);
+
+
+		result.ShouldNotBeNull();
+		result.ShouldBe(expected);
+	}
+
+	[Test]
+	public void GetScopeId_shall_yield_scope_ID_if_not_null_or_empty()
+	{
+		const string expected = "test-scope-id";
+		Func<object?> factory = () => expected;
+
+
+		var result = IdentityExtractor.GetScopeId(factory);
+
+
+		result.ShouldNotBeNull();
+		result.ShouldBe(expected);
 	}
 
 	[Test]

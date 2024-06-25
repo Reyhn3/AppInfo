@@ -36,8 +36,17 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return appInfo;
 	}
 
-	public IAppInfoBuilder WithIdentities(string appId, string? instanceId = null, Func<object?>? scopeIdFactory = null, params string[] args) =>
-		AddExtractors(new IdentityExtractor(appId, instanceId, scopeIdFactory, args));
+	public IAppInfoBuilder WithIdentities(
+		string appId,
+		string? instanceId = null,
+		Func<object?>? scopeIdFactory = null,
+		params string[] args) =>
+		AddExtractors(new IdentityExtractor(
+			appId,
+			instanceId,
+			() => AppSettingsReader.ReadTopLevelKeyFromAppSettings(IdentityExtractor.InstanceIdLabel),
+			scopeIdFactory,
+			args));
 
 	public IAppInfoBuilder AddTimestamp() =>
 		AddExtractors(new TimestampExtractor());
@@ -45,7 +54,10 @@ public class AppInfoBuilder : IAppInfoBuilder
 	public IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras) =>
 		AddExtractors(new ExtrasExtractor(extras));
 
-	public IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripSourceRevision = false) =>
+	public IAppInfoBuilder AddAssembly(
+		Assembly assembly,
+		string? shortName = null,
+		bool stripSourceRevision = false) =>
 		AddExtractors(new AssemblyExtractor(assembly, shortName, stripSourceRevision));
 
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)

@@ -13,12 +13,14 @@ public class IdentityExtractor : IExtractor
 
 	private readonly string _appId;
 	private readonly string? _instanceId;
+	private readonly Func<object?>? _instanceIdFactory;
 	private readonly Func<object?>? _scopeIdFactory;
 	private readonly string[] _args;
 
 	public IdentityExtractor(
 		string appId,
 		string? instanceId = null,
+		Func<object?>? instanceIdFactory = null,
 		Func<object?>? scopeIdFactory = null,
 		params string[] args)
 	{
@@ -26,6 +28,7 @@ public class IdentityExtractor : IExtractor
 			throw new ArgumentNullException(nameof(appId));
 
 		_appId = appId.Trim();
+		_instanceIdFactory = instanceIdFactory;
 		_scopeIdFactory = scopeIdFactory;
 		_args = args;
 
@@ -37,14 +40,42 @@ public class IdentityExtractor : IExtractor
 	public IEnumerable<Fragment> Extract()
 	{
 		yield return new Fragment(ApplicationIdLabel, _appId);
-		yield return new Fragment(InstanceIdLabel, _instanceId ?? Constants.NA);
+		yield return new Fragment(InstanceIdLabel, GetInstanceId(_args, _instanceIdFactory, _instanceId));
 		yield return new Fragment(ScopeIdLabel, GetScopeId(_scopeIdFactory));
 	}
 
-	internal static object GetScopeId(Func<object?>? factory) =>
-		TryRunScopeIdFactory(factory) ?? new Random().NextInt64();
+	internal static object? GetInstanceId(string[]? fromCli, Func<object?>? factory, string? fromArgument) =>
+		GetInstanceIdFromCli(fromCli) ?? GetInstanceIdFromAppSettings(factory) ?? fromArgument;
 
-	private static object? TryRunScopeIdFactory(Func<object?>? factory)
+	private static object? GetInstanceIdFromCli(string[]? args)
+	{
+		if (args == null || args.Length == 0)
+			return null;
+
+		for (var i = 0; i < args.Length; i++)
+		{
+			// Check if the argument is present
+			var switchName = args[i].TrimStart('-');
+			if (!string.Equals(InstanceIdLabel, switchName, StringComparison.InvariantCultureIgnoreCase))
+				continue;
+
+			// Check if there is a value to the argument
+			if (i + 1 > args.Length)
+				continue;
+
+			return args[i + 1];
+		}
+
+		return null;
+	}
+
+	private static object? GetInstanceIdFromAppSettings(Func<object?>? factory) =>
+		TryRunFactory(InstanceIdLabel, factory);
+
+	internal static object GetScopeId(Func<object?>? factory) =>
+		TryRunFactory(ScopeIdLabel, factory) ?? new Random().NextInt64();
+
+	private static object? TryRunFactory(string name, Func<object?>? factory)
 	{
 		try
 		{
@@ -52,7 +83,7 @@ public class IdentityExtractor : IExtractor
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when running factory for {ScopeIdLabel}: {ex}");
+			Debug.WriteLine($"Exception caught when running factory for {name}: {ex}");
 			return null;
 		}
 	}
