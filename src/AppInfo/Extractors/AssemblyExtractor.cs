@@ -20,6 +20,7 @@ public class AssemblyExtractor(Assembly assembly, string? shortName = null, bool
 
 	internal static IEnumerable<object?> CompileValue(Assembly assembly, string? shortName, bool stripSourceRevision = false)
 	{
+//TODO: Put the name as fragment key instead?
 		yield return string.IsNullOrWhiteSpace(shortName)
 			? assembly.GetName().Name
 			: shortName.Trim();
