@@ -3,5 +3,5 @@
 
 public interface IAppInfo
 {
-	string Formatted { get; }
+	IEnumerable<Fragment> Fragments { get; }
 }

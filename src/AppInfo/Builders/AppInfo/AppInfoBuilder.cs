@@ -25,11 +25,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
-		var formatted = string.Join(" ␍␊ ", fragments.Select(f => string.Join('/', f.Value)));
-		var appInfo = new AppInfo
-			{
-				Formatted = formatted
-			};
+		var appInfo = new AppInfo(fragments);
 
 		Output.Execute(appInfo);
 

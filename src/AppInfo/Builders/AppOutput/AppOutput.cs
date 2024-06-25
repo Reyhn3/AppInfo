@@ -1,20 +1,29 @@
+using System.Collections.Immutable;
+using AppInfo.Renderers;
+
+
 namespace AppInfo;
 
 
-public class AppOutput
+public sealed class AppOutput
 {
-	private List<Action<string>> _writers = [];
+	private readonly ImmutableArray<IRenderer> _renderers;
 
-	public void AddOutput(Action<string> writer) =>
-		_writers.Add(writer);
+	internal AppOutput(IEnumerable<IRenderer> renderers)
+	{
+		if (renderers == null)
+			throw new ArgumentNullException(nameof(renderers));
+
+		_renderers = [..renderers];
+	}
 
 //TODO: Make async
 //TODO: Make safe
 	public void Execute(IAppInfo appInfo)
 	{
-		foreach (var writer in _writers)
+		foreach (var renderer in _renderers)
 		{
-			writer(appInfo.Formatted);
+			renderer.Render(appInfo);
 		}
 	}
 }
