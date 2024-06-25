@@ -5,7 +5,7 @@ using AppInfo;
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
 	.WithIdentities("MyAppId")
-//TODO:Add WithNames (service name, instance name)
+//TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
@@ -16,12 +16,12 @@ var appInfo = AppInfoBuilder
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()
-//TODO: Replace this with Serilog and Microsoft Ilogger
-//TODO: Remove prefix
+//TODO: #10: Replace this with Serilog and Microsoft Ilogger
+//TODO: #10: Remove prefix
 		.ToLog(info => Console.WriteLine("Log: {0}", info))
 		.ToTextFile()
 		.ToJsonFile())
 	.UseCulture(CultureInfo.CurrentCulture)
 	.Build();
 
-//TODO: Inject appInfo into Generic Host
+//TODO: #9: Inject appInfo into Generic Host
