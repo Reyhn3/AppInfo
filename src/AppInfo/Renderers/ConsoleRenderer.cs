@@ -9,16 +9,20 @@ public class ConsoleRenderer : UnstructuredTextRenderer
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 //TODO: #14: Detect VT100 support and format for console
-
-		WriteTitle(info);
-
-		var width = CalculateLabelMaxWidth(info);
-//TODO: Wrap in try-catch that restores console colors
-//TODO: Add ordering of standard fragments
-		foreach (var (label, value) in info.Fragments)
+		try
 		{
-			Write("{0}{1}", Indentation, PadLabel(label, width));
-			WriteValue(value);
+			WriteTitle(info);
+
+			var width = CalculateLabelMaxWidth(info);
+			foreach (var (label, value) in info.Fragments)
+			{
+				Write("{0}{1}", Indentation, PadLabel(label, width));
+				WriteValue(value);
+			}
+		}
+		finally
+		{
+			ResetColor();
 		}
 	}
 
