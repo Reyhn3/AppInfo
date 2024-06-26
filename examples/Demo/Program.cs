@@ -13,7 +13,7 @@ var appInfo = AppInfoBuilder
 		("Custom", true),
 		("Custom", false),
 		("Feature", "Disabled"))
-	.AddAssembly(typeof(IAppInfo).Assembly, "AppInfo", stripSourceRevision: true)
+	.AddAssembly(typeof(IAppInfo).Assembly, "Info", stripSourceRevision: true)
 	.AddAssembly(typeof(IAppInfo).Assembly, stripSourceRevision: true)
 	.WithOutput(output => output
 		.ToConsole()

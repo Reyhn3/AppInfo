@@ -4,20 +4,15 @@ using static System.Console;
 namespace AppInfo.Renderers;
 
 
-public class ConsoleRenderer : Renderer
+public class ConsoleRenderer : UnstructuredTextRenderer
 {
-	private const string Indentation = "  ";
-	private const char Separator = ':';
-	private const int MaxLabelWidth = 15;
-	private const string NullValue = "<null>";
-	private const string EmptyValue = "<empty>";
-
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 //TODO: #14: Detect VT100 support and format for console
-		var width = CalculateLabelMaxWidth(info);
-		WriteLine("Application created with context:");
 
+		WriteTitle(info);
+
+		var width = CalculateLabelMaxWidth(info);
 //TODO: Wrap in try-catch that restores console colors
 //TODO: Add ordering of standard fragments
 		foreach (var (label, value) in info.Fragments)
@@ -27,16 +22,20 @@ public class ConsoleRenderer : Renderer
 		}
 	}
 
-	private static int CalculateLabelMaxWidth(IAppInfo info) =>
-		Math.Min(
-			MaxLabelWidth,
-			info.Fragments
-				.Select(f => f.Label)
-				.Where(s => !string.IsNullOrWhiteSpace(s))
-				.Max(s => s.Length));
+	private static void WriteTitle(IAppInfo info)
+	{
+		var originalForeground = ForegroundColor;
+		var originalBackground = BackgroundColor;
 
-	private static string PadLabel(string label, int width) =>
-		(label + Separator + ' ').PadRight(width + 2);
+		var (lead, name, tail) = GenerateTitleParts(info);
+		Write(lead);
+		ForegroundColor = ConsoleColor.Black;
+		BackgroundColor = ConsoleColor.White;
+		Write(name);
+		ForegroundColor = originalForeground;
+		BackgroundColor = originalBackground;
+		WriteLine(tail);
+	}
 
 	private static void WriteValue(IEnumerable<object?> value)
 	{
@@ -70,15 +69,6 @@ public class ConsoleRenderer : Renderer
 
 		ResetColor();
 	}
-
-	private static string FormatValue(object? value) =>
-		value switch
-			{
-				null                                       => NullValue,
-				bool b                                     => b.ToString().ToLower(),
-				string s when string.IsNullOrWhiteSpace(s) => EmptyValue,
-				_                                          => value.ToString()!
-			};
 
 	private static ConsoleColor Colorize(object? value) =>
 		value switch
