@@ -1,9 +1,9 @@
 namespace AppInfo.Renderers;
 
 
-public class ConsoleRenderer : IRenderer
+public class ConsoleRenderer : Renderer
 {
-	public void Render(IAppInfo info)
+	protected override void RenderAppInfo(IAppInfo info)
 	{
 //TODO: Detect VT100 support and format for console
 		var formatted = string.Join(" ␍␊ ", info.Fragments.Select(f => string.Join('/', f.Value)));

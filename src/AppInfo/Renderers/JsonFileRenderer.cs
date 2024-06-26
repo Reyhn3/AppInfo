@@ -1,9 +1,9 @@
 namespace AppInfo.Renderers;
 
 
-public class JsonFileRenderer : IRenderer
+public class JsonFileRenderer : Renderer
 {
-	public void Render(IAppInfo info)
+	protected override void RenderAppInfo(IAppInfo info)
 	{
 //TODO: Format for JSON file
 		var formatted = string.Join(" ␍␊ ", info.Fragments.Select(f => string.Join('/', f.Value)));
