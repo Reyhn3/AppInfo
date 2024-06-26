@@ -16,6 +16,12 @@ public sealed class Fragment
 		Value = values?.ToArray() ?? [];
 	}
 
+	public void Deconstruct(out string label, out IEnumerable<object?> value)
+	{
+		label = Label;
+		value = Value;
+	}
+
 	public string Label { get; }
 	public IEnumerable<object?> Value { get; }
 

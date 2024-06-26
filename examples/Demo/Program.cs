@@ -4,12 +4,14 @@ using AppInfo;
 //TODO: Change namespace
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
-	.WithIdentities("MyAppId")
+//TODO: Create overload with int/long
+	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
-		("Custom", "def"),
+		("Custom", true),
+		("Custom", false),
 		("Feature", "Disabled"))
 	.AddAssembly(typeof(IAppInfo).Assembly, "AppInfo", stripSourceRevision: true)
 	.AddAssembly(typeof(IAppInfo).Assembly, stripSourceRevision: true)
