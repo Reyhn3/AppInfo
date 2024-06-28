@@ -8,7 +8,7 @@ public interface IAppInfoOutputBuilder :
 	IAppOutputTextFile,
 	IAppOutputJsonFile
 {
-	AppOutput Build();
+	IAppOutput Build();
 }
 
 
@@ -40,11 +40,4 @@ public interface IAppOutputTextFile
 public interface IAppOutputJsonFile
 {
 	IAppInfoOutputBuilder ToJsonFile();
-}
-
-
-//TODO: Rename to IAddOutput?
-public interface IAppOutput
-{
-	IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure);
 }

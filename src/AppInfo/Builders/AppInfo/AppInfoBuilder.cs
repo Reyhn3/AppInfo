@@ -11,7 +11,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 	internal readonly List<IExtractor> _extractors = [];
 
 	public CultureInfo Culture { get; private set; }
-	public AppOutput Output { get; private set; }
+	public IAppOutput Output { get; private set; }
 
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
 		new AppInfoBuilder

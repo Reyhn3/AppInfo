@@ -8,7 +8,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 {
 	private readonly List<IRenderer> _renderers = [];
 
-	public static AppOutput Default { get; } = new AppInfoOutputBuilder().ToConsole().Build();
+	public static IAppOutput Default { get; } = new AppInfoOutputBuilder().ToConsole().Build();
 
 	public IAppInfoOutputBuilder ToConsole() => AddRenderer(new ConsoleRenderer());
 	public IAppInfoOutputBuilder ToTrace() => AddRenderer(new TraceRenderer());
@@ -22,6 +22,6 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		return this;
 	}
 
-	public AppOutput Build() =>
-		new(_renderers);
+	public IAppOutput Build() =>
+		new AppOutput(_renderers);
 }

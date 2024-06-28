@@ -11,11 +11,11 @@ public interface IAppInfoBuilder :
 	IAppInfoExtras,
 	IAppInfoAssembly,
 	IAppInfoCulture,
-	IAppOutput
+	IAddOutput
 {
 	IAppInfo Build();
 	CultureInfo Culture { get; }
-	AppOutput Output { get; }
+	IAppOutput Output { get; }
 }
 
 
@@ -50,4 +50,10 @@ public interface IAppInfoExtras
 public interface IAppInfoAssembly
 {
 	IAppInfoBuilder AddAssembly(Assembly assembly, string? shortName = null, bool stripSourceRevision = false);
+}
+
+
+public interface IAddOutput
+{
+	IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure);
 }

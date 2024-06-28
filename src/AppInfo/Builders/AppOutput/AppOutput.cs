@@ -5,7 +5,13 @@ using AppInfo.Renderers;
 namespace AppInfo;
 
 
-public sealed class AppOutput
+public interface IAppOutput
+{
+	void Execute(IAppInfo appInfo);
+}
+
+
+public sealed class AppOutput : IAppOutput
 {
 	private readonly ImmutableArray<IRenderer> _renderers;
 
