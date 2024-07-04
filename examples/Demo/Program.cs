@@ -20,7 +20,7 @@ var appInfo = AppInfoBuilder
 		.ToTrace()
 //TODO: #10: Replace this with Serilog and Microsoft Ilogger
 //TODO: #10: Remove prefix
-		.ToLog(info => Console.WriteLine("Log: {0}", info))
+		.ToLog((structuredFormat, structuredArgs) => Console.WriteLine("Log: " + structuredFormat))
 		.ToTextFile()
 		.ToJsonFile())
 	.UseCulture(CultureInfo.CurrentCulture)

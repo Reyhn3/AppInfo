@@ -26,7 +26,7 @@ public interface IAppOutputTrace
 
 public interface IAppOutputLog
 {
-	IAppInfoOutputBuilder ToLog(Action<string> logger);
+	IAppInfoOutputBuilder ToLog(Action<string, object?[]> logger);
 }
 
 

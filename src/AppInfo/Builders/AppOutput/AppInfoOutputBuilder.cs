@@ -12,7 +12,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 
 	public IAppInfoOutputBuilder ToConsole() => AddRenderer(new ConsoleRenderer());
 	public IAppInfoOutputBuilder ToTrace() => AddRenderer(new TraceRenderer());
-	public IAppInfoOutputBuilder ToLog(Action<string> logger) => AddRenderer(new LogRenderer(logger));
+	public IAppInfoOutputBuilder ToLog(Action<string, object?[]> logger) => AddRenderer(new LogRenderer(logger));
 	public IAppInfoOutputBuilder ToTextFile() => AddRenderer(new TextFileRenderer());
 	public IAppInfoOutputBuilder ToJsonFile() => AddRenderer(new JsonFileRenderer());
 
