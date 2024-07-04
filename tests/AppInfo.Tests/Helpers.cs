@@ -9,13 +9,15 @@ internal static class Helpers
 		{
 			Console.WriteLine("Label: '{0}', Value: {1}",
 				fragment.Label,
-				fragment.Value.Count() == 0
-					? "<empty>"
-					: string.Join(" :: ", fragment.Value.Select(ValueFormatter)));
+				fragment.Value == null
+					? "<null>"
+					: !fragment.Value.Any()
+						? "<empty>"
+						: string.Join(" :: ", fragment.Value.Select(ValueFormatter)));
 		}
 	}
 
-	public static void PrintValues(IEnumerable<object?> values)
+	public static void PrintValues(IEnumerable<object?>? values)
 	{
 		if (values == null)
 		{

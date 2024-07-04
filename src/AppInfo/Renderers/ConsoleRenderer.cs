@@ -41,34 +41,43 @@ public class ConsoleRenderer : UnstructuredTextRenderer
 		WriteLine(tail);
 	}
 
-	private static void WriteValue(IEnumerable<object?> value)
+	private static void WriteValue(IEnumerable<object?>? value)
 	{
 		var originalForeground = ForegroundColor;
 
-		var array = value.ToArray();
-		if (array.Length == 1)
+		if (value == null)
 		{
-			ForegroundColor = Colorize(array[0]);
-			WriteLine(FormatValue(array[0]));
+			ForegroundColor = Colorize(null);
+			WriteLine(FormatValue(null));
 			ForegroundColor = originalForeground;
 		}
 		else
 		{
-//TODO: Enrich Fragment with instructions on how to render multi-values (e.g. concat, newline, separate etc.)
-			for (var i = 0; i < array.Length; i++)
+			var array = value.ToArray();
+			if (array.Length == 1)
 			{
-				var element = array[i];
-				ForegroundColor = Colorize(element);
-
-				Write(FormatValue(element));
-
+				ForegroundColor = Colorize(array[0]);
+				WriteLine(FormatValue(array[0]));
 				ForegroundColor = originalForeground;
-
-				if (i + 1 < array.Length)
-					Write(", ");
 			}
+			else
+			{
+//TODO: Enrich Fragment with instructions on how to render multi-values (e.g. concat, newline, separate etc.)
+				for (var i = 0; i < array.Length; i++)
+				{
+					var element = array[i];
+					ForegroundColor = Colorize(element);
 
-			WriteLine();
+					Write(FormatValue(element));
+
+					ForegroundColor = originalForeground;
+
+					if (i + 1 < array.Length)
+						Write(", ");
+				}
+
+				WriteLine();
+			}
 		}
 
 		ResetColor();

@@ -17,11 +17,10 @@ public class FragmentTests
 		new Fragment("\ttest" + Environment.NewLine, []).Label.ShouldBe("test");
 
 	[Test]
-	public void Ctor_shall_use_empty_array_if_value_is_null()
+	public void Ctor_shall_use_null_if_value_is_null()
 	{
 		var result = new Fragment("test", null);
-		result.Value.ShouldNotBeNull();
-		result.Value.ShouldBeEmpty();
+		result.Value.ShouldBeNull();
 	}
 
 	[Test]

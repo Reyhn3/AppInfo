@@ -9,6 +9,10 @@ namespace AppInfo.Tests.Renderers;
 public class LogRendererTests
 {
 	[Test]
+	public void IsScalar_shall_return_true_for_null() =>
+		LogRenderer.IsScalar(null).ShouldBeTrue();
+
+	[Test]
 	public void IsScalar_shall_return_true_for_single_element_enumerable() =>
 		LogRenderer.IsScalar(Enumerable.Repeat((object?)null, 1)).ShouldBeTrue();
 

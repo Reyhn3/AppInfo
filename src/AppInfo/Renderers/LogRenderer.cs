@@ -24,9 +24,11 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 	}
 
 	private static object? FormatValue(Fragment fragment) =>
-		IsScalar(fragment.Value)
-			? fragment.Value.SingleOrDefault()
-			: fragment.Value.ToArray();
+		fragment.Value == null
+			? null
+			: IsScalar(fragment.Value)
+				? fragment.Value.SingleOrDefault()
+				: fragment.Value.ToArray();
 
 	private static string ConcatenateTitle(IAppInfo info)
 	{
@@ -34,8 +36,8 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 		return lead + name + tail;
 	}
 
-	internal static bool IsScalar(IEnumerable<object?> value) =>
-		value.Count() == 1;
+	internal static bool IsScalar(IEnumerable<object?>? value) =>
+		value == null || value.Count() == 1;
 
 	internal static int? CalculateSuffix(IEnumerable<Fragment> all, Fragment current)
 	{

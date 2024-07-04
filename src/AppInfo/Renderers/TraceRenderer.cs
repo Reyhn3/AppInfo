@@ -34,6 +34,6 @@ public class TraceRenderer : UnstructuredTextRenderer
 		return lead + name + tail;
 	}
 
-	private static string RenderValue(IEnumerable<object?> value) =>
-		string.Join(", ", value.Select(FormatValue));
+	private static string RenderValue(IEnumerable<object?>? value) =>
+		string.Join(", ", value == null ? FormatValue(null) : value.Select(FormatValue));
 }
