@@ -18,6 +18,7 @@ var appInfo = AppInfoBuilder
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()
+//TODO: Use the same file name for all file outputs (unless customized)
 //TODO: #10: Replace this with Serilog and Microsoft Ilogger
 //TODO: #10: Remove prefix
 		.ToLog((structuredFormat, structuredArgs) => Console.WriteLine("Log: " + structuredFormat))
