@@ -9,6 +9,16 @@ public class TraceRenderer : UnstructuredTextRenderer
 {
 	protected override void RenderAppInfo(IAppInfo info)
 	{
+		var output = BuildPlainString(info);
+
+		// Note to self:
+		// Traces will not appear anywhere when running the IDE in Debug mode.
+		// To see the traces, run directly from command line.
+		Trace.WriteLine(output, Constants.LibraryName);
+	}
+
+	private static string BuildPlainString(IAppInfo info)
+	{
 		var output = new StringWriter();
 		var writer = new IndentedTextWriter(output, Indentation);
 		writer.WriteLine(ConcatenateTitle(info));
@@ -21,11 +31,7 @@ public class TraceRenderer : UnstructuredTextRenderer
 			writer.WriteLine(line);
 		}
 
-		// Note to self:
-		// Traces will not appear anywhere when running the IDE in Debug mode.
-		// To see the traces, run directly from command line.
-		var final = output.ToString();
-		Trace.WriteLine(final, Constants.LibraryName);
+		return output.ToString();
 	}
 
 	private static string ConcatenateTitle(IAppInfo info)

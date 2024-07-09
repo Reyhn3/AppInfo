@@ -39,6 +39,7 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 	internal static bool IsScalar(IEnumerable<object?>? value) =>
 		value == null || value.Count() == 1;
 
+//TODO: Move this logic to a output-shared pre-render
 	internal static int? CalculateSuffix(IEnumerable<Fragment> all, Fragment current)
 	{
 		var duplicates = all
