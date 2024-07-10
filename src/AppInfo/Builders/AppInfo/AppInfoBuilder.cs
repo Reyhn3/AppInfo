@@ -11,7 +11,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 	internal readonly List<IExtractor> _extractors = [];
 
 	public CultureInfo Culture { get; private set; }
-	public AppOutput Output { get; private set; }
+	public IAppOutput Output { get; private set; }
 
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
 		new AppInfoBuilder
@@ -25,11 +25,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
-		var formatted = string.Join(" ␍␊ ", fragments.Select(f => string.Join('/', f.Value)));
-		var appInfo = new AppInfo
-			{
-				Formatted = formatted
-			};
+		var appInfo = new AppInfo(fragments);
 
 		Output.Execute(appInfo);
 

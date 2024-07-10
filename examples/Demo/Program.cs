@@ -4,21 +4,25 @@ using AppInfo;
 //TODO: Change namespace
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
-	.WithIdentities("MyAppId")
+//TODO: Create overload with int/long
+	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
-		("Custom", "def"),
-		("Feature", "Disabled"))
-	.AddAssembly(typeof(IAppInfo).Assembly, "AppInfo", stripSourceRevision: true)
-	.AddAssembly(typeof(IAppInfo).Assembly, stripSourceRevision: true)
+		("Custom 2", true),
+		("Custom-three", short.MaxValue),
+		("Feature", "Disabled"),
+		("Feature AB 34", string.Empty))
+	.AddAssembly(typeof(IAppInfo).Assembly)
+	.AddAssembly(typeof(IAppInfo).Assembly, "Info", stripSourceRevision: true)
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()
+//TODO: Use the same file name for all file outputs (unless customized)
 //TODO: #10: Replace this with Serilog and Microsoft Ilogger
 //TODO: #10: Remove prefix
-		.ToLog(info => Console.WriteLine("Log: {0}", info))
+		.ToLog((structuredFormat, structuredArgs) => Console.WriteLine("Log: " + structuredFormat))
 		.ToTextFile()
 		.ToJsonFile())
 	.UseCulture(CultureInfo.CurrentCulture)

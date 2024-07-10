@@ -8,7 +8,7 @@ public interface IAppInfoOutputBuilder :
 	IAppOutputTextFile,
 	IAppOutputJsonFile
 {
-	AppOutput Build();
+	IAppOutput Build();
 }
 
 
@@ -26,12 +26,15 @@ public interface IAppOutputTrace
 
 public interface IAppOutputLog
 {
-	IAppInfoOutputBuilder ToLog(Action<string> logger);
+	IAppInfoOutputBuilder ToLog(Action<string, object?[]> logger);
 }
 
 
 public interface IAppOutputTextFile
 {
+//TODO: Add filename
+//TODO: Add encoding
+//TODO: Add option to append, overwrite or create unique every time
 	IAppInfoOutputBuilder ToTextFile();
 }
 
@@ -40,11 +43,4 @@ public interface IAppOutputTextFile
 public interface IAppOutputJsonFile
 {
 	IAppInfoOutputBuilder ToJsonFile();
-}
-
-
-//TODO: Rename to IAddOutput?
-public interface IAppOutput
-{
-	IAppInfoBuilder WithOutput(Action<IAppInfoOutputBuilder> configure);
 }
