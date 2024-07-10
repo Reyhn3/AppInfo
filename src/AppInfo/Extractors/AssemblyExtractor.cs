@@ -6,15 +6,15 @@ namespace AppInfo.Extractors;
 
 
 public class AssemblyExtractor(Assembly assembly, string? shortName = null, bool stripSourceRevision = false)
-	: IExtractor
+	: Extractor
 {
 	internal const string AssemblyLabel = "Assembly";
 
 	private readonly Assembly _assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
 
-	public IEnumerable<Fragment> Extract()
+	protected override IEnumerable<Func<Fragment>> ProduceExtractors()
 	{
-		yield return new Fragment(AssemblyLabel, CompileValue(_assembly, shortName, stripSourceRevision).ToArray());
+		yield return () => new Fragment(AssemblyLabel, CompileValue(_assembly, shortName, stripSourceRevision).ToArray());
 	}
 
 	internal static IEnumerable<object?> CompileValue(Assembly assembly, string? shortName, bool stripSourceRevision = false)
