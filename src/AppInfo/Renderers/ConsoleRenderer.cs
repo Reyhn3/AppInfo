@@ -86,10 +86,11 @@ public class ConsoleRenderer : UnstructuredTextRenderer
 	private static ConsoleColor Colorize(object? value) =>
 		value switch
 			{
-				bool v    => v ? ConsoleColor.Green : ConsoleColor.Red,
-				string    => ConsoleColor.White,
-				ValueType => ConsoleColor.Magenta,
-				null      => ConsoleColor.DarkGray,
-				_         => ConsoleColor.Gray
+				null                                       => ConsoleColor.DarkGray,
+				bool v                                     => v ? ConsoleColor.Green : ConsoleColor.Red,
+				string s when string.IsNullOrWhiteSpace(s) => ConsoleColor.DarkGray,
+				string                                     => ConsoleColor.White,
+				ValueType                                  => ConsoleColor.Magenta,
+				_                                          => ConsoleColor.Gray
 			};
 }

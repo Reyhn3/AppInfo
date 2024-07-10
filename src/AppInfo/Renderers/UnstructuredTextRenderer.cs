@@ -5,8 +5,6 @@ public abstract class UnstructuredTextRenderer : Renderer
 {
 	private const char Separator = ':';
 	private const int MaxLabelWidth = 15;
-	private const string NullValue = "<null>";
-	private const string EmptyValue = "<empty>";
 	protected const string Indentation = "  ";
 
 	protected static int CalculateLabelMaxWidth(IAppInfo info) =>
@@ -23,9 +21,9 @@ public abstract class UnstructuredTextRenderer : Renderer
 	protected static string FormatValue(object? value) =>
 		value switch
 			{
-				null                                       => NullValue,
+				null                                       => "<null>",
 				bool b                                     => b.ToString().ToLower(),
-				string s when string.IsNullOrWhiteSpace(s) => EmptyValue,
+				string s when string.IsNullOrWhiteSpace(s) => "<empty>",
 				_                                          => value.ToString()!
 			};
 }

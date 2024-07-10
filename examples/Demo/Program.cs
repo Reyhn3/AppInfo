@@ -10,11 +10,12 @@ var appInfo = AppInfoBuilder
 	.AddTimestamp()
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
-		("Custom", true),
-		("Custom", false),
-		("Feature", "Disabled"))
+		("Custom 2", true),
+		("Custom-three", short.MaxValue),
+		("Feature", "Disabled"),
+		("Feature AB 34", string.Empty))
+	.AddAssembly(typeof(IAppInfo).Assembly)
 	.AddAssembly(typeof(IAppInfo).Assembly, "Info", stripSourceRevision: true)
-	.AddAssembly(typeof(IAppInfo).Assembly, stripSourceRevision: true)
 	.WithOutput(output => output
 		.ToConsole()
 		.ToTrace()
