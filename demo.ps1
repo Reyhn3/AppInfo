@@ -1,1 +1,1 @@
-& .\examples\Demo\bin\Debug\net8.0\Demo.exe $args
+& .\examples\Demo\bin\Debug\net8.0\demo.exe $args
