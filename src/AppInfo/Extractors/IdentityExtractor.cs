@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace AppInfo.Extractors;
 
 
-public class IdentityExtractor : IExtractor
+public class IdentityExtractor : Extractor
 {
 	internal const string ApplicationIdLabel = "ApplicationId";
 	internal const string InstanceIdLabel = "InstanceId";
@@ -36,17 +36,17 @@ public class IdentityExtractor : IExtractor
 			_instanceId = trimmedInstanceId;
 	}
 
-	public IEnumerable<Fragment> Extract()
+	protected override IEnumerable<Func<Fragment>> ProduceExtractors()
 	{
-		yield return new Fragment(ApplicationIdLabel, _appId);
-		yield return new Fragment(InstanceIdLabel, GetInstanceId(_args, _instanceIdFactory, _instanceId));
-		yield return new Fragment(ScopeIdLabel, GetScopeId(_scopeIdFactory));
+		yield return () => new Fragment(ApplicationIdLabel, _appId);
+		yield return () => new Fragment(InstanceIdLabel, GetInstanceId(_args, _instanceIdFactory, _instanceId));
+		yield return () => new Fragment(ScopeIdLabel, GetScopeId(_scopeIdFactory));
 	}
 
 	internal static object? GetInstanceId(string[]? fromCli, Func<object?>? factory, string? fromArgument) =>
 		GetInstanceIdFromCli(fromCli) ?? GetInstanceIdFromAppSettings(factory) ?? fromArgument;
 
-	private static object? GetInstanceIdFromCli(string[]? args)
+	private static string? GetInstanceIdFromCli(string[]? args)
 	{
 		if (args == null || args.Length == 0)
 			return null;

@@ -8,20 +8,21 @@ namespace AppInfo;
 
 public class AppInfoBuilder : IAppInfoBuilder
 {
-	internal readonly List<IExtractor> _extractors = [];
-
 	public CultureInfo Culture { get; private set; }
 	public IAppOutput Output { get; private set; }
+	internal List<IExtractor> Extractors { get; private init; }
 
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
 		new AppInfoBuilder
 			{
+//TODO: Make sure this is the right assembly
+				Extractors = [new StandardExtractor(Assembly.GetEntryAssembly())],
 				Output = AppInfoOutputBuilder.Default
 			};
 
 	public IAppInfo Build()
 	{
-		var fragments = _extractors.SelectMany(e => e.Extract());
+		var fragments = Extractors.SelectMany(e => e.Extract());
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
@@ -72,7 +73,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 	private AppInfoBuilder AddExtractors(params IExtractor[] extractors)
 	{
-		_extractors.AddRange(extractors);
+		Extractors.AddRange(extractors);
 		return this;
 	}
 }

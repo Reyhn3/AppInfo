@@ -22,7 +22,7 @@ public class AppInfoBuilderTests
 
 	[Test]
 	public void CreateDefaultBuilder_shall_set_default_extractors() =>
-		((AppInfoBuilder)AppInfoBuilder.CreateDefaultBuilder())._extractors.ShouldNotBeNull();
+		((AppInfoBuilder)AppInfoBuilder.CreateDefaultBuilder()).Extractors.ShouldNotBeNull();
 
 	[Test]
 	public void Build_shall_create_an_instance_of_AppInfo() =>

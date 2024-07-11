@@ -1,7 +1,7 @@
 namespace AppInfo.Extractors;
 
 
-public class ExtrasExtractor : IExtractor
+public class ExtrasExtractor : Extractor
 {
 	private readonly Extra[] _extras;
 
@@ -10,10 +10,10 @@ public class ExtrasExtractor : IExtractor
 		_extras = extras.Select(e => new Extra(e.Label, e.Value)).ToArray();
 	}
 
-	public IEnumerable<Fragment> Extract() =>
+	protected override IEnumerable<Func<Fragment>> ProduceExtractors() =>
 		_extras
 			.Where(e => !string.IsNullOrWhiteSpace(e.Label))
-			.Select(e => new Fragment(e.Label, e.Value));
+			.Select<Extra, Func<Fragment>>(e => () => new Fragment(e.Label, e.Value));
 
 
 	private record struct Extra(string Label, object? Value);

@@ -22,7 +22,7 @@ public abstract class Renderer : IRenderer
 
 	protected static Title GenerateTitleParts(IAppInfo info) => new(
 		"Application ",
-//TODO: Replace this part with the AssemblyProductAttribute.Product or assembly.GetName().Name
+//TODO: Replace this part with the ProductName-fragment from StandardExtractor
 		"DUMMY",
 		" created with context:");
 
