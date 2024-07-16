@@ -34,8 +34,8 @@ var appInfo = AppInfoBuilder
 	.AddAssembly(typeof(IAppInfo).Assembly, "Info", true)
 	.UseCulture(CultureInfo.CurrentCulture)
 	.WithOutput(output => output
-		.ToConsole()                    // Write directly to console
-		.ToTrace()                      // Write to a trace listener (useful when running as a service)
+		.ToConsole() // Write directly to console
+		.ToTrace()   // Write to a trace listener (useful when running as a service)
 //TODO: Use the same file name for all file outputs (unless customized)
 		.ToLog(Log.Information)         // Demonstrates output can be directed to Serilog
 		.ToLog(msLogger.LogInformation) // Demonstrates output can be directed to ILogger
@@ -51,8 +51,13 @@ try
 		.ConfigureServices(services => services.AddSingleton(appInfo))
 		.UseSerilog((_, provider, logger) => logger
 			.WriteTo.Console()
-//TODO: Get the identities
-			.Enrich.WithProperty("ApplicationId", provider.GetService<IAppInfo>()?.ToString()))
+			// The following three lines demonstrate how the injected IAppInfo can be
+			// used to retrieve information. Some of that information can be very
+			// useful for log enrichment (as done here) or observability (for instance,
+			// when using OpenTelemetry).
+			.Enrich.WithProperty("ApplicationId", provider.GetService<IAppInfo>().ApplicationId())
+			.Enrich.WithProperty("InstanceId", provider.GetService<IAppInfo>().InstanceId())
+			.Enrich.WithProperty("ScopeId", provider.GetService<IAppInfo>().ScopeId()))
 		.RunConsoleAsync(new CancellationTokenSource(TimeSpan.Zero).Token); // Exit demo immediately
 }
 catch (OperationCanceledException)
