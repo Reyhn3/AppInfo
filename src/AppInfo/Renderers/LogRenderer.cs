@@ -18,6 +18,7 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 		var format = info.Fragments.Aggregate(
 			ConcatenateTitle(info),
 			(current, next) =>
+//BUG: Add missing label
 				current + $"{Environment.NewLine}{{{(IsScalar(next.Value) ? string.Empty : "@")}{names[next]}{CalculateSuffix(fragments, next)}}}");
 
 		_logger(format, args);
@@ -60,6 +61,7 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 			.Index;
 	}
 
+//BUG: This must clean away dashes and other invalid characters
 	internal static string FormatName(string label)
 	{
 		var components = s_whitespace.Split(label).Where(s => !string.IsNullOrWhiteSpace(s));
