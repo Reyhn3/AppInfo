@@ -51,6 +51,7 @@ try
 		.ConfigureServices(services => services.AddSingleton(appInfo))
 		.UseSerilog((_, provider, logger) => logger
 			.WriteTo.Console()
+
 			// The following three lines demonstrate how the injected IAppInfo can be
 			// used to retrieve information. Some of that information can be very
 			// useful for log enrichment (as done here) or observability (for instance,

@@ -17,7 +17,8 @@ public static class AppInfoExtensions
 
 //TODO: Consider this strategy... It will return the fallback if the fragment doesn't exist or if the value is null. Is this intended?
 	private static object? GetFragmentValueOrFallback(this IAppInfo? appInfo, string label, object? fallback) =>
-		appInfo?.Fragments.FirstOrDefault(f => string.Equals(f.Label, label, StringComparison.OrdinalIgnoreCase))?
+		appInfo?.Fragments
+			.FirstOrDefault(f => string.Equals(f.Label, label, StringComparison.OrdinalIgnoreCase))?
 			.Value?.FirstOrDefault()
 		?? fallback;
 }
