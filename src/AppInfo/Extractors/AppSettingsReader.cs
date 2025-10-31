@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AppInfo.Helpers;
 
 
 namespace AppInfo.Extractors;
@@ -29,9 +30,7 @@ internal static class AppSettingsReader
 
 	private static IEnumerable<string> GetAppSettingsFilePaths()
 	{
-		var environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
-			?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-			?? "Production";
+		var environmentName = EnvironmentHelper.GetEnvironment();
 		yield return $"appsettings.{environmentName}.json";
 		yield return "appsettings.json";
 	}
