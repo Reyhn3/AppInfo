@@ -2,9 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppInfo", "src\AppInfo\AppInfo.csproj", "{6FA13DCE-495D-4A9B-B296-32DCD3E9E1DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "examples\Demo\Demo.csproj", "{6C4A0F2D-9EE2-4DF1-9EB8-BB54EDCF99F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic", "examples\Basic\Basic.csproj", "{6C4A0F2D-9EE2-4DF1-9EB8-BB54EDCF99F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppInfo.Tests", "tests\AppInfo.Tests\AppInfo.Tests.csproj", "{B53A203F-4ADC-4B0D-AD3A-D088F2D3BCFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{CD9DE4FA-BA75-4A06-B056-9AC5892AE582}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

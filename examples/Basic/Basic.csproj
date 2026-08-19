@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>demo</AssemblyName>
-    <Product>AppInfo Demo</Product>
-    <Description>Demonstrates the usage of AppInfo</Description>
+    <AssemblyName>basic</AssemblyName>
+    <Product>AppInfo Demo - Basic</Product>
+    <Description>Demonstrates the basic usage of AppInfo</Description>
+    <RootNamespace>Basic</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
