@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>web</AssemblyName>
+    <Product>AppInfo Demo - Web</Product>
+    <Description>Demonstrates the web application usage of AppInfo</Description>
+    <RootNamespace>Web</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AppInfo\AppInfo.csproj" />
+  </ItemGroup>
+
+</Project>
