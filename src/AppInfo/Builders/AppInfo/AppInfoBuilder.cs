@@ -15,8 +15,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
 		new AppInfoBuilder
 			{
-//TODO: Make sure this is the right assembly
-				Extractors = [new StandardExtractor(Assembly.GetEntryAssembly())],
+				Extractors = [new StandardExtractor(Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly())],
 				Output = AppInfoOutputBuilder.Default
 			};
 

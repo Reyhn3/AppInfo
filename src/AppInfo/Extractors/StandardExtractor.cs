@@ -36,17 +36,10 @@ internal class StandardExtractor(Assembly assembly)
 		yield return () => new Fragment(LabelForLocation, Path.GetDirectoryName(_assembly.Location));
 		yield return () => new Fragment(LabelForBase, AppContext.BaseDirectory);
 
-		yield return () => new Fragment(LabelForEnvironment, GetEnvironment());
+		yield return () => new Fragment(LabelForEnvironment, EnvironmentHelper.GetEnvironment());
 		yield return () => new Fragment(LabelForMachineName, Environment.MachineName);
 		yield return () => new Fragment(LabelForOSVersion, Environment.OSVersion.VersionString); // This includes the name of the OS as well
 		yield return () => new Fragment(LabelForClrVersion, Environment.Version);
 		yield return () => new Fragment(LabelForProcessId, Environment.ProcessId);
-	}
-
-	private string GetEnvironment()
-	{
-		// Fall back to "Production" just to be safe
-		var value = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-		return string.IsNullOrWhiteSpace(value) ? "Production" : value;
 	}
 }

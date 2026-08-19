@@ -18,8 +18,6 @@ public abstract class Extractor : IExtractor
 		}
 	}
 
-	protected abstract IEnumerable<Func<Fragment>> ProduceExtractors();
-
 	private bool TryProduceExtractors(out Func<Fragment>[] extractors)
 	{
 		try
@@ -35,11 +33,13 @@ public abstract class Extractor : IExtractor
 		}
 	}
 
-	private static bool TryExtractSafely(Func<Fragment> extractor, out Fragment? fragment)
+	protected abstract IEnumerable<Func<Fragment>> ProduceExtractors();
+
+	private static bool TryExtractSafely(Func<Fragment> extract, out Fragment? fragment)
 	{
 		try
 		{
-			fragment = extractor();
+			fragment = extract();
 			return true;
 		}
 		catch (Exception ex)
