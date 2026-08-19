@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿// This demonstration expands on the Basic example by adding custom properties,
+// controlling the output and redirecting it.
+
+
+using System.Globalization;
 using AppInfo;
 
 AppInfoBuilder
