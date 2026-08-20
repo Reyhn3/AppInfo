@@ -21,7 +21,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 	public IAppInfo Build()
 	{
-		var fragments = Extractors.SelectMany(e => e.Extract());
+		var fragments = Extractors.SelectMany(e => e.Extract()).ToArray();
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value

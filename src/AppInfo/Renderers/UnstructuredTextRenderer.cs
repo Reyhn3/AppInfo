@@ -15,6 +15,7 @@ public abstract class UnstructuredTextRenderer : Renderer
 				.Where(s => !string.IsNullOrWhiteSpace(s))
 				.Max(s => s.Length));
 
+//TEST: Make sure it cannot exceed the MaxLabelWidth
 	protected static string PadLabel(string label, int width) =>
 		(label + Separator + ' ').PadRight(width + 2);
 

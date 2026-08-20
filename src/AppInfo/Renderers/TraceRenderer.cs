@@ -1,4 +1,5 @@
 using System.CodeDom.Compiler;
+using System.Diagnostics;
 
 
 namespace AppInfo.Renderers;
@@ -9,7 +10,7 @@ public class TraceRenderer : UnstructuredTextRenderer
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 		var output = BuildPlainString(info);
-		InternalLogger.Log(output);
+		Trace.WriteLine(output);
 	}
 
 	private static string BuildPlainString(IAppInfo info)
@@ -35,6 +36,14 @@ public class TraceRenderer : UnstructuredTextRenderer
 		return lead + name + tail;
 	}
 
-	private static string RenderValue(IEnumerable<object?>? value) =>
-		string.Join(", ", value == null ? FormatValue(null) : value.Select(FormatValue));
+	private static string RenderValue(IEnumerable<object?>? value)
+	{
+		if (value == null)
+		{
+			return FormatValue(null);
+		}
+
+		var array = value.ToArray();
+		return string.Join(", ", array.Select(FormatValue));
+	}
 }
