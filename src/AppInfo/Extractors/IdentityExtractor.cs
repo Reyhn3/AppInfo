@@ -1,6 +1,3 @@
-using System.Diagnostics;
-
-
 namespace AppInfo.Extractors;
 
 
@@ -82,7 +79,7 @@ public class IdentityExtractor : Extractor
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when running factory for {name}: {ex}");
+			InternalLogger.Log("Exception caught when running factory for {1}:{0}{1}", Environment.NewLine, name, ex);
 			return null;
 		}
 	}

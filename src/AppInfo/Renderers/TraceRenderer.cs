@@ -10,14 +10,10 @@ public class TraceRenderer : UnstructuredTextRenderer
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 		var output = BuildPlainString(info);
-
-		// Note to self:
-		// Traces will not appear anywhere when running the IDE in Debug mode.
-		// To see the traces, run directly from command line.
-		Trace.WriteLine(output, Constants.LibraryName);
+		Trace.WriteLine(output);
 	}
 
-	private static string BuildPlainString(IAppInfo info)
+	private string BuildPlainString(IAppInfo info)
 	{
 		var output = new StringWriter();
 		var writer = new IndentedTextWriter(output, Indentation);
@@ -40,6 +36,14 @@ public class TraceRenderer : UnstructuredTextRenderer
 		return lead + name + tail;
 	}
 
-	private static string RenderValue(IEnumerable<object?>? value) =>
-		string.Join(", ", value == null ? FormatValue(null) : value.Select(FormatValue));
+	private string RenderValue(IEnumerable<object?>? value)
+	{
+		if (value == null)
+		{
+			return FormatValue(null);
+		}
+
+		var array = value.ToArray();
+		return string.Join(", ", array.Select(FormatValue));
+	}
 }

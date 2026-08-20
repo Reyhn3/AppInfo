@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -24,7 +23,7 @@ public class JsonFileRenderer : Renderer
 
 		using var stream = File.Create(path);
 		JsonSerializer.Serialize(stream, container, s_options);
-		Debug.WriteLine($"JSON file written to {path}", Constants.LibraryName);
+		InternalLogger.Log("JSON file written to {0}", path);
 
 //TODO: Remove this
 		Console.WriteLine("JSON file: {0}", path);

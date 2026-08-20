@@ -1,5 +1,5 @@
+using System.Globalization;
 using System.Reflection;
-using AppInfo.Helpers;
 
 
 namespace AppInfo.Extractors;
@@ -16,6 +16,7 @@ internal class StandardExtractor(Assembly assembly)
 	internal const string LabelForFileName = "File Name";
 	internal const string LabelForLocation = "Location";
 	internal const string LabelForRelease = "Is Release";
+	internal const string LabelForCulture = "Culture";
 	internal const string LabelForEnvironment = "Environment";
 	internal const string LabelForBase = "Base";
 	internal const string LabelForMachineName = "MachineName";
@@ -32,6 +33,7 @@ internal class StandardExtractor(Assembly assembly)
 		yield return () => new Fragment(LabelForAssembly, _assembly.GetName().Name);
 		yield return () => new Fragment(LabelForFileName, Path.GetFileName(_assembly.Location));
 		yield return () => new Fragment(LabelForRelease, AssemblyHelper.GetReleaseMode(_assembly));
+		yield return () => new Fragment(LabelForCulture, $"{CultureInfo.CurrentCulture.Name} (UI: {CultureInfo.CurrentUICulture.Name})");
 		yield return () => new Fragment(LabelForArchitecture, Environment.Is64BitProcess);
 		yield return () => new Fragment(LabelForLocation, Path.GetDirectoryName(_assembly.Location));
 		yield return () => new Fragment(LabelForBase, AppContext.BaseDirectory);

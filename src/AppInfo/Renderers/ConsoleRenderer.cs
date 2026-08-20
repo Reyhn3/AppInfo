@@ -41,7 +41,7 @@ public class ConsoleRenderer : UnstructuredTextRenderer
 		WriteLine(tail);
 	}
 
-	private static void WriteValue(IEnumerable<object?>? value)
+	private void WriteValue(IEnumerable<object?>? value)
 	{
 		var originalForeground = ForegroundColor;
 

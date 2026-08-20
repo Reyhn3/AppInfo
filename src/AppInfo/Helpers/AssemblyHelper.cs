@@ -20,8 +20,7 @@ internal static class AssemblyHelper
 		}
 		catch (Exception ex)
 		{
-//TODO: Extract this logic (and everywhere else) to a debug helper class
-			Debug.WriteLine("Failed to read product name from assembly {0}: {1}", assembly, ex);
+			InternalLogger.Log("Failed to read product name from assembly {0}: {1}", assembly, ex);
 			return null;
 		}
 	}
@@ -56,7 +55,6 @@ internal static class AssemblyHelper
 			// allow any version suffixes.
 			return assembly.GetName()?.Version?.ToString() ?? Constants.NA;
 
-
 			string? WithoutSourceRevision(string? original)
 			{
 				if (string.IsNullOrWhiteSpace(original))
@@ -68,7 +66,7 @@ internal static class AssemblyHelper
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine("Failed to read version info from assembly {0}: {1}", assembly, ex);
+			InternalLogger.Log("Failed to read version info from assembly {0}: {1}", assembly, ex);
 			return Constants.NA;
 		}
 	}
@@ -84,7 +82,7 @@ internal static class AssemblyHelper
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine("Failed to read release mode info from assembly {0}: {1}", assembly, ex);
+			InternalLogger.Log("Failed to read release mode info from assembly {0}: {1}", assembly, ex);
 			return null;
 		}
 	}

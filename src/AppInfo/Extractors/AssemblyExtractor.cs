@@ -1,5 +1,4 @@
 using System.Reflection;
-using AppInfo.Helpers;
 
 
 namespace AppInfo.Extractors;

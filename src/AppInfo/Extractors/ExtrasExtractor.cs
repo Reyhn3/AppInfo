@@ -10,6 +10,11 @@ public class ExtrasExtractor : Extractor
 		_extras = extras.Select(e => new Extra(e.Label, e.Value)).ToArray();
 	}
 
+	public ExtrasExtractor(params (string Label, Func<object?> ValueFactory)[] extras)
+	{
+		_extras = extras.Select(e => new Extra(e.Label, e.ValueFactory())).ToArray();
+	}
+
 	protected override IEnumerable<Func<Fragment>> ProduceExtractors() =>
 		_extras
 			.Where(e => !string.IsNullOrWhiteSpace(e.Label))

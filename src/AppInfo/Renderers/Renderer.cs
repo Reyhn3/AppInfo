@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using System.Globalization;
 
 
 namespace AppInfo.Renderers;
@@ -6,15 +6,18 @@ namespace AppInfo.Renderers;
 
 public abstract class Renderer : IRenderer
 {
+	private CultureInfo _culture;
+
 	public void Render(IAppInfo info)
 	{
 		try
 		{
+			_culture = info.Culture;
 			RenderAppInfo(info);
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Exception when rendering with {GetType().Name}:{Environment.NewLine}{ex}", Constants.LibraryName);
+			InternalLogger.Log("Exception when rendering with {1}:{0}{3}", Environment.NewLine, GetType().Name, ex);
 		}
 	}
 
@@ -25,6 +28,9 @@ public abstract class Renderer : IRenderer
 //TODO: Replace this part with the ProductName-fragment from StandardExtractor
 		"DUMMY",
 		" created with context:");
+
+	protected string FormatWithCulture(object value) =>
+		string.Format(_culture, "{0}", value!);
 
 
 	protected record struct Title(string Lead, string Name, string Tail);

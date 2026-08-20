@@ -15,15 +15,16 @@ public abstract class UnstructuredTextRenderer : Renderer
 				.Where(s => !string.IsNullOrWhiteSpace(s))
 				.Max(s => s.Length));
 
+//TEST: Make sure it cannot exceed the MaxLabelWidth
 	protected static string PadLabel(string label, int width) =>
 		(label + Separator + ' ').PadRight(width + 2);
 
-	protected static string FormatValue(object? value) =>
+	protected string FormatValue(object? value) =>
 		value switch
 			{
 				null                                       => "<null>",
 				bool b                                     => b.ToString().ToLower(),
 				string s when string.IsNullOrWhiteSpace(s) => "<empty>",
-				_                                          => value.ToString()!
+				_                                          => FormatWithCulture(value!)
 			};
 }

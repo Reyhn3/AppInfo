@@ -1,5 +1,4 @@
 using System.CodeDom.Compiler;
-using System.Diagnostics;
 using System.Text;
 
 
@@ -16,13 +15,13 @@ public class TextFileRenderer : UnstructuredTextRenderer
 
 //TODO: Let the user choose encoding
 		File.WriteAllText(path, output, Encoding.UTF8);
-		Debug.WriteLine($"Plain-text file written to {path}", Constants.LibraryName);
+		InternalLogger.Log("Plain-text file written to {0}", path);
 
 //TODO: Remove this
 		Console.WriteLine("Text file: {0}", path);
 	}
 
-	private static string BuildPlainString(IAppInfo info)
+	private string BuildPlainString(IAppInfo info)
 	{
 		var output = new StringWriter();
 		var writer = new IndentedTextWriter(output, Indentation);
@@ -46,7 +45,7 @@ public class TextFileRenderer : UnstructuredTextRenderer
 	}
 
 //TODO: Check if IsScalar (move to base and test)
-	private static string RenderValue(IEnumerable<object?>? value)
+	private string RenderValue(IEnumerable<object?>? value)
 	{
 		if (value == null)
 			return FormatValue(null);
