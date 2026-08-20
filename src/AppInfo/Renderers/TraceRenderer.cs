@@ -13,7 +13,7 @@ public class TraceRenderer : UnstructuredTextRenderer
 		Trace.WriteLine(output);
 	}
 
-	private static string BuildPlainString(IAppInfo info)
+	private string BuildPlainString(IAppInfo info)
 	{
 		var output = new StringWriter();
 		var writer = new IndentedTextWriter(output, Indentation);
@@ -36,7 +36,7 @@ public class TraceRenderer : UnstructuredTextRenderer
 		return lead + name + tail;
 	}
 
-	private static string RenderValue(IEnumerable<object?>? value)
+	private string RenderValue(IEnumerable<object?>? value)
 	{
 		if (value == null)
 		{

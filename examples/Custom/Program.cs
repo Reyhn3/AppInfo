@@ -20,7 +20,7 @@ AppInfoBuilder
 		("Feature AB 34", string.Empty))
 	.AddAssembly(typeof(IAppInfo).Assembly)
 	.AddAssembly(typeof(IAppInfo).Assembly, "Info", true)
-	.UseCulture(CultureInfo.CurrentCulture)
+	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
 	.WithOutput(output => output
 		.ToConsole() // Write directly to console
 		.ToTrace())  // Write to a trace listener (useful when running as a service)

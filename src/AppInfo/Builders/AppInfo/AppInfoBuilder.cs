@@ -16,6 +16,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 		new AppInfoBuilder
 			{
 				Extractors = [new StandardExtractor(Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly())],
+				Culture = CultureInfo.CurrentUICulture,
 				Output = AppInfoOutputBuilder.Default
 			};
 
@@ -25,7 +26,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
-		var appInfo = new AppInfo(fragments);
+		var appInfo = new AppInfo(Culture, fragments);
 
 		Output.Execute(appInfo);
 
