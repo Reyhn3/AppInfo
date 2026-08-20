@@ -43,7 +43,11 @@ public interface IAppInfoTimestamp
 
 public interface IAppInfoExtras
 {
+	IAppInfoBuilder AddExtras(string label, object? value);
 	IAppInfoBuilder AddExtras(params (string Label, object? Value)[] extras);
+
+	IAppInfoBuilder AddExtras(string label, Func<object?> valueFactory);
+	IAppInfoBuilder AddExtras(params (string Label, Func<object?> ValueFactory)[] extras);
 }
 
 

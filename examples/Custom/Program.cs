@@ -11,13 +11,16 @@ AppInfoBuilder
 	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
-//TODO: #4: Add labmda overloads
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
 		("Custom 2", true),
 		("Custom-three", short.MaxValue),
 		("Feature", "Disabled"),
 		("Feature AB 34", string.Empty))
+	.AddExtras(("Random", () => Random.Shared.Next()))
+	.AddExtras(
+			("Guid", () => Guid.NewGuid()),
+			("Double", () => Random.Shared.NextDouble()))
 	.AddAssembly(typeof(IAppInfo).Assembly)
 	.AddAssembly(typeof(IAppInfo).Assembly, "Info", true)
 	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
