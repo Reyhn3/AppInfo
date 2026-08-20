@@ -1,6 +1,3 @@
-using System.Diagnostics;
-
-
 namespace AppInfo.Extractors;
 
 
@@ -27,7 +24,7 @@ public abstract class Extractor : IExtractor
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Exception when trying to produce extractor:{Environment.NewLine}{ex}", Constants.LibraryName);
+			InternalLogger.Log("Exception when trying to produce extractor:{0}{1}", Environment.NewLine, ex);
 			extractors = [];
 			return false;
 		}
@@ -44,7 +41,7 @@ public abstract class Extractor : IExtractor
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Exception when trying to extract:{Environment.NewLine}{ex}", Constants.LibraryName);
+			InternalLogger.Log("Exception when trying to extract:{0}{1}", Environment.NewLine, ex);
 			fragment = null;
 			return false;
 		}

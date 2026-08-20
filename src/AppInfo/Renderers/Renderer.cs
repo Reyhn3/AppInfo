@@ -1,6 +1,3 @@
-using System.Diagnostics;
-
-
 namespace AppInfo.Renderers;
 
 
@@ -14,7 +11,7 @@ public abstract class Renderer : IRenderer
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Exception when rendering with {GetType().Name}:{Environment.NewLine}{ex}", Constants.LibraryName);
+			InternalLogger.Log("Exception when rendering with {1}:{0}{3}", Environment.NewLine, GetType().Name, ex);
 		}
 	}
 

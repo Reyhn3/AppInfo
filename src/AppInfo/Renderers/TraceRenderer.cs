@@ -1,5 +1,4 @@
 using System.CodeDom.Compiler;
-using System.Diagnostics;
 
 
 namespace AppInfo.Renderers;
@@ -10,11 +9,7 @@ public class TraceRenderer : UnstructuredTextRenderer
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 		var output = BuildPlainString(info);
-
-		// Note to self:
-		// Traces will not appear anywhere when running the IDE in Debug mode.
-		// To see the traces, run directly from command line.
-		Trace.WriteLine(output, Constants.LibraryName);
+		InternalLogger.Log(output);
 	}
 
 	private static string BuildPlainString(IAppInfo info)

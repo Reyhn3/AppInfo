@@ -1,5 +1,4 @@
 using System.CodeDom.Compiler;
-using System.Diagnostics;
 using System.Text;
 
 
@@ -16,7 +15,7 @@ public class TextFileRenderer : UnstructuredTextRenderer
 
 //TODO: Let the user choose encoding
 		File.WriteAllText(path, output, Encoding.UTF8);
-		Debug.WriteLine($"Plain-text file written to {path}", Constants.LibraryName);
+		InternalLogger.Log("Plain-text file written to {0}", path);
 
 //TODO: Remove this
 		Console.WriteLine("Text file: {0}", path);
