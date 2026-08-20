@@ -18,7 +18,7 @@ app.UseHttpsRedirection();
 // ! This code is only intended for demonstration purposes and should not be
 // ! used in production.
 app.MapGet("/", context =>
-//TODO: Consider adding a web renderer
+//TODO: #28: Consider adding a web renderer
 	context.Response.WriteAsJsonAsync(
 		context.RequestServices.GetRequiredService<IAppInfo>().Fragments));
 

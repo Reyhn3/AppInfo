@@ -11,6 +11,7 @@ AppInfoBuilder
 	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
+//TODO: #4: Add labmda overloads
 	.AddExtras(("Custom", "abc"))
 	.AddExtras(
 		("Custom 2", true),

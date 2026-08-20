@@ -27,9 +27,10 @@ AppInfoBuilder
 	.WithOutput(output => output
 		.ToConsole()                    // Write directly to console
 		.ToTrace()                      // Write to a trace listener (useful when running as a service)
-//TODO: Use the same file name for all file outputs (unless customized)
 		.ToLog(Log.Information)         // Demonstrates output can be directed to Serilog
 		.ToLog(msLogger.LogInformation) // Demonstrates output can be directed to ILogger
+//TODO: #30: Use the same file name for all file outputs (unless customized)
+//TODO: Add overload to specify file name
 		.ToTextFile()                   // Write to a plain text file (useful to include in bug reports)
 		.ToJsonFile())                  // Write to structured JSON file (useful for automated processing)
 	.Build();

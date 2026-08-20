@@ -32,7 +32,7 @@ public interface IAppOutputLog
 
 public interface IAppOutputTextFile
 {
-//TODO: Add filename
+//TODO: #30: Add filename
 //TODO: Add encoding
 //TODO: Add option to append, overwrite or create unique every time
 	IAppInfoOutputBuilder ToTextFile();
