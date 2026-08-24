@@ -3,10 +3,14 @@
 
 
 using AppInfo;
+using AppInfo.Definition;
+using AppInfo.Output;
 
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()
-	.Build();
+	.Build()
+	.WithDefaultOutput()
+	.Write();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(appInfo);

@@ -1,3 +1,4 @@
+using AppInfo.Output;
 using Shouldly;
 
 
@@ -14,5 +15,5 @@ public class AppInfoOutputBuilderTests
 
 	[Test]
 	public void Build_shall_create_an_output_instance() =>
-		_sut.Build().ShouldNotBeNull().ShouldBeOfType<global::AppInfo.AppOutput>();
+		_sut.Write().ShouldNotBeNull().ShouldBeOfType<global::AppInfo.AppInfo>();
 }
