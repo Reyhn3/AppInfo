@@ -11,6 +11,9 @@ public interface IAppInfoOutputBuilder
 	IAppInfoOutputBuilder AddRenderer<T>(T renderer)
 		where T : IRenderer;
 
+	IAppInfoOutputBuilder AddRenderer<T>()
+		where T : IRenderer, new();
+
 	IAppInfo Write();
 	Task<IAppInfo> WriteAsync(CancellationToken cancellationToken = default);
 }

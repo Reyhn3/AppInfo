@@ -12,5 +12,8 @@ public interface IAppInfoBuilder
 	IAppInfoBuilder AddExtractor<T>(T extractor)
 		where T : IExtractor;
 
+	IAppInfoBuilder AddExtractor<T>()
+		where T : IExtractor, new();
+
 	IAppInfo Build();
 }

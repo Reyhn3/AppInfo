@@ -44,6 +44,22 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		return this;
 	}
 
+	public IAppInfoOutputBuilder AddRenderer<T>()
+		where T : IRenderer, new()
+	{
+		try
+		{
+			var renderer = new T();
+			AddRenderer(renderer);
+			return this;
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Exception caught when trying to create and add renderer of type {typeof(T)}: {ex}");
+			return this;
+		}
+	}
+
 	public IAppInfo Write() =>
 		WriteAsync(CancellationToken.None).GetAwaiter().GetResult();
 

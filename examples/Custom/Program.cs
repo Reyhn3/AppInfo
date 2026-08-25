@@ -23,7 +23,7 @@ AppInfoBuilder
 	.AddAssembly(typeof(IAppInfo).Assembly)
 	.AddAssembly(typeof(IAppInfo).Assembly, "Info", true)
 	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
-	.Build()
+	.Build() // This builds the IAppInfo; the following steps configure and execute output
 	.WithOutput(output => output
 		.ToConsole() // Write directly to console
 		.ToTrace())  // Write to a trace listener (useful when running as a service)

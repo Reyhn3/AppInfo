@@ -5,7 +5,7 @@ using System.Reflection;
 namespace AppInfo.Extractors;
 
 
-internal class StandardExtractor(Assembly assembly)
+public class StandardExtractor(Assembly assembly)
 	: Extractor
 {
 	private readonly Assembly _assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));

@@ -20,4 +20,11 @@ public sealed class AppInfo : IAppInfo
 
 	public CultureInfo Culture { get; }
 	public IEnumerable<Fragment> Fragments => _fragments.AsEnumerable();
+
+	public static IAppInfo BuildAndOutputDefault() =>
+		AppInfoBuilder
+			.CreateDefaultBuilder()
+			.Build()
+			.WithDefaultOutput()
+			.Write();
 }

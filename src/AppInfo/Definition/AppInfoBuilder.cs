@@ -11,10 +11,6 @@ public class AppInfoBuilder : IAppInfoBuilder
 	private CultureInfo _culture = CultureInfo.CurrentUICulture;
 	private readonly List<IExtractor> _extractors = new();
 
-	public static IAppInfoBuilder CreateDefaultBuilder() =>
-		new AppInfoBuilder()
-			.AddStandard();
-
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
 	{
 		_culture = cultureInfo;
@@ -39,6 +35,21 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 		_extractors.Add(extractor);
 		return this;
+	}
+
+	public IAppInfoBuilder AddExtractor<T>()
+		where T : IExtractor, new()
+	{
+		try
+		{
+			var extractor = new T();
+			return AddExtractor(extractor);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Exception caught when trying to create and add extractor of {typeof(T)}: {ex}");
+			return this;
+		}
 	}
 
 	public IAppInfo Build()
