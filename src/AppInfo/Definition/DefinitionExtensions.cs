@@ -9,12 +9,21 @@ public static class DefinitionExtensions
 {
 	extension(IAppInfoBuilder builder)
 	{
+		public IAppInfo BuildAndWriteToDefault()
+		{
+			var appInfo = builder.Build();
+
+			var outputBuilder = Default.DefaultOutputBuilder(appInfo);
+			outputBuilder.Write();
+
+			return appInfo;
+		}
+
 		public IAppInfo BuildAndWriteTo(Action<IAppInfoOutputBuilder> configure)
 		{
 			var appInfo = builder.Build();
 
-			var outputBuilder = new AppInfoOutputBuilder();
-			outputBuilder.UseAppInfo(appInfo);
+			var outputBuilder = Default.DefaultOutputBuilder(appInfo);
 			configure(outputBuilder);
 			outputBuilder.Write();
 

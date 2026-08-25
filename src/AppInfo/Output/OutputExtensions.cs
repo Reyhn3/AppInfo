@@ -8,19 +8,13 @@ public static class OutputExtensions
 {
 	extension(IAppInfo appInfo)
 	{
-		public IAppInfoOutputBuilder WithDefaultOutput()
-		{
-			var builder = new AppInfoOutputBuilder();
-			builder.UseAppInfo(appInfo);
-			builder.ToConsole();
-			return builder;
-		}
+		public IAppInfoOutputBuilder WithDefaultOutput() =>
+			Default.DefaultOutputBuilder(appInfo);
 
 		public IAppInfoOutputBuilder WithOutput(
 			Action<IAppInfoOutputBuilder> configure)
 		{
-			var builder = new AppInfoOutputBuilder();
-			builder.UseAppInfo(appInfo);
+			var builder = Default.DefaultOutputBuilder(appInfo);
 			configure(builder);
 			return builder;
 		}
