@@ -3,7 +3,7 @@ using System.Globalization;
 using AppInfo.Renderers;
 
 
-namespace AppInfo.Output;
+namespace AppInfo;
 
 
 public class AppInfoOutputBuilder : IAppInfoOutputBuilder
@@ -11,35 +11,37 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 	private IAppInfo? _appInfo;
 	private readonly List<IRenderer> _renderers = new();
 
-	public void UseAppInfo(IAppInfo appInfo)
+	public IAppInfoOutputBuilder UseAppInfo(IAppInfo appInfo)
 	{
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (appInfo == null)
 		{
 			Debug.WriteLine("Attempted to use a null appInfo");
-			return;
+			return this;
 		}
 
 		_appInfo = appInfo;
+		return this;
 	}
 
-	public void AddRenderer<T>(T renderer)
+	public IAppInfoOutputBuilder AddRenderer<T>(T renderer)
 		where T : IRenderer
 	{
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (renderer == null)
 		{
 			Debug.WriteLine("Attempted to add a null renderer");
-			return;
+			return this;
 		}
 
 		if (_renderers.Contains(renderer))
 		{
 			Debug.WriteLine("Attempted to add duplicate renderer");
-			return;
+			return this;
 		}
 
 		_renderers.Add(renderer);
+		return this;
 	}
 
 	public IAppInfo Write() =>

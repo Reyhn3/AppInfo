@@ -1,14 +1,14 @@
 using AppInfo.Renderers;
 
 
-namespace AppInfo.Output;
+namespace AppInfo;
 
 
 public interface IAppInfoOutputBuilder
 {
-	void UseAppInfo(IAppInfo appInfo);
+	IAppInfoOutputBuilder UseAppInfo(IAppInfo appInfo);
 
-	void AddRenderer<T>(T renderer)
+	IAppInfoOutputBuilder AddRenderer<T>(T renderer)
 		where T : IRenderer;
 
 	IAppInfo Write();

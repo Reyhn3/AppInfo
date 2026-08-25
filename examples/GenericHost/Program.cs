@@ -3,8 +3,6 @@
 
 
 using AppInfo;
-using AppInfo.Definition;
-using AppInfo.Output;
 using GenericHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

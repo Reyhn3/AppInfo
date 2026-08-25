@@ -2,8 +2,7 @@
 // both during startup and resolved at a later time.
 
 
-using AppInfo.Definition;
-using AppInfo.Output;
+using AppInfo;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,8 +1,7 @@
 ﻿// This demonstrates the most basic, non-intrusive usage of AppInfo.
 
 
-using AppInfo.Definition;
-using AppInfo.Output;
+using AppInfo;
 
 //TODO: Add simpler extension
 AppInfoBuilder

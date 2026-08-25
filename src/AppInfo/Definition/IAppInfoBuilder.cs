@@ -2,8 +2,7 @@ using System.Globalization;
 using AppInfo.Extractors;
 
 
-//TODO: Move to base namespace (and friends)
-namespace AppInfo.Definition;
+namespace AppInfo;
 
 
 public interface IAppInfoBuilder

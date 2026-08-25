@@ -1,4 +1,3 @@
-using AppInfo.Definition;
 using Shouldly;
 
 

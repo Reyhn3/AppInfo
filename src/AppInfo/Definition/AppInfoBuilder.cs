@@ -3,7 +3,7 @@ using System.Globalization;
 using AppInfo.Extractors;
 
 
-namespace AppInfo.Definition;
+namespace AppInfo;
 
 
 public class AppInfoBuilder : IAppInfoBuilder

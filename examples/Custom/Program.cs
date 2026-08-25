@@ -4,8 +4,6 @@
 
 using System.Globalization;
 using AppInfo;
-using AppInfo.Definition;
-using AppInfo.Output;
 
 AppInfoBuilder
 	.CreateDefaultBuilder()

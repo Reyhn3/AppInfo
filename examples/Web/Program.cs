@@ -3,8 +3,6 @@
 
 
 using AppInfo;
-using AppInfo.Definition;
-using AppInfo.Output;
 
 var appInfo = AppInfoBuilder
 	.CreateDefaultBuilder()

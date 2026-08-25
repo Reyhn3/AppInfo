@@ -3,8 +3,6 @@
 
 
 using AppInfo;
-using AppInfo.Definition;
-using AppInfo.Output;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
