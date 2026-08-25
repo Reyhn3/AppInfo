@@ -5,8 +5,8 @@
 using System.Globalization;
 using AppInfo;
 
-AppInfoBuilder
-	.CreateDefaultBuilder()
+AppInfo.Create
+	.DefaultBuilder()
 //TODO: Create overload with int/long
 	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)

@@ -22,8 +22,8 @@ var msLogger = LoggerFactory
 	.CreateLogger<Program>();
 
 // Configure and create app info
-AppInfoBuilder
-	.CreateDefaultBuilder()
+AppInfo.Create
+	.DefaultBuilder()
 	.Build()
 	.WithOutput(output => output
 		.ToConsole()                    // Write directly to console

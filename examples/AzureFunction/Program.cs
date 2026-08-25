@@ -7,8 +7,8 @@ using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var appInfo = AppInfoBuilder
-	.CreateDefaultBuilder()
+var appInfo = AppInfo.Create
+	.DefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

@@ -4,8 +4,8 @@
 
 using AppInfo;
 
-var appInfo = AppInfoBuilder
-	.CreateDefaultBuilder()
+var appInfo = AppInfo.Create
+	.DefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

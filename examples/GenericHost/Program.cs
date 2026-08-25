@@ -10,8 +10,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Formatting.Compact;
 
-var appInfo = AppInfoBuilder
-	.CreateDefaultBuilder()
+var appInfo = AppInfo.Create
+	.DefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

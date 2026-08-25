@@ -49,8 +49,8 @@ Console.WriteLine("--------------------------------------------------");
 // but easier.
 //
 
-AppInfoBuilder
-	.CreateDefaultBuilder() // This adds the standard extractor
+AppInfo.Create
+	.DefaultBuilder() // This adds the standard extractor
 	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
 	.AddTimestamp()
 	.BuildAndWriteTo(output => output
