@@ -16,16 +16,13 @@ Add the package to the application project.
 Create an AppInfo in the `Main` method:
 
 ```csharp
-using AppInfo;
-
-AppInfoBuilder
-	.CreateDefaultBuilder()
-	.Build();
+AppInfo.Default.BuildAndOutput();
 ```
 
-Ideally, this should be done at or near the top of the application entry point; as early as possible in the application startup.
+> [!TIP]
+> Ideally, this should be done **at or near** the top of the application entry point; as early as possible in the application startup in order to provide as much value as possible.
 
-Optionally configure the `IAppInfo` before building it.
+**Optionally** configure the `IAppInfo` before building it.
 
 When starting the application, this library will output detailed information about the hosting application:
 
@@ -47,9 +44,24 @@ Application created with context:
 ```
 
 
-# Configuration
+## Examples
 
-The [examples](https://github.com/Reyhn3/AppInfo/tree/main/examples) folder contains runnable demo projects for different types of host applications and usages.
+The [examples](https://github.com/Reyhn3/AppInfo/tree/main/examples) folder contains runnable demo projects for different types of host applications and usages:
+
+* [Basic](https://github.com/Reyhn3/AppInfo/tree/main/examples/Basic)
+<br/> The most rudimentary usage example.
+* [Custom](https://github.com/Reyhn3/AppInfo/tree/main/examples/Custom)
+<br/> Demonstrates how to customize the information and output.
+* [Manual](https://github.com/Reyhn3/AppInfo/tree/main/examples/Manual)
+<br/> Compares manual configuration vs fluent syntax.
+* [Generic Host](https://github.com/Reyhn3/AppInfo/tree/main/examples/GenericHost)
+<br/> Demonstrates integration with the [Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder).
+* [Logging](https://github.com/Reyhn3/AppInfo/tree/main/examples/Logging)
+<br/> Shows how simple it is to output to the logger of your choice.
+* [Web](https://github.com/Reyhn3/AppInfo/tree/main/examples/Web)
+<br/> Demonstrates the integration with an ASP.NET Core Web Host, and how the `IAppInfo` instance can be used in a request.
+* [Azure Functions](https://github.com/Reyhn3/AppInfo/tree/main/examples/AzureFunction)
+<br/> Demonstrates the integration with an Azure Functions app host.
 
 
 # Features
@@ -71,3 +83,12 @@ The [examples](https://github.com/Reyhn3/AppInfo/tree/main/examples) folder cont
 
 * **Configurable**
 <br/> Configure where and how to output the information.
+
+
+# Design
+
+There are two phases to this library: **information extraction** and **outputting**. The information extraction phase is responsible for gathering all the information about the application and its running conditions. The outputting phase is responsible for rendering the information toward the configured targets.
+
+Gathering information is done by using a builder pattern. The `AppInfoBuilder` class collect the `IExtractor` objects that can be added using fluent convenience methods. These are then used to assemble the information into a single `AppInfo` object that can be used by the outputting phase.
+
+Outputting is also done by using a builder pattern. The `AppInfoOutputBuilder` class collect the `IOutputter` objects that can be added using fluent convenience methods. When calling the `Write` method, the `AppInfoOutputBuilder` will use the `IOutputter` objects to render the information toward the configured targets.
