@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>manual</AssemblyName>
+    <Product>AppInfo Demo - Manual</Product>
+    <Description>Demonstrates manually vs fluently configuring AppInfo</Description>
+    <RootNamespace>Manual</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AppInfo\AppInfo.csproj" />
+  </ItemGroup>
+
+</Project>
