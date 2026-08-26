@@ -51,24 +51,24 @@ public static class DefinitionExtensions
 			builder.AddExtractor(
 				new TimestampExtractor());
 
-		public IAppInfoBuilder AddExtras(
+		public IAppInfoBuilder AddExtra(
 			string label,
 			object? value) =>
 			builder.AddExtractor(
 				new ExtrasExtractor((label, value)));
 
-		public IAppInfoBuilder AddExtras(
-			params (string Label, object? Value)[] extras) =>
-			builder.AddExtractor(
-				new ExtrasExtractor(extras));
-
-		public IAppInfoBuilder AddExtras(
+		public IAppInfoBuilder AddExtra(
 			string label,
 			Func<object?> valueFactory) =>
 			builder.AddExtractor(
 				new ExtrasExtractor((label, valueFactory)));
 
-		public IAppInfoBuilder AddExtras(
+		public IAppInfoBuilder AddExtra(
+			params (string Label, object? Value)[] extras) =>
+			builder.AddExtractor(
+				new ExtrasExtractor(extras));
+
+		public IAppInfoBuilder AddExtra(
 			params (string Label, Func<object?> ValueFactory)[] extras) =>
 			builder.AddExtractor(
 				new ExtrasExtractor(extras));

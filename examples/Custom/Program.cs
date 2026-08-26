@@ -11,13 +11,13 @@ AppInfo
 	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)
 	.AddTimestamp()
-	.AddExtras(("Custom", "abc"))
-	.AddExtras(
+	.AddExtra("Custom", "abc")
+	.AddExtra(
 		("Custom 2", true),
 		("Custom-three", short.MaxValue),
 		("Feature AB 34", string.Empty))
-	.AddExtras(("Random", () => Random.Shared.Next()))
-	.AddExtras(
+	.AddExtra(("Random", () => Random.Shared.Next()))
+	.AddExtra(
 		("Guid", () => Guid.NewGuid()),
 		("Enabled", () => true))
 	.AddAssembly(typeof(IAppInfo).Assembly)
