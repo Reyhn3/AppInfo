@@ -16,7 +16,9 @@ Add the package to the application project.
 Create an AppInfo in the `Main` method:
 
 ```csharp
-AppInfo.Default.BuildAndOutput();
+using AppInformation;
+
+AppInfo.BuildAndOutputDefault();
 ```
 
 > [!TIP]
