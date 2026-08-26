@@ -2,13 +2,13 @@
 // both during startup and resolved at a later time.
 
 
-using AppInfo;
+using AppInformation;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var appInfo = AppInfo.Create
-	.DefaultBuilder()
+var appInfo = AppInfo
+	.CreateDefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

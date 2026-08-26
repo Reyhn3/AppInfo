@@ -5,6 +5,7 @@
     <AssemblyName>AppInfo</AssemblyName>
     <Product>AppInfo</Product>
     <Description>Collects, displays and optionally saves information about the host application during startup.</Description>
+    <RootNamespace>AppInformation</RootNamespace>
   </PropertyGroup>
 
 </Project>

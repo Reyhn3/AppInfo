@@ -2,7 +2,7 @@
 // APIs. In this example, both Microsoft and Serilog are used.
 
 
-using AppInfo;
+using AppInformation;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
@@ -22,8 +22,8 @@ var msLogger = LoggerFactory
 	.CreateLogger<Program>();
 
 // Configure and create app info
-AppInfo.Create
-	.DefaultBuilder()
+AppInfo
+	.CreateDefaultBuilder()
 	.Build()
 	.WithOutput(output => output
 		.ToConsole()                    // Write directly to console

@@ -1,4 +1,4 @@
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public abstract class UnstructuredTextRenderer : Renderer

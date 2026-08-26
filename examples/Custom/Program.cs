@@ -3,10 +3,10 @@
 
 
 using System.Globalization;
-using AppInfo;
+using AppInformation;
 
-AppInfo.Create
-	.DefaultBuilder()
+AppInfo
+	.CreateDefaultBuilder()
 //TODO: Create overload with int/long
 	.WithIdentities("123456")
 //TODO: #8: Add WithNames (service name, instance name)

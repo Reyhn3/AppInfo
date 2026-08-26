@@ -1,4 +1,4 @@
-namespace AppInfo;
+namespace AppInformation;
 
 
 public static class Constants

@@ -1,8 +1,8 @@
 using System.Reflection;
-using AppInfo.Extractors;
+using AppInformation.Extractors;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public static class DefinitionExtensions
@@ -13,7 +13,7 @@ public static class DefinitionExtensions
 		{
 			var appInfo = builder.Build();
 
-			var outputBuilder = Default.DefaultOutputBuilder(appInfo);
+			var outputBuilder = AppInfo.CreateDefaultOutputBuilder(appInfo);
 			outputBuilder.Write();
 
 			return appInfo;
@@ -23,7 +23,7 @@ public static class DefinitionExtensions
 		{
 			var appInfo = builder.Build();
 
-			var outputBuilder = Default.DefaultOutputBuilder(appInfo);
+			var outputBuilder = AppInfo.CreateDefaultOutputBuilder(appInfo);
 			configure(outputBuilder);
 			outputBuilder.Write();
 

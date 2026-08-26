@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using System.Globalization;
-using AppInfo.Renderers;
+using AppInformation.Renderers;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public class AppInfoOutputBuilder : IAppInfoOutputBuilder

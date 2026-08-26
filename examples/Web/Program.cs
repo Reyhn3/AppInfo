@@ -2,10 +2,10 @@
 // application at startup and also provide it when requested.
 
 
-using AppInfo;
+using AppInformation;
 
-var appInfo = AppInfo.Create
-	.DefaultBuilder()
+var appInfo = AppInfo
+	.CreateDefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

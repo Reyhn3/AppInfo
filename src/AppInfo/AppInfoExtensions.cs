@@ -1,7 +1,7 @@
-using AppInfo.Extractors;
+using AppInformation.Extractors;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public static class AppInfoExtensions

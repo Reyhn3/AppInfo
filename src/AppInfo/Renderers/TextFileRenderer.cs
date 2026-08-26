@@ -1,8 +1,9 @@
 using System.CodeDom.Compiler;
 using System.Text;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public class TextFileRenderer : UnstructuredTextRenderer

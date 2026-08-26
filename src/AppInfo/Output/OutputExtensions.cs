@@ -1,7 +1,7 @@
-using AppInfo.Renderers;
+using AppInformation.Renderers;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public static class OutputExtensions
@@ -9,12 +9,12 @@ public static class OutputExtensions
 	extension(IAppInfo appInfo)
 	{
 		public IAppInfoOutputBuilder WithDefaultOutput() =>
-			Default.DefaultOutputBuilder(appInfo);
+			AppInfo.CreateDefaultOutputBuilder(appInfo);
 
 		public IAppInfoOutputBuilder WithOutput(
 			Action<IAppInfoOutputBuilder> configure)
 		{
-			var builder = Default.DefaultOutputBuilder(appInfo);
+			var builder = AppInfo.CreateDefaultOutputBuilder(appInfo);
 			configure(builder);
 			return builder;
 		}

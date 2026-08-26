@@ -1,7 +1,8 @@
 using System.Reflection;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Extractors;
+namespace AppInformation.Extractors;
 
 
 public class AssemblyExtractor(Assembly assembly, string? shortName = null, bool stripSourceRevision = false)

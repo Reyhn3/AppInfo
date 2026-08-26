@@ -1,4 +1,4 @@
-using AppInfo;
+using AppInformation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;

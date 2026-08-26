@@ -1,4 +1,4 @@
-namespace AppInfo.Helpers;
+namespace AppInformation.Helpers;
 
 
 internal static class EnvironmentHelper

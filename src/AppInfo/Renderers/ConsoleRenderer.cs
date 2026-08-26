@@ -1,7 +1,7 @@
 using static System.Console;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public class ConsoleRenderer : UnstructuredTextRenderer

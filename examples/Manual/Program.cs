@@ -3,9 +3,9 @@
 
 using System.Globalization;
 using System.Reflection;
-using AppInfo;
-using AppInfo.Extractors;
-using AppInfo.Renderers;
+using AppInformation;
+using AppInformation.Extractors;
+using AppInformation.Renderers;
 
 
 //
@@ -49,8 +49,8 @@ Console.WriteLine("--------------------------------------------------");
 // but easier.
 //
 
-AppInfo.Create
-	.DefaultBuilder() // This adds the standard extractor
+AppInfo
+	.CreateDefaultBuilder() // This adds the standard extractor
 	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
 	.AddTimestamp()
 	.BuildAndWriteTo(output => output

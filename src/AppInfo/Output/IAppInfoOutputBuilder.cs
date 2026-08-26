@@ -1,7 +1,7 @@
-using AppInfo.Renderers;
+using AppInformation.Renderers;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public interface IAppInfoOutputBuilder

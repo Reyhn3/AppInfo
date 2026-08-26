@@ -1,6 +1,8 @@
 ﻿// This demonstrates the most basic, non-intrusive usage of AppInfo.
 
 
-AppInfo.Default.BuildAndOutput();
+using AppInformation;
+
+AppInfo.BuildAndOutputDefault();
 
 Console.WriteLine("Application has started");

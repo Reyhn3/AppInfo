@@ -1,8 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public class JsonFileRenderer : Renderer

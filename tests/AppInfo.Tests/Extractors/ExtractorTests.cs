@@ -1,8 +1,7 @@
-using AppInfo.Extractors;
-using Shouldly;
+using AppInformation.Extractors;
 
 
-namespace AppInfo.Tests.Extractors;
+namespace AppInformation.Tests.Extractors;
 
 
 public class ExtractorTests

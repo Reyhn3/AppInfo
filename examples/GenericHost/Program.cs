@@ -2,7 +2,7 @@
 // https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder
 
 
-using AppInfo;
+using AppInformation;
 using GenericHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,8 +10,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Formatting.Compact;
 
-var appInfo = AppInfo.Create
-	.DefaultBuilder()
+var appInfo = AppInfo
+	.CreateDefaultBuilder()
 	.Build()
 	.WithDefaultOutput()
 	.Write();

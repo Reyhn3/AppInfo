@@ -1,4 +1,4 @@
-namespace AppInfo.Extractors;
+namespace AppInformation.Extractors;
 
 
 public class ExtrasExtractor : Extractor

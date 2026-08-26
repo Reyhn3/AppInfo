@@ -1,7 +1,4 @@
-using Shouldly;
-
-
-namespace AppInfo.Tests.Fragments;
+namespace AppInformation.Tests.Fragments;
 
 
 public class FragmentTests

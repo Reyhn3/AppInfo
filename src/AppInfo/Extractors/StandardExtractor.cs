@@ -1,8 +1,9 @@
 using System.Globalization;
 using System.Reflection;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Extractors;
+namespace AppInformation.Extractors;
 
 
 public class StandardExtractor(Assembly assembly)
