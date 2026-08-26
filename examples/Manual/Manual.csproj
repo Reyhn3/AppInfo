@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>manual</AssemblyName>
     <Product>AppInfo Demo - Manual</Product>
-    <Description>Demonstrates manually vs fluently configuring AppInfo</Description>
+    <Description>Demonstrates the manual steps in configuring AppInfo</Description>
     <RootNamespace>Manual</RootNamespace>
   </PropertyGroup>
 

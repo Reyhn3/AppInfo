@@ -1,5 +1,8 @@
-﻿// This demonstrates the manual and the fluent way to
+﻿// This demonstrates the manual way to
 // configure and execute AppInfo.
+// It clearly demonstrates that extracting information and
+// rendering are two separate concerns. Outputting the info
+// is optional.
 
 using System.Globalization;
 using System.Reflection;
@@ -11,9 +14,6 @@ using AppInformation.Renderers;
 //
 // MANUAL
 // This is the manual way to configure and execute AppInfo.
-// This clearly demonstrates that extracting information and
-// rendering are two separate concerns. Outputting the info
-// is optional.
 //
 
 // First, define what information to include
@@ -33,25 +33,4 @@ appInfoOutputBuilder.AddRenderer<ConsoleRenderer>();
 // Fourth, execute the output
 appInfoOutputBuilder.Write();
 
-
-//
-//
-//
-Console.WriteLine("--------------------------------------------------");
-//
-//
-//
-
-
-//
-// FLUENT
-// This does the same way as the manual way,
-// but easier.
-//
-
-AppInfo
-	.CreateDefaultBuilder() // This adds the standard extractor
-	.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"))
-	.AddTimestamp()
-	.BuildAndWriteTo(output => output
-		.ToConsole());
+Console.WriteLine("Application has started");

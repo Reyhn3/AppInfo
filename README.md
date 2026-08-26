@@ -55,7 +55,9 @@ The [examples](https://github.com/Reyhn3/AppInfo/tree/main/examples) folder cont
 * [Custom](https://github.com/Reyhn3/AppInfo/tree/main/examples/Custom)
 <br/> Demonstrates how to customize the information and output.
 * [Manual](https://github.com/Reyhn3/AppInfo/tree/main/examples/Manual)
-<br/> Compares manual configuration vs fluent syntax.
+<br/> AppInfo can be constructed using traditional syntax, which demonstrates that extracting information and outputting it are two separate steps.
+* [Fluent](https://github.com/Reyhn3/AppInfo/tree/main/examples/Fluent)
+<br/> Demonstrates the different ways to use the fluent syntax and convenience methods.
 * [Generic Host](https://github.com/Reyhn3/AppInfo/tree/main/examples/GenericHost)
 <br/> Demonstrates integration with the [Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder).
 * [Logging](https://github.com/Reyhn3/AppInfo/tree/main/examples/Logging)
