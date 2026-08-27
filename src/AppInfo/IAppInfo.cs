@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
 public interface IAppInfo

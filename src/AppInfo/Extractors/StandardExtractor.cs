@@ -1,11 +1,12 @@
 using System.Globalization;
 using System.Reflection;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Extractors;
+namespace AppInformation.Extractors;
 
 
-internal class StandardExtractor(Assembly assembly)
+public class StandardExtractor(Assembly assembly)
 	: Extractor
 {
 	private readonly Assembly _assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));

@@ -2,10 +2,10 @@ using System.Collections.Immutable;
 using System.Globalization;
 
 
-namespace AppInfo;
+namespace AppInformation;
 
 
-public sealed class AppInfo : IAppInfo
+public partial class AppInfo : IAppInfo
 {
 	private readonly ImmutableArray<Fragment> _fragments;
 

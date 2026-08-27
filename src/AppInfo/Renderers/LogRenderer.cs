@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public class LogRenderer(Action<string, object?[]> logger) : Renderer

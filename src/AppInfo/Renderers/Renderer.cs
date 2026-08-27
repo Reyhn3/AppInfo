@@ -1,7 +1,8 @@
 using System.Globalization;
+using AppInformation.Helpers;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public abstract class Renderer : IRenderer

@@ -2,11 +2,9 @@
 // application at startup and also provide it when requested.
 
 
-using AppInfo;
+using AppInformation;
 
-var appInfo = AppInfoBuilder
-	.CreateDefaultBuilder()
-	.Build();
+var appInfo = AppInfo.BuildAndOutputDefault();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(appInfo);

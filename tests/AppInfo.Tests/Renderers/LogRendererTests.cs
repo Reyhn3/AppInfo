@@ -1,9 +1,7 @@
-using AppInfo.Renderers;
-using FakeItEasy;
-using Shouldly;
+using AppInformation.Renderers;
 
 
-namespace AppInfo.Tests.Renderers;
+namespace AppInformation.Tests.Renderers;
 
 
 public class LogRendererTests

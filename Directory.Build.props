@@ -5,6 +5,7 @@
     <Copyright>Copyright © Björn Bengtsson 2024</Copyright>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <LangVersion>latest</LangVersion>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

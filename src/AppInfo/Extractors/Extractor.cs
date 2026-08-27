@@ -1,4 +1,7 @@
-namespace AppInfo.Extractors;
+using AppInformation.Helpers;
+
+
+namespace AppInformation.Extractors;
 
 
 public abstract class Extractor : IExtractor

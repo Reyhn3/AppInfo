@@ -1,4 +1,4 @@
-namespace AppInfo.Tests;
+namespace AppInformation.Tests;
 
 
 internal static class Helpers

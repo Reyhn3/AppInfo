@@ -2,7 +2,7 @@ using System.CodeDom.Compiler;
 using System.Diagnostics;
 
 
-namespace AppInfo.Renderers;
+namespace AppInformation.Renderers;
 
 
 public class TraceRenderer : UnstructuredTextRenderer
