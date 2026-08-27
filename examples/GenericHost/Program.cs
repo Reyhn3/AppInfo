@@ -11,10 +11,7 @@ using Serilog;
 using Serilog.Formatting.Compact;
 
 var appInfo = AppInfo
-	.CreateDefaultBuilder()
-	.Build()
-	.WithDefaultOutput()
-	.Write();
+	.BuildAndOutputDefault();
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddSingleton(appInfo);

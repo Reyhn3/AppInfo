@@ -7,14 +7,9 @@ using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var appInfo = AppInfo
-	.CreateDefaultBuilder()
-	.Build()
-	.WithDefaultOutput()
-	.Write();
+var appInfo = AppInfo.BuildAndOutputDefault();
 
 var builder = FunctionsApplication.CreateBuilder(args);
-
 builder.ConfigureFunctionsWebApplication();
 builder.Services.AddSingleton(appInfo);
 

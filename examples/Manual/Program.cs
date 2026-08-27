@@ -4,6 +4,7 @@
 // rendering are two separate concerns. Outputting the info
 // is optional.
 
+
 using System.Globalization;
 using System.Reflection;
 using AppInformation;

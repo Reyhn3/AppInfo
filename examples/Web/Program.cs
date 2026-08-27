@@ -4,11 +4,7 @@
 
 using AppInformation;
 
-var appInfo = AppInfo
-	.CreateDefaultBuilder()
-	.Build()
-	.WithDefaultOutput()
-	.Write();
+var appInfo = AppInfo.BuildAndOutputDefault();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(appInfo);
