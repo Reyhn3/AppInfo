@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Reflection;
 using AppInformation.Extractors;
 
 
@@ -8,11 +7,6 @@ namespace AppInformation.Tests;
 
 public class AppInfo_StaticConvenienceMembersTests
 {
-	private static readonly Type s_type = typeof(AppInfoBuilder);
-	private static readonly FieldInfo s_culture = s_type.GetField("_culture", BindingFlags.Instance | BindingFlags.NonPublic)!;
-	private static readonly FieldInfo s_extractors = s_type.GetField("_extractors", BindingFlags.Instance | BindingFlags.NonPublic)!;
-
-
 	[Test]
 	public void DefaultBuilder_shall_return_new_builder() =>
 		AppInfo.CreateDefaultBuilder()
@@ -20,14 +14,14 @@ public class AppInfo_StaticConvenienceMembersTests
 
 	[Test]
 	public void DefaultBuilder_shall_set_culture_to_CurrentUICulture() =>
-		s_culture.GetValue(AppInfo.CreateDefaultBuilder())
+		Helpers.GetFieldValue(AppInfo.CreateDefaultBuilder(), "_culture")
 			.ShouldNotBeNull()
 			.ShouldBe(CultureInfo.CurrentUICulture);
 
 	[Test]
 	public void DefaultBuilder_shall_add_standard_extractor()
 	{
-		var result = s_extractors.GetValue(AppInfo.CreateDefaultBuilder());
+		var result = Helpers.GetFieldValue(AppInfo.CreateDefaultBuilder(), "_extractors");
 		result.ShouldNotBeNull();
 		result.ShouldBeOfType<List<IExtractor>>();
 

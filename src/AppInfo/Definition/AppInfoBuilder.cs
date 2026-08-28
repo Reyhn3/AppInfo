@@ -13,6 +13,9 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
 	{
+		if (cultureInfo == null)
+			return this;
+
 		_culture = cultureInfo;
 		return this;
 	}

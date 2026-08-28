@@ -1,3 +1,6 @@
+using System.Reflection;
+
+
 namespace AppInformation.Tests;
 
 
@@ -33,4 +36,22 @@ internal static class Helpers
 		value == null
 			? "<null>"
 			: $"{value} ({value.GetType().Name})";
+
+	public static object? GetFieldValue(object obj, string fieldName)
+	{
+		var type = obj.GetType();
+		var field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+		if (field == null)
+			throw new ArgumentException($"Field '{fieldName}' not found in type '{type.Name}'");
+
+		return field?.GetValue(obj);
+	}
+
+	public static T? GetFieldValue<T>(object obj, string fieldName)
+	{
+		var type = obj.GetType();
+		var field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+		return (T?)field?.GetValue(obj);
+	}
 }
