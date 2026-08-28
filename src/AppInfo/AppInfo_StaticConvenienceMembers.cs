@@ -17,7 +17,7 @@ public partial class AppInfo
 
 	public static IAppInfoBuilder CreateDefaultBuilder() =>
 		new AppInfoBuilder()
-			.UseCulture(CultureInfo.CurrentUICulture)
+			.UseCulture(Constants.DefaultCulture)
 			.AddStandard();
 
 	internal static IAppInfoOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>

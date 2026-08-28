@@ -8,7 +8,7 @@ namespace AppInformation;
 
 public class AppInfoBuilder : IAppInfoBuilder
 {
-	private CultureInfo _culture = CultureInfo.CurrentUICulture;
+	private CultureInfo _culture = Constants.DefaultCulture;
 	private readonly List<IExtractor> _extractors = new();
 
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)

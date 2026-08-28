@@ -68,7 +68,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		if (_appInfo == null)
 		{
 			Debug.WriteLine($"Attempted to call {nameof(WriteAsync)} without calling {nameof(UseAppInfo)}");
-			return Task.FromResult<IAppInfo>(new AppInfo(CultureInfo.CurrentUICulture, Enumerable.Empty<Fragment>()));
+			return Task.FromResult<IAppInfo>(new AppInfo(Constants.DefaultCulture, Enumerable.Empty<Fragment>()));
 		}
 
 //TODO: Make async
