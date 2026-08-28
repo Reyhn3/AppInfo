@@ -57,12 +57,24 @@ public class AppInfoBuilder : IAppInfoBuilder
 
 	public IAppInfo Build()
 	{
-//TODO: try-catch
-		var fragments = _extractors.SelectMany(e => e.Extract()).ToArray();
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
+		var fragments = _extractors.SelectMany(SafelyExtract).ToArray();
 		var appInfo = new AppInfo(_culture, fragments);
 		return appInfo;
+	}
+
+	private IEnumerable<Fragment> SafelyExtract(IExtractor extractor)
+	{
+		try
+		{
+			return extractor.Extract();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Exception caught when extracting fragments from {extractor}: {ex}");
+			return [];
+		}
 	}
 }
