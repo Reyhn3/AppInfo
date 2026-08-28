@@ -82,11 +82,11 @@ The [examples](https://github.com/Reyhn3/AppInfo/tree/main/examples) folder cont
 * **Customizable**
 <br/> Add custom information to the output.
 
+* **Configurable**
+  <br/> Configure where and how to output the information.
+
 * **Extensible**
 <br/> Extend the library with custom information providers.
-
-* **Configurable**
-<br/> Configure where and how to output the information.
 
 
 # Design
@@ -96,3 +96,10 @@ There are two phases to this library: **information extraction** and **outputtin
 Gathering information is done by using a builder pattern. The `AppInfoBuilder` class collect the `IExtractor` objects that can be added using fluent convenience methods. These are then used to assemble the information into a single `AppInfo` object that can be used by the outputting phase.
 
 Outputting is also done by using a builder pattern. The `AppInfoOutputBuilder` class collect the `IOutputter` objects that can be added using fluent convenience methods. When calling the `Write` method, the `AppInfoOutputBuilder` will use the `IOutputter` objects to render the information toward the configured targets.
+
+
+# Licence
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<a href="https://ai-free.io"><img decoding="async" src="https://ai-free.io/AI-free.io-CODE.png" width="80"/></a>

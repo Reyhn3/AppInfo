@@ -2,18 +2,15 @@ set shell := ["/usr/bin/env", "bash" ,"-c"]
 set windows-shell := ["pwsh","-NoLogo", "-NoProfile", "-c"]
 set quiet
 
-_recipe-name:
-	echo "AppInfo helpers"
-
-
+[default]
 [linux]
-[doc("Demo: Basic")]
-demo:
+example:
 	if [[ ! -f "./examples/Basic/bin/Debug/net8.0/basic" ]]; then echo "Building..."; dotnet build -v quiet; fi
 	./examples/Basic/bin/Debug/net8.0/basic
 
+[default]
 [windows]
-demo:
+example:
 	dotnet build -v quiet
 	& .\examples\Basic\bin\Debug\net8.0\basic.exe
 
