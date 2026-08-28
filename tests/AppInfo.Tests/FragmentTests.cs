@@ -1,4 +1,4 @@
-namespace AppInformation.Tests.Fragments;
+namespace AppInformation.Tests;
 
 
 public class FragmentTests
@@ -6,8 +6,12 @@ public class FragmentTests
 	[TestCase(null)]
 	[TestCase("")]
 	[TestCase("\t")]
-	public void Ctor_shall_throw_exception_if_label_is_null_or_empty(string? label) =>
-		Should.Throw<ArgumentNullException>(() => new Fragment(label, []));
+	public void Ctor_shall_not_throw_exception_if_label_is_null_or_empty(string? label)
+	{
+		var result = Should.NotThrow(() => new Fragment(label!, []));
+		result.ShouldNotBeNull();
+		result.Label.ShouldStartWith($"{Constants.Unknown}-");
+	}
 
 	[Test]
 	public void Ctor_shall_trim_label() =>
@@ -33,9 +37,7 @@ public class FragmentTests
 	{
 		var expected = new object();
 
-
 		var result = new Fragment("test", expected).Value?.ToArray();
-
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
@@ -54,9 +56,7 @@ public class FragmentTests
 				new()
 			};
 
-
 		var result = new Fragment("test", expected).Value?.ToArray();
-
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
