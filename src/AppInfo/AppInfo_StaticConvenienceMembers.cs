@@ -1,6 +1,3 @@
-using System.Globalization;
-
-
 namespace AppInformation;
 
 
@@ -19,6 +16,10 @@ public partial class AppInfo
 		new AppInfoBuilder()
 			.UseCulture(Constants.DefaultCulture)
 			.AddStandard();
+
+	internal static IAppInfoOutputBuilder CreateEmptyOutputBuilder(IAppInfo appInfo) =>
+		new AppInfoOutputBuilder()
+			.UseAppInfo(appInfo);
 
 	internal static IAppInfoOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>
 		new AppInfoOutputBuilder()

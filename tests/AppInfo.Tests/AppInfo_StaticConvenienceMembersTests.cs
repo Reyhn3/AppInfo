@@ -9,18 +9,32 @@ namespace AppInformation.Tests;
 
 public class AppInfo_StaticConvenienceMembersTests
 {
+	private const string AppInfoFieldName = "_appInfo";
+
 #region BuildAndOutputDefault
 	[Test]
 	public void BuildAndOutputDefault_should_create_the_default_builder_and_default_output_then_write()
 	{
-		using var capture = new StdOutCapture();
-		var result = AppInfo.BuildAndOutputDefault();
+		// Arrange
+
+		IAppInfo result;
+		string? output;
+
+		// Act
+
+		using (var capture = new StdOutCapture())
+		{
+			result = AppInfo.BuildAndOutputDefault();
+			output = capture.Captured.ToString();
+		}
+
+		// Assert
 
 		result.ShouldNotBeNull();
 		result.Culture.ShouldBe(Constants.DefaultCulture);
 		result.Fragments.ShouldNotBeEmpty();
 
-		var output = capture.Captured.ToString();
+		TestHelpers.Helpers.PrintCapturedOutput(output);
 		output.ShouldNotBeEmpty();
 		output.ShouldStartWith("Application");
 		output.ShouldContain("ReSharperTestRunner");
@@ -73,6 +87,26 @@ public class AppInfo_StaticConvenienceMembersTests
 	}
 #endregion
 
+#region CreateEmptyOutputBuilder
+	[Test]
+	public void CreateEmptyOutputBuilder_should_create_output_builder_with_empty_renderers()
+	{
+		var appInfo = A.Dummy<IAppInfo>();
+
+		var result = AppInfo.CreateEmptyOutputBuilder(appInfo);
+		result.ShouldNotBeNull();
+
+		TestHelpers.Helpers.GetFieldValue(result, AppInfoFieldName)
+			.ShouldNotBeNull()
+			.ShouldBe(appInfo);
+
+		var renderers = TestHelpers.Helpers.GetFieldValue<List<IRenderer>>(result, "_renderers");
+		renderers.ShouldNotBeNull();
+		renderers.ShouldBeOfType<List<IRenderer>>();
+		renderers.ShouldBeEmpty();
+	}
+#endregion
+
 #region CreateDefaultOutputBuilder
 	[Test]
 	public void CreateDefaultOutputBuilder_should_create_output_builder_with_console_renderer()
@@ -82,7 +116,7 @@ public class AppInfo_StaticConvenienceMembersTests
 		var result = AppInfo.CreateDefaultOutputBuilder(appInfo);
 		result.ShouldNotBeNull();
 
-		TestHelpers.Helpers.GetFieldValue(result, "_appInfo")
+		TestHelpers.Helpers.GetFieldValue(result, AppInfoFieldName)
 			.ShouldNotBeNull()
 			.ShouldBe(appInfo);
 

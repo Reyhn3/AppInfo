@@ -23,7 +23,7 @@ public static class DefinitionExtensions
 		{
 			var appInfo = builder.Build();
 
-			var outputBuilder = AppInfo.CreateDefaultOutputBuilder(appInfo);
+			var outputBuilder = AppInfo.CreateEmptyOutputBuilder(appInfo);
 			configure(outputBuilder);
 			outputBuilder.Write();
 

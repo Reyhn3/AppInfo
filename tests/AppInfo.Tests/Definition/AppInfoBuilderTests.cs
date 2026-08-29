@@ -1,5 +1,6 @@
 using System.Globalization;
 using AppInformation.Extractors;
+using AppInformation.Tests.TestHelpers;
 
 
 namespace AppInformation.Tests.Definition;
@@ -8,7 +9,7 @@ namespace AppInformation.Tests.Definition;
 public class AppInfoBuilderTests
 {
 	private AppInfoBuilder _sut;
-	private string _extractorsFieldName = "_extractors";
+	private const string ExtractorsFieldName = "_extractors";
 
 	[SetUp]
 	public void PreRun() =>
@@ -24,7 +25,7 @@ public class AppInfoBuilderTests
 
 	[Test]
 	public void Ctor_should_populate_extractors_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), ExtractorsFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<List<IExtractor>>()
 			.ShouldBeEmpty();
@@ -45,7 +46,7 @@ public class AppInfoBuilderTests
 	public void AddExtractor_with_instance_shall_do_nothing_if_instance_is_null()
 	{
 		_sut.AddExtractor((IExtractor)null!);
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 	}
 
@@ -54,53 +55,53 @@ public class AppInfoBuilderTests
 	{
 		var extractor = A.Fake<IExtractor>();
 
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 
 		// First addition
 		_sut.AddExtractor(extractor);
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(1);
 
 		// Second addition (should be ignored)
 		_sut.AddExtractor(extractor);
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_the_instance_to_the_collection()
 	{
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 		_sut.AddExtractor(A.Fake<IExtractor>());
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_multiple_instances_to_the_collection()
 	{
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 
 		_sut.AddExtractor(A.Fake<IExtractor>());
 		_sut.AddExtractor(A.Fake<IExtractor>());
 
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(2);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_multiple_instances_of_the_same_type_to_the_collection()
 	{
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 
 		_sut.AddExtractor(new TestExtractor());
 		_sut.AddExtractor(new TestExtractor());
 
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(2);
 	}
 
@@ -112,7 +113,7 @@ public class AppInfoBuilderTests
 	public void AddExtractor_without_instance_shall_create_instance_and_add_to_the_collection()
 	{
 		_sut.AddExtractor<TestExtractor>();
-		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 #endregion
@@ -191,33 +192,6 @@ public class AppInfoBuilderTests
 		result.ShouldNotBeNull();
 		result.Culture.ShouldNotBeNull();
 		result.Culture.Name.ShouldBe("de-DE");
-	}
-#endregion
-
-#region Helpers
-	private class TestExtractor : IExtractor
-	{
-		public IEnumerable<Fragment> Extract() =>
-			A.CollectionOfDummy<Fragment>(1);
-	}
-
-
-	private class ExceptionThrowingExtractor : IExtractor
-	{
-		public IEnumerable<Fragment> Extract() =>
-			throw new Exception("Intentional exception for testing");
-	}
-
-
-	private class CtorExceptionThrowingExtractor : IExtractor
-	{
-		public CtorExceptionThrowingExtractor()
-		{
-			throw new Exception("Intentional exception for testing");
-		}
-
-		public IEnumerable<Fragment> Extract() =>
-			throw new NotImplementedException("Ignored");
 	}
 #endregion
 }
