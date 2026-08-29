@@ -24,14 +24,14 @@ public class AssemblyExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(1);
 		result.ShouldContain(f => string.Equals(AssemblyExtractor.AssemblyLabel, f.Label));
 
 		var value = result.Single().Value?.ToArray();
 		value.ShouldNotBeNull();
 		value.ShouldNotBeEmpty();
-		Helpers.PrintValues(value);
+		TestHelpers.Helpers.PrintValues(value);
 		value.Length.ShouldBe(2);
 	}
 
@@ -42,7 +42,7 @@ public class AssemblyExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
 		result.ShouldContain(v => string.Equals("AppInfo", (string?)v, StringComparison.Ordinal));
 	}
@@ -54,7 +54,7 @@ public class AssemblyExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
 		result.ShouldContain(v => string.Equals("test", (string?)v, StringComparison.Ordinal));
 	}
@@ -66,7 +66,7 @@ public class AssemblyExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
 		result.ShouldContain(v => ((string?)v).StartsWith("v1.0.0+"));
 	}
@@ -78,7 +78,7 @@ public class AssemblyExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
 		result.ShouldContain(v => string.Equals("v1.0.0", (string?)v));
 	}

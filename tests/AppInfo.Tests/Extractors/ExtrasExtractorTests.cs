@@ -14,7 +14,7 @@ public class ExtrasExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
 		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value!.Single(), 1));
 		result.ShouldContain(f => string.Equals(f.Label, "second") && Equals(f.Value!.Single(), 2));
@@ -29,7 +29,7 @@ public class ExtrasExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
 		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value!.Single(), 1));
 		result.ShouldContain(f => string.Equals(f.Label, "second") && Equals(f.Value!.Single(), 2));
@@ -46,7 +46,7 @@ public class ExtrasExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(2);
 		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value!.Single(), 1));
 		result.ShouldNotContain(f => string.Equals(f.Label, label));
@@ -64,7 +64,7 @@ public class ExtrasExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
 		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value!.Single(), 1));
 		result.ShouldContain(f => string.Equals(f.Label, "second")
@@ -84,7 +84,7 @@ public class ExtrasExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.Length.ShouldBe(3);
 		result.ShouldContain(f => string.Equals(f.Label, "first") && Equals(f.Value!.Single(), 1));
 		result.ShouldContain(f => string.Equals(f.Label, "second")

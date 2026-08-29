@@ -1,7 +1,7 @@
 using System.Reflection;
 
 
-namespace AppInformation.Tests;
+namespace AppInformation.Tests.TestHelpers;
 
 
 internal static class Helpers

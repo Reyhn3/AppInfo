@@ -24,7 +24,7 @@ public class IdentityExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(IdentityExtractor.ApplicationIdLabel, f.Label)
 			&& string.Equals(appId, (string?)f.Value.Single()));
 	}
@@ -141,7 +141,7 @@ public class IdentityExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.ApplicationIdLabel)
 			&& string.Equals(appId, (string?)f.Value.Single()));
 		result.ShouldContain(f => string.Equals(f.Label, IdentityExtractor.InstanceIdLabel)

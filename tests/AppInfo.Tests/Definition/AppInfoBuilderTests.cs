@@ -17,14 +17,14 @@ public class AppInfoBuilderTests
 #region Ctor
 	[Test]
 	public void Ctor_should_populate_culture_field() =>
-		Helpers.GetFieldValue(new AppInfoBuilder(), "_culture")
+		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), "_culture")
 			.ShouldNotBeNull()
 			.ShouldBeOfType<CultureInfo>()
 			.ShouldBe(Constants.DefaultCulture);
 
 	[Test]
 	public void Ctor_should_populate_extractors_field() =>
-		Helpers.GetFieldValue(new AppInfoBuilder(), _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), _extractorsFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<List<IExtractor>>()
 			.ShouldBeEmpty();
@@ -35,7 +35,7 @@ public class AppInfoBuilderTests
 	public void UseCulture_shall_do_nothing_if_culture_is_null()
 	{
 		_sut.UseCulture(null);
-		Helpers.GetFieldValue(_sut, "_culture")
+		TestHelpers.Helpers.GetFieldValue(_sut, "_culture")
 			.ShouldBe(Constants.DefaultCulture);
 	}
 #endregion
@@ -45,7 +45,7 @@ public class AppInfoBuilderTests
 	public void AddExtractor_with_instance_shall_do_nothing_if_instance_is_null()
 	{
 		_sut.AddExtractor((IExtractor)null!);
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
 			.ShouldBeEmpty();
 	}
 
@@ -54,53 +54,53 @@ public class AppInfoBuilderTests
 	{
 		var extractor = A.Fake<IExtractor>();
 
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
 			.ShouldBeEmpty();
 
 		// First addition
 		_sut.AddExtractor(extractor);
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(1);
 
 		// Second addition (should be ignored)
 		_sut.AddExtractor(extractor);
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_the_instance_to_the_collection()
 	{
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
 			.ShouldBeEmpty();
 		_sut.AddExtractor(A.Fake<IExtractor>());
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_multiple_instances_to_the_collection()
 	{
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
 			.ShouldBeEmpty();
 
 		_sut.AddExtractor(A.Fake<IExtractor>());
 		_sut.AddExtractor(A.Fake<IExtractor>());
 
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(2);
 	}
 
 	[Test]
 	public void AddExtractor_with_instance_shall_add_multiple_instances_of_the_same_type_to_the_collection()
 	{
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)
 			.ShouldBeEmpty();
 
 		_sut.AddExtractor(new TestExtractor());
 		_sut.AddExtractor(new TestExtractor());
 
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(2);
 	}
 
@@ -112,7 +112,7 @@ public class AppInfoBuilderTests
 	public void AddExtractor_without_instance_shall_create_instance_and_add_to_the_collection()
 	{
 		_sut.AddExtractor<TestExtractor>();
-		Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
+		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, _extractorsFieldName)!
 			.Count.ShouldBe(1);
 	}
 #endregion

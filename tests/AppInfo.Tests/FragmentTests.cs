@@ -41,7 +41,7 @@ public class FragmentTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(1);
 		result.First().ShouldBe(expected);
 	}
@@ -60,7 +60,7 @@ public class FragmentTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintValues(result);
+		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(expected.Length);
 		result.ShouldBeEquivalentTo(expected);
 	}
