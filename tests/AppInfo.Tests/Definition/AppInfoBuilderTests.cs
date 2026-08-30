@@ -100,8 +100,8 @@ public class AppInfoBuilderTests
 		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)
 			.ShouldBeEmpty();
 
-		_sut.AddExtractor(new TestExtractor());
-		_sut.AddExtractor(new TestExtractor());
+		_sut.AddExtractor(A.Fake<IExtractor>());
+		_sut.AddExtractor(A.Fake<IExtractor>());
 
 		TestHelpers.Helpers.GetFieldValue<List<IExtractor>>(_sut, ExtractorsFieldName)!
 			.Count.ShouldBe(2);

@@ -97,8 +97,8 @@ public class AppInfoOutputBuilderTests
 		TestHelpers.Helpers.GetFieldValue<List<IRenderer>>(_sut, RenderersFieldName)
 			.ShouldBeEmpty();
 
-		_sut.AddRenderer(new TestRenderer());
-		_sut.AddRenderer(new TestRenderer());
+		_sut.AddRenderer(A.Fake<IRenderer>());
+		_sut.AddRenderer(A.Fake<IRenderer>());
 
 		TestHelpers.Helpers.GetFieldValue<List<IRenderer>>(_sut, RenderersFieldName)!
 			.Count.ShouldBe(2);
@@ -123,7 +123,7 @@ public class AppInfoOutputBuilderTests
 	{
 		// Arrange
 
-		var renderer = new TestRenderer();
+		var renderer = A.Fake<IRenderer>();
 		_sut.AddRenderer(renderer);
 		_sut.UseAppInfo(A.Dummy<IAppInfo>());
 
@@ -134,7 +134,8 @@ public class AppInfoOutputBuilderTests
 		// Assert
 
 //TODO: Assert that it has actually called WriteAsync
-		renderer.HasRenderBeenCalled.ShouldBeTrue();
+		A.CallTo(() => renderer.Render(A<IAppInfo>.Ignored))
+			.MustHaveHappenedOnceExactly();
 	}
 #endregion
 
@@ -144,7 +145,7 @@ public class AppInfoOutputBuilderTests
 	{
 		// Arrange
 
-		var renderer = new TestRenderer();
+		var renderer = A.Fake<IRenderer>();
 		_sut.AddRenderer(renderer);
 
 		// Act
@@ -153,7 +154,8 @@ public class AppInfoOutputBuilderTests
 
 		// Assert
 
-		renderer.HasRenderBeenCalled.ShouldBeFalse();
+		A.CallTo(() => renderer.Render(A<IAppInfo>.Ignored))
+			.MustNotHaveHappened();
 	}
 
 	[Test]

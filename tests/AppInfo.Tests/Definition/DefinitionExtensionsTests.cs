@@ -1,5 +1,6 @@
 using System.Reflection;
 using AppInformation.Extractors;
+using AppInformation.Renderers;
 using AppInformation.Tests.TestHelpers;
 
 
@@ -47,7 +48,7 @@ public class DefinitionExtensionsTests
 	{
 		// Arrange
 
-		var renderer = new TestRenderer();
+		var renderer = A.Fake<IRenderer>();
 
 		IAppInfo result;
 		string? output;
@@ -65,9 +66,10 @@ public class DefinitionExtensionsTests
 
 		result.ShouldNotBeNull();
 		TestHelpers.Helpers.PrintCapturedOutput(output);
-		renderer.HasRenderBeenCalled.ShouldBeTrue();
-		renderer.AppInfo.ShouldNotBeNull();
 		output.ShouldBeEmpty("Did not expect to find any standard output");
+
+		A.CallTo(() => renderer.Render(A<IAppInfo>.Ignored))
+			.MustHaveHappenedOnceExactly();
 	}
 #endregion
 
