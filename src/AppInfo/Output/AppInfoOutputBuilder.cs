@@ -63,21 +63,32 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 	public IAppInfo Write() =>
 		WriteAsync(CancellationToken.None).GetAwaiter().GetResult();
 
-	public Task<IAppInfo> WriteAsync(CancellationToken cancellationToken)
+	public async Task<IAppInfo> WriteAsync(CancellationToken cancellationToken)
 	{
 		if (_appInfo == null)
 		{
 			Debug.WriteLine($"Attempted to call {nameof(WriteAsync)} without calling {nameof(UseAppInfo)}");
-			return Task.FromResult<IAppInfo>(new AppInfo(Constants.DefaultCulture, Enumerable.Empty<Fragment>()));
+			return new AppInfo(Constants.DefaultCulture, Enumerable.Empty<Fragment>());
 		}
 
-//TODO: Make async
-//TODO: Make safe
-		foreach (var renderer in _renderers)
+		var tasks = _renderers.Select(renderer =>
+			InvokeRenderer(renderer, _appInfo, cancellationToken));
+		await Task.WhenAll(tasks);
+
+		return _appInfo;
+	}
+
+	private static async Task InvokeRenderer(IRenderer renderer, IAppInfo appInfo, CancellationToken cancellationToken)
+	{
+		try
 		{
-			renderer.Render(_appInfo);
+//TODO: Make async
+			renderer.Render(appInfo);
+			await Task.CompletedTask;
 		}
-
-		return Task.FromResult(_appInfo);
+		catch (Exception ex)
+		{
+			Debug.WriteLine("Exception caught when invoking renderer: {0}", ex);
+		}
 	}
 }

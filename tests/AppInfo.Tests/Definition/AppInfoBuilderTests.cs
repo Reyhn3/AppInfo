@@ -8,8 +8,10 @@ namespace AppInformation.Tests.Definition;
 
 public class AppInfoBuilderTests
 {
-	private AppInfoBuilder _sut;
+	private const string CultureFieldName = "_culture";
 	private const string ExtractorsFieldName = "_extractors";
+
+	private AppInfoBuilder _sut;
 
 	[SetUp]
 	public void PreRun() =>
@@ -18,7 +20,7 @@ public class AppInfoBuilderTests
 #region Ctor
 	[Test]
 	public void Ctor_should_populate_culture_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), "_culture")
+		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), CultureFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<CultureInfo>()
 			.ShouldBe(Constants.DefaultCulture);
@@ -36,7 +38,7 @@ public class AppInfoBuilderTests
 	public void UseCulture_shall_do_nothing_if_culture_is_null()
 	{
 		_sut.UseCulture(null);
-		TestHelpers.Helpers.GetFieldValue(_sut, "_culture")
+		TestHelpers.Helpers.GetFieldValue(_sut, CultureFieldName)
 			.ShouldBe(Constants.DefaultCulture);
 	}
 #endregion
