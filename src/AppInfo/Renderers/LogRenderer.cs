@@ -6,8 +6,8 @@ namespace AppInformation.Renderers;
 
 public class LogRenderer(Action<string, object?[]> logger) : Renderer
 {
-	private static readonly Regex s_whitespace = new(@"\s+", RegexOptions.Compiled);
-	private readonly Action<string, object?[]> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+	private static readonly Regex s_nonAlphanumerics = new(@"[^a-zA-Z0-9]", RegexOptions.Compiled);
+	private readonly Action<string, object?[]> _logger = logger ?? ((_, _) => {});
 
 	protected override void RenderAppInfo(IAppInfo info)
 	{
@@ -61,10 +61,9 @@ public class LogRenderer(Action<string, object?[]> logger) : Renderer
 			.Index;
 	}
 
-//BUG: This must clean away dashes and other invalid characters
 	internal static string FormatName(string label)
 	{
-		var components = s_whitespace.Split(label).Where(s => !string.IsNullOrWhiteSpace(s));
+		var components = s_nonAlphanumerics.Split(label).Where(s => !string.IsNullOrWhiteSpace(s));
 		return string.Join(string.Empty, components.Select(c => char.ToUpper(c[0]) + c[1..]));
 	}
 }
