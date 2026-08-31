@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using AppInformation.Helpers;
 
@@ -18,6 +19,7 @@ internal static class AppSettingsReader
 		try
 		{
 			return GetAppSettingsFilePaths()
+				.Where(SafelyCheckIfFileExists)
 				.Select(filePath => TryReadFromAppConfig(name, filePath))
 				.FirstOrDefault();
 		}
@@ -33,6 +35,19 @@ internal static class AppSettingsReader
 		var environmentName = EnvironmentHelper.GetEnvironment();
 		yield return $"appsettings.{environmentName}.json";
 		yield return "appsettings.json";
+	}
+
+	private static bool SafelyCheckIfFileExists(string filePath)
+	{
+		try
+		{
+			return File.Exists(filePath);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine("Exception caught when trying to check if file '{0}' exists: {1}", filePath, ex);
+			return false;
+		}
 	}
 
 	private static object? TryReadFromAppConfig(string propertyName, string filePath)
