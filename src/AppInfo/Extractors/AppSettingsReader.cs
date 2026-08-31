@@ -45,7 +45,7 @@ internal static class AppSettingsReader
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine("Exception caught when trying to check if file '{0}' exists: {1}", filePath, ex);
+			InternalLogger.Log("Exception caught when trying to check if file '{0}' exists: {1}", filePath, ex);
 			return false;
 		}
 	}

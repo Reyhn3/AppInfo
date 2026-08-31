@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using System.Reflection;
 using AppInformation.Extractors;
+using AppInformation.Helpers;
 
 
 namespace AppInformation;
@@ -40,7 +40,7 @@ public static class DefinitionExtensions
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine("Exception caught when trying to add extractor: {0}", ex);
+				InternalLogger.Log("Exception caught when trying to add extractor: {0}", ex);
 				return builder;
 			}
 		}

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
+using AppInformation.Helpers;
 
 
 namespace AppInformation;
@@ -21,12 +22,12 @@ public partial class AppInfo : IAppInfo
 		try
 		{
 			var immutable = fragments?.ToImmutableArray() ?? [];
-			Debug.WriteLineIf(immutable.Length == 0, "Warning: No fragments received");
+			InternalLogger.LogIf(immutable.Length == 0, "Warning: No fragments received");
 			return immutable;
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Unexpected exception when converting fragments to ImmutableArray: {ex}");
+			InternalLogger.Log("Unexpected exception when converting fragments to ImmutableArray: {0}", ex);
 			return [];
 		}
 	}

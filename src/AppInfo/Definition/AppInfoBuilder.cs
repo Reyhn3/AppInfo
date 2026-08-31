@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using AppInformation.Extractors;
+using AppInformation.Helpers;
 
 
 namespace AppInformation;
@@ -26,13 +27,13 @@ public class AppInfoBuilder : IAppInfoBuilder
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (extractor == null)
 		{
-			Debug.WriteLine("Attempted to add null extractor");
+			InternalLogger.Log("Attempted to add null extractor");
 			return this;
 		}
 
 		if (_extractors.Contains(extractor))
 		{
-			Debug.WriteLine("Attempted to add duplicate extractor");
+			InternalLogger.Log("Attempted to add duplicate extractor");
 			return this;
 		}
 
@@ -50,7 +51,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when trying to create and add extractor of {typeof(T)}: {ex}");
+			InternalLogger.Log("Exception caught when trying to create and add extractor of {0}: {1}", typeof(T), ex);
 			return this;
 		}
 	}
@@ -73,7 +74,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when extracting fragments from {extractor}: {ex}");
+			InternalLogger.Log("Exception caught when extracting fragments from {0}: {1}", extractor, ex);
 			return [];
 		}
 	}

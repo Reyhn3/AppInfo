@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
+using AppInformation.Helpers;
 using AppInformation.Renderers;
 
 
@@ -16,7 +17,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (appInfo == null)
 		{
-			Debug.WriteLine("Attempted to use a null appInfo");
+			InternalLogger.Log("Attempted to use a null appInfo");
 			return this;
 		}
 
@@ -30,13 +31,13 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (renderer == null)
 		{
-			Debug.WriteLine("Attempted to add a null renderer");
+			InternalLogger.Log("Attempted to add a null renderer");
 			return this;
 		}
 
 		if (_renderers.Contains(renderer))
 		{
-			Debug.WriteLine("Attempted to add duplicate renderer");
+			InternalLogger.Log("Attempted to add duplicate renderer");
 			return this;
 		}
 
@@ -55,7 +56,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when trying to create and add renderer of type {typeof(T)}: {ex}");
+			InternalLogger.Log("Exception caught when trying to create and add renderer of type {0}: {1}", typeof(T), ex);
 			return this;
 		}
 	}
@@ -67,12 +68,11 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 	{
 		if (_appInfo == null)
 		{
-			Debug.WriteLine($"Attempted to call {nameof(WriteAsync)} without calling {nameof(UseAppInfo)}");
+			InternalLogger.Log("Attempted to call {0} without calling {1}", nameof(WriteAsync), nameof(UseAppInfo));
 			return new AppInfo(Constants.DefaultCulture, Enumerable.Empty<Fragment>());
 		}
 
-		var tasks = _renderers.Select(renderer =>
-			InvokeRenderer(renderer, _appInfo, cancellationToken));
+		var tasks = _renderers.Select(renderer => InvokeRenderer(renderer, _appInfo, cancellationToken));
 		await Task.WhenAll(tasks);
 
 		return _appInfo;
@@ -88,7 +88,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine("Exception caught when invoking renderer: {0}", ex);
+			InternalLogger.Log("Exception caught when invoking renderer: {0}", ex);
 		}
 	}
 }
