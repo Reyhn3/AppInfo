@@ -15,8 +15,8 @@ public class TraceRenderer : UnstructuredTextRenderer
 
 	private string BuildPlainString(IAppInfo info)
 	{
-		var output = new StringWriter();
-		var writer = new IndentedTextWriter(output, Indentation);
+		using var output = new StringWriter();
+		using var writer = new IndentedTextWriter(output, Indentation);
 		writer.WriteLine(ConcatenateTitle(info));
 		writer.Indent++;
 
