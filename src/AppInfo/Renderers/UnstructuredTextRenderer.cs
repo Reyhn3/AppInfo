@@ -4,7 +4,7 @@ namespace AppInformation.Renderers;
 public abstract class UnstructuredTextRenderer : Renderer
 {
 	private const char Separator = ':';
-	private const int MaxLabelWidth = 15;
+	internal const int MaxLabelWidth = 15;
 	protected const string Indentation = "  ";
 
 	protected static int CalculateLabelMaxWidth(IAppInfo info) =>
@@ -13,11 +13,16 @@ public abstract class UnstructuredTextRenderer : Renderer
 			info.Fragments
 				.Select(f => f.Label)
 				.Where(s => !string.IsNullOrWhiteSpace(s))
-				.Max(s => s.Length));
+				.DefaultIfEmpty(string.Empty)
+				.Max(s => s.Trim().Length));
 
-//TEST: Make sure it cannot exceed the MaxLabelWidth
 	protected static string PadLabel(string label, int width) =>
-		(label + Separator + ' ').PadRight(width + 2);
+		string.IsNullOrWhiteSpace(label)
+			? string.Empty
+			: ((label.Length > width ? label[..(width - 1)] + "…" : label)
+				+ Separator
+				+ ' ')
+			.PadRight(width + 2);
 
 	protected string FormatValue(object? value) =>
 		value switch
