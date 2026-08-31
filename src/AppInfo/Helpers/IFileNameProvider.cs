@@ -1,13 +1,13 @@
 namespace AppInformation.Helpers;
 
 
-internal interface IFileNameProvider
+public interface IFileNameProvider
 {
 	string GetPathAndFileName(string? extension);
 }
 
 
-internal class TempFileNameProvider : IFileNameProvider
+public class TempFileNameProvider : IFileNameProvider
 {
 	public string GetPathAndFileName(string? extension)
 	{

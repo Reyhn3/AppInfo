@@ -4,13 +4,13 @@ using System.Text;
 namespace AppInformation.Helpers;
 
 
-internal interface IFileWriter
+public interface IFileWriter
 {
 	FileInfo? WriteToFile(string pathAndFileName, string? contents);
 }
 
 
-internal class FileWriter : IFileWriter
+public class FileWriter : IFileWriter
 {
 	public FileInfo? WriteToFile(string pathAndFileName, string? contents)
 	{

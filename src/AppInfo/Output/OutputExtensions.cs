@@ -1,3 +1,4 @@
+using AppInformation.Helpers;
 using AppInformation.Renderers;
 
 
@@ -33,7 +34,11 @@ public static class OutputExtensions
 			builder.AddRenderer(new LogRenderer(logger));
 
 		public IAppInfoOutputBuilder ToTextFile() =>
-			builder.AddRenderer(new TextFileRenderer());
+			builder.AddRenderer(
+				new TextFileRenderer(
+//TODO: Make path and filename configurable
+					new TempFileNameProvider(),
+					new FileWriter()));
 
 		public IAppInfoOutputBuilder ToJsonFile() =>
 			builder.AddRenderer(new JsonFileRenderer());
