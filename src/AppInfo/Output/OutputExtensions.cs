@@ -14,7 +14,7 @@ public static class OutputExtensions
 		public IAppInfoOutputBuilder WithOutput(
 			Action<IAppInfoOutputBuilder> configure)
 		{
-			var builder = AppInfo.CreateDefaultOutputBuilder(appInfo);
+			var builder = AppInfo.CreateEmptyOutputBuilder(appInfo);
 			configure(builder);
 			return builder;
 		}

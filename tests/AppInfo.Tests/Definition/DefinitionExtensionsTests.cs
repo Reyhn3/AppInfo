@@ -10,6 +10,7 @@ namespace AppInformation.Tests.Definition;
 public class DefinitionExtensionsTests
 {
 	private const string ExtractorsFieldName = "_extractors";
+
 	private AppInfoBuilder _sut;
 
 	[SetUp]
