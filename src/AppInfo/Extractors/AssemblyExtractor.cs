@@ -10,7 +10,7 @@ public class AssemblyExtractor(Assembly assembly, string? shortName = null, bool
 {
 	internal const string AssemblyLabel = "Assembly";
 
-	private readonly Assembly _assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
+	private readonly Assembly _assembly = assembly ?? Assembly.GetExecutingAssembly();
 
 	protected override IEnumerable<Func<Fragment>> ProduceExtractors()
 	{
