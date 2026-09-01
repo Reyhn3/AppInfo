@@ -6,8 +6,10 @@ using AppInformation.Helpers;
 namespace AppInformation.Renderers;
 
 
-public class JsonFileRenderer : Renderer
+public class JsonFileRenderer(IFileNameProvider fileNameProvider, IFileWriter fileWriter)
+	: Renderer
 {
+//TODO: #30: This should be configurable
 	private static readonly JsonSerializerOptions s_options = new()
 		{
 			WriteIndented = true,
@@ -20,17 +22,18 @@ public class JsonFileRenderer : Renderer
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 		var container = BuildContainer(info);
-		var path = Path.ChangeExtension(Path.GetTempFileName(), "json");
 
-		using var stream = File.Create(path);
+//TODO: #30: Generate unique file name, or append to existing file
+		var path = fileNameProvider.GetPathAndFileName("json");
+
+		using var stream = new MemoryStream();
 		JsonSerializer.Serialize(stream, container, s_options);
-		InternalLogger.Log("JSON file written to {0}", path);
 
-//TODO: Remove this
-		Console.WriteLine("JSON file: {0}", path);
+		var file = fileWriter.WriteToFile(path, stream);
+		InternalLogger.Log("JSON file written to {0}", file);
 	}
 
-//TODO: Replace the object type with a structured type
+//TODO: Replace the object type with a public structured contract type
 	private object BuildContainer(IAppInfo info) =>
 		info.Fragments.ToArray();
 }

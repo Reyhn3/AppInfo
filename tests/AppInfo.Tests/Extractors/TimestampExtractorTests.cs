@@ -17,7 +17,7 @@ public class TimestampExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(TimestampExtractor.TimestampLabel, f.Label)
 			&& f.Value.Single() is DateTime);
 	}
@@ -33,7 +33,7 @@ public class TimestampExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(TimestampExtractor.TimestampUtcLabel, f.Label)
 			&& f.Value.Single() is DateTime);
 	}
@@ -49,7 +49,7 @@ public class TimestampExtractorTests
 
 		result.ShouldNotBeNull();
 		result.ShouldNotBeEmpty();
-		Helpers.PrintFragments(result);
+		TestHelpers.Helpers.PrintFragments(result);
 		result.ShouldContain(f => string.Equals(TimestampExtractor.TimeZoneLabel, f.Label)
 			&& f.Value.Single() is TimeZoneInfo);
 	}

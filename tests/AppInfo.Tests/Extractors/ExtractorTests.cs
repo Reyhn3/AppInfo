@@ -1,4 +1,4 @@
-using AppInformation.Extractors;
+using AppInformation.Tests.TestHelpers;
 
 
 namespace AppInformation.Tests.Extractors;
@@ -92,14 +92,5 @@ public class ExtractorTests
 		result.Length.ShouldBe(extractors.Length - 1);
 		result.ShouldAllBe(f => f != null);
 		result.Select(f => f.Value!.Single()).ToArray().ShouldBeEquivalentTo(expected);
-	}
-
-
-	private class DummyExtractor(IEnumerable<Func<Fragment>>? extractors) : Extractor
-	{
-		private readonly Func<Fragment>[]? _extractors = extractors?.ToArray();
-
-		protected override IEnumerable<Func<Fragment>> ProduceExtractors() =>
-			_extractors!;
 	}
 }

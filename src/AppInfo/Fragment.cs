@@ -10,9 +10,14 @@ public sealed class Fragment
 	public Fragment(string label, params object?[]? values)
 	{
 		if (string.IsNullOrWhiteSpace(label))
-			throw new ArgumentNullException(label);
+		{
+			Label = Constants.Unknown + '-' + Random.Shared.Next();
+		}
+		else
+		{
+			Label = label.Trim();
+		}
 
-		Label = label.Trim();
 		Value = values?.ToArray() ?? null;
 	}
 

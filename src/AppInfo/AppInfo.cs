@@ -1,5 +1,7 @@
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Globalization;
+using AppInformation.Helpers;
 
 
 namespace AppInformation;
@@ -11,11 +13,23 @@ public partial class AppInfo : IAppInfo
 
 	internal AppInfo(CultureInfo culture, IEnumerable<Fragment> fragments)
 	{
-		if (fragments == null)
-			throw new ArgumentNullException(nameof(fragments));
+		Culture = culture ?? Constants.DefaultCulture;
+		_fragments = ToSafeImmutableArray(fragments);
+	}
 
-		Culture = culture;
-		_fragments = [.. fragments];
+	private static ImmutableArray<Fragment> ToSafeImmutableArray(IEnumerable<Fragment> fragments)
+	{
+		try
+		{
+			var immutable = fragments?.ToImmutableArray() ?? [];
+			InternalLogger.LogIf(immutable.Length == 0, "Warning: No fragments received");
+			return immutable;
+		}
+		catch (Exception ex)
+		{
+			InternalLogger.Log("Unexpected exception when converting fragments to ImmutableArray: {0}", ex);
+			return [];
+		}
 	}
 
 	public CultureInfo Culture { get; }

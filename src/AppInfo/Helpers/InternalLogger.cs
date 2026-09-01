@@ -22,4 +22,10 @@ internal static class InternalLogger
 			// Ignore
 		}
 	}
+
+	public static void LogIf(bool condition, string format, params object[] args)
+	{
+		if (condition)
+			Log(format, args);
+	}
 }

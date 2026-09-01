@@ -6,20 +6,19 @@ using AppInformation.Helpers;
 namespace AppInformation.Renderers;
 
 
-public class TextFileRenderer : UnstructuredTextRenderer
+public class TextFileRenderer(IFileNameProvider fileNameProvider, IFileWriter fileWriter)
+	: UnstructuredTextRenderer
 {
 	protected override void RenderAppInfo(IAppInfo info)
 	{
 		var output = BuildPlainString(info);
-//TODO: Generate unique file name, or append to existing file
-		var path = Path.ChangeExtension(Path.GetTempFileName(), "txt");
 
-//TODO: Let the user choose encoding
-		File.WriteAllText(path, output, Encoding.UTF8);
-		InternalLogger.Log("Plain-text file written to {0}", path);
+//TODO: #30: Generate unique file name, or append to existing file
+		var path = fileNameProvider.GetPathAndFileName("txt");
 
-//TODO: Remove this
-		Console.WriteLine("Text file: {0}", path);
+//TODO: #30: Let the user choose encoding
+		var file = fileWriter.WriteToFile(path, output);
+		InternalLogger.Log("Plain-text file written to {0}", file);
 	}
 
 	private string BuildPlainString(IAppInfo info)

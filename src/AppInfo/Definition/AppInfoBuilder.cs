@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using AppInformation.Extractors;
+using AppInformation.Helpers;
 
 
 namespace AppInformation;
@@ -8,11 +9,14 @@ namespace AppInformation;
 
 public class AppInfoBuilder : IAppInfoBuilder
 {
-	private CultureInfo _culture = CultureInfo.CurrentUICulture;
+	private CultureInfo _culture = Constants.DefaultCulture;
 	private readonly List<IExtractor> _extractors = new();
 
 	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
 	{
+		if (cultureInfo == null)
+			return this;
+
 		_culture = cultureInfo;
 		return this;
 	}
@@ -23,13 +27,13 @@ public class AppInfoBuilder : IAppInfoBuilder
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (extractor == null)
 		{
-			Debug.WriteLine("Attempted to add null extractor");
+			InternalLogger.Log("Attempted to add null extractor");
 			return this;
 		}
 
 		if (_extractors.Contains(extractor))
 		{
-			Debug.WriteLine("Attempted to add duplicate extractor");
+			InternalLogger.Log("Attempted to add duplicate extractor");
 			return this;
 		}
 
@@ -47,19 +51,31 @@ public class AppInfoBuilder : IAppInfoBuilder
 		}
 		catch (Exception ex)
 		{
-			Debug.WriteLine($"Exception caught when trying to create and add extractor of {typeof(T)}: {ex}");
+			InternalLogger.Log("Exception caught when trying to create and add extractor of {0}: {1}", typeof(T), ex);
 			return this;
 		}
 	}
 
 	public IAppInfo Build()
 	{
-//TODO: try-catch
-		var fragments = _extractors.SelectMany(e => e.Extract()).ToArray();
 //TODO: #11: Move fragment compilation to formatter class
 //TODO: #11: Inject culture when formatting
 //TODO: #11: Trim label and value
+		var fragments = _extractors.SelectMany(SafelyExtract).ToArray();
 		var appInfo = new AppInfo(_culture, fragments);
 		return appInfo;
+	}
+
+	private IEnumerable<Fragment> SafelyExtract(IExtractor extractor)
+	{
+		try
+		{
+			return extractor.Extract();
+		}
+		catch (Exception ex)
+		{
+			InternalLogger.Log("Exception caught when extracting fragments from {0}: {1}", extractor, ex);
+			return [];
+		}
 	}
 }

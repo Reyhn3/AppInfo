@@ -1,3 +1,4 @@
+using AppInformation.Helpers;
 using AppInformation.Renderers;
 
 
@@ -14,7 +15,7 @@ public static class OutputExtensions
 		public IAppInfoOutputBuilder WithOutput(
 			Action<IAppInfoOutputBuilder> configure)
 		{
-			var builder = AppInfo.CreateDefaultOutputBuilder(appInfo);
+			var builder = AppInfo.CreateEmptyOutputBuilder(appInfo);
 			configure(builder);
 			return builder;
 		}
@@ -33,9 +34,17 @@ public static class OutputExtensions
 			builder.AddRenderer(new LogRenderer(logger));
 
 		public IAppInfoOutputBuilder ToTextFile() =>
-			builder.AddRenderer(new TextFileRenderer());
+			builder.AddRenderer(
+				new TextFileRenderer(
+//TODO: Make path and filename configurable
+					new TempFileNameProvider(),
+					new FileWriter()));
 
 		public IAppInfoOutputBuilder ToJsonFile() =>
-			builder.AddRenderer(new JsonFileRenderer());
+			builder.AddRenderer(
+				new JsonFileRenderer(
+//TODO: Make path and filename configurable
+					new TempFileNameProvider(),
+					new FileWriter()));
 	}
 }

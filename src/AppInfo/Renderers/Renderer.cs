@@ -1,4 +1,5 @@
 using System.Globalization;
+using AppInformation.Extractors;
 using AppInformation.Helpers;
 
 
@@ -24,15 +25,24 @@ public abstract class Renderer : IRenderer
 
 	protected abstract void RenderAppInfo(IAppInfo info);
 
-	protected static Title GenerateTitleParts(IAppInfo info) => new(
-		"Application ",
-//TODO: Replace this part with the ProductName-fragment from StandardExtractor
-		"DUMMY",
-		" created with context:");
+	protected static Title GenerateTitleParts(IAppInfo info)
+	{
+		var productName = info.Fragments.FirstOrDefault(f => string.Equals(f.Label, StandardExtractor.LabelForProductName));
+		if (productName is null || productName.Value is null || !productName.Value.Any())
+			return new Title(
+				"Application ",
+				string.Empty,
+				" created with context:");
+
+		return new Title(
+			"Application ",
+			productName.Value.FirstOrDefault()?.ToString() ?? "\b",
+			" created with context:");
+	}
 
 	protected string FormatWithCulture(object value) =>
 		string.Format(_culture, "{0}", value!);
 
 
-	protected record struct Title(string Lead, string Name, string Tail);
+	protected internal record struct Title(string Lead, string Name, string Tail);
 }
