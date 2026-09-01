@@ -9,20 +9,20 @@ public partial class AppInfo
 			.WithDefaultOutput()
 			.Write();
 
-	public static IAppInfoBuilder CreateEmptyBuilder() =>
-		new AppInfoBuilder();
+	public static IInputBuilder CreateEmptyBuilder() =>
+		new InputBuilder();
 
-	public static IAppInfoBuilder CreateDefaultBuilder() =>
-		new AppInfoBuilder()
+	public static IInputBuilder CreateDefaultBuilder() =>
+		new InputBuilder()
 			.UseCulture(Constants.DefaultCulture)
 			.AddStandard();
 
-	internal static IAppInfoOutputBuilder CreateEmptyOutputBuilder(IAppInfo appInfo) =>
-		new AppInfoOutputBuilder()
+	internal static IOutputBuilder CreateEmptyOutputBuilder(IAppInfo appInfo) =>
+		new OutputBuilder()
 			.UseAppInfo(appInfo);
 
-	internal static IAppInfoOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>
-		new AppInfoOutputBuilder()
+	internal static IOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>
+		new OutputBuilder()
 			.UseAppInfo(appInfo)
 			.ToConsole();
 }

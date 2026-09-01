@@ -4,18 +4,18 @@ using AppInformation.Renderers;
 using AppInformation.Tests.TestHelpers;
 
 
-namespace AppInformation.Tests.Definition;
+namespace AppInformation.Tests.Input;
 
 
-public class DefinitionExtensionsTests
+public class InputExtensionsTests
 {
 	private const string ExtractorsFieldName = "_extractors";
 
-	private AppInfoBuilder _sut;
+	private InputBuilder _sut;
 
 	[SetUp]
 	public void PreRun() =>
-		_sut = new AppInfoBuilder();
+		_sut = new InputBuilder();
 
 #region BuildAndWriteToDefault
 	[Test]

@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Globalization;
 using AppInformation.Helpers;
 using AppInformation.Renderers;
 
@@ -7,12 +5,12 @@ using AppInformation.Renderers;
 namespace AppInformation;
 
 
-public class AppInfoOutputBuilder : IAppInfoOutputBuilder
+public class OutputBuilder : IOutputBuilder
 {
 	private IAppInfo? _appInfo;
 	private readonly List<IRenderer> _renderers = new();
 
-	public IAppInfoOutputBuilder UseAppInfo(IAppInfo appInfo)
+	public IOutputBuilder UseAppInfo(IAppInfo appInfo)
 	{
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (appInfo == null)
@@ -25,7 +23,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		return this;
 	}
 
-	public IAppInfoOutputBuilder AddRenderer<T>(T renderer)
+	public IOutputBuilder AddRenderer<T>(T renderer)
 		where T : IRenderer
 	{
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -45,7 +43,7 @@ public class AppInfoOutputBuilder : IAppInfoOutputBuilder
 		return this;
 	}
 
-	public IAppInfoOutputBuilder AddRenderer<T>()
+	public IOutputBuilder AddRenderer<T>()
 		where T : IRenderer, new()
 	{
 		try

@@ -9,11 +9,11 @@ public static class OutputExtensions
 {
 	extension(IAppInfo appInfo)
 	{
-		public IAppInfoOutputBuilder WithDefaultOutput() =>
+		public IOutputBuilder WithDefaultOutput() =>
 			AppInfo.CreateDefaultOutputBuilder(appInfo);
 
-		public IAppInfoOutputBuilder WithOutput(
-			Action<IAppInfoOutputBuilder> configure)
+		public IOutputBuilder WithOutput(
+			Action<IOutputBuilder> configure)
 		{
 			var builder = AppInfo.CreateEmptyOutputBuilder(appInfo);
 			configure(builder);
@@ -22,25 +22,25 @@ public static class OutputExtensions
 	}
 
 
-	extension(IAppInfoOutputBuilder builder)
+	extension(IOutputBuilder builder)
 	{
-		public IAppInfoOutputBuilder ToConsole() =>
+		public IOutputBuilder ToConsole() =>
 			builder.AddRenderer(new ConsoleRenderer());
 
-		public IAppInfoOutputBuilder ToTrace() =>
+		public IOutputBuilder ToTrace() =>
 			builder.AddRenderer(new TraceRenderer());
 
-		public IAppInfoOutputBuilder ToLog(Action<string, object?[]> logger) =>
+		public IOutputBuilder ToLog(Action<string, object?[]> logger) =>
 			builder.AddRenderer(new LogRenderer(logger));
 
-		public IAppInfoOutputBuilder ToTextFile() =>
+		public IOutputBuilder ToTextFile() =>
 			builder.AddRenderer(
 				new TextFileRenderer(
 //TODO: Make path and filename configurable
 					new TempFileNameProvider(),
 					new FileWriter()));
 
-		public IAppInfoOutputBuilder ToJsonFile() =>
+		public IOutputBuilder ToJsonFile() =>
 			builder.AddRenderer(
 				new JsonFileRenderer(
 //TODO: Make path and filename configurable

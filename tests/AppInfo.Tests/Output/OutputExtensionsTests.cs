@@ -9,11 +9,11 @@ public class OutputExtensionsTests
 	private const string AppInfoFieldName = "_appInfo";
 	private const string RenderersFieldName = "_renderers";
 
-	private AppInfoOutputBuilder _sut;
+	private OutputBuilder _sut;
 
 	[SetUp]
 	public void PreRun() =>
-		_sut = new AppInfoOutputBuilder();
+		_sut = new OutputBuilder();
 
 #region WithDefaultOutput
 	[Test]

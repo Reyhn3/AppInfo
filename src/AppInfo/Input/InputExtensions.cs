@@ -6,9 +6,9 @@ using AppInformation.Helpers;
 namespace AppInformation;
 
 
-public static class DefinitionExtensions
+public static class InputExtensions
 {
-	extension(IAppInfoBuilder builder)
+	extension(IInputBuilder builder)
 	{
 		public IAppInfo BuildAndWriteToDefault()
 		{
@@ -20,7 +20,7 @@ public static class DefinitionExtensions
 			return appInfo;
 		}
 
-		public IAppInfo BuildAndWriteTo(Action<IAppInfoOutputBuilder> configure)
+		public IAppInfo BuildAndWriteTo(Action<IOutputBuilder> configure)
 		{
 			var appInfo = builder.Build();
 
@@ -31,7 +31,7 @@ public static class DefinitionExtensions
 			return appInfo;
 		}
 
-		private IAppInfoBuilder SafelyAddExtractor(Func<IExtractor> factory)
+		private IInputBuilder SafelyAddExtractor(Func<IExtractor> factory)
 		{
 			try
 			{
@@ -45,11 +45,11 @@ public static class DefinitionExtensions
 			}
 		}
 
-		public IAppInfoBuilder AddStandard() =>
+		public IInputBuilder AddStandard() =>
 			builder.SafelyAddExtractor(() =>
 				new StandardExtractor(Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()));
 
-		public IAppInfoBuilder WithIdentities(
+		public IInputBuilder WithIdentities(
 			string appId,
 			string? instanceId = null,
 			Func<object?>? scopeIdFactory = null,
@@ -62,33 +62,33 @@ public static class DefinitionExtensions
 					scopeIdFactory,
 					args));
 
-		public IAppInfoBuilder AddTimestamp() =>
+		public IInputBuilder AddTimestamp() =>
 			builder.SafelyAddExtractor(() =>
 				new TimestampExtractor());
 
-		public IAppInfoBuilder AddExtra(
+		public IInputBuilder AddExtra(
 			string label,
 			object? value) =>
 			builder.SafelyAddExtractor(() =>
 				new ExtrasExtractor((label, value)));
 
-		public IAppInfoBuilder AddExtra(
+		public IInputBuilder AddExtra(
 			string label,
 			Func<object?> valueFactory) =>
 			builder.SafelyAddExtractor(() =>
 				new ExtrasExtractor((label, valueFactory)));
 
-		public IAppInfoBuilder AddExtra(
+		public IInputBuilder AddExtra(
 			params (string Label, object? Value)[] extras) =>
 			builder.SafelyAddExtractor(() =>
 				new ExtrasExtractor(extras));
 
-		public IAppInfoBuilder AddExtra(
+		public IInputBuilder AddExtra(
 			params (string Label, Func<object?> ValueFactory)[] extras) =>
 			builder.SafelyAddExtractor(() =>
 				new ExtrasExtractor(extras));
 
-		public IAppInfoBuilder AddAssembly(
+		public IInputBuilder AddAssembly(
 			Assembly assembly,
 			string? shortName = null,
 			bool stripSourceRevision = false) =>

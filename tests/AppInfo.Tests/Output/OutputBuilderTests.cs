@@ -5,26 +5,26 @@ using AppInformation.Tests.TestHelpers;
 namespace AppInformation.Tests.Output;
 
 
-public class AppInfoOutputBuilderTests
+public class OutputBuilderTests
 {
 	private const string AppInfoFieldName = "_appInfo";
 	private const string RenderersFieldName = "_renderers";
 
-	private AppInfoOutputBuilder _sut;
+	private OutputBuilder _sut;
 
 	[SetUp]
 	public void PreRun() =>
-		_sut = new AppInfoOutputBuilder();
+		_sut = new OutputBuilder();
 
 #region Ctor
 	[Test]
 	public void Ctor_should_not_populate_appinfo_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoOutputBuilder(), AppInfoFieldName)
+		TestHelpers.Helpers.GetFieldValue(new OutputBuilder(), AppInfoFieldName)
 			.ShouldBeNull();
 
 	[Test]
 	public void Ctor_should_populate_renderers_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoOutputBuilder(), RenderersFieldName)
+		TestHelpers.Helpers.GetFieldValue(new OutputBuilder(), RenderersFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<List<IRenderer>>()
 			.ShouldBeEmpty();
