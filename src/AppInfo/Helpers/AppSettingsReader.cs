@@ -1,9 +1,7 @@
-using System.Diagnostics;
 using System.Text.Json;
-using AppInformation.Helpers;
 
 
-namespace AppInformation.Extractors;
+namespace AppInformation.Helpers;
 
 
 internal static class AppSettingsReader

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Globalization;
 using AppInformation.Extractors;
 using AppInformation.Helpers;

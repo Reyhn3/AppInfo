@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Globalization;
 using AppInformation.Helpers;
 using AppInformation.Renderers;
 
