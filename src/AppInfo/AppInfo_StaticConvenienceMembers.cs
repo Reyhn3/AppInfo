@@ -9,11 +9,11 @@ public partial class AppInfo
 			.WithDefaultOutput()
 			.Write();
 
-	public static IAppInfoBuilder CreateEmptyBuilder() =>
-		new AppInfoBuilder();
+	public static IInputBuilder CreateEmptyBuilder() =>
+		new InputBuilder();
 
-	public static IAppInfoBuilder CreateDefaultBuilder() =>
-		new AppInfoBuilder()
+	public static IInputBuilder CreateDefaultBuilder() =>
+		new InputBuilder()
 			.UseCulture(Constants.DefaultCulture)
 			.AddStandard();
 

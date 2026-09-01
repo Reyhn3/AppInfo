@@ -6,12 +6,12 @@ using AppInformation.Helpers;
 namespace AppInformation;
 
 
-public class AppInfoBuilder : IAppInfoBuilder
+public class InputBuilder : IInputBuilder
 {
 	private CultureInfo _culture = Constants.DefaultCulture;
 	private readonly List<IExtractor> _extractors = new();
 
-	public IAppInfoBuilder UseCulture(CultureInfo cultureInfo)
+	public IInputBuilder UseCulture(CultureInfo cultureInfo)
 	{
 		if (cultureInfo == null)
 			return this;
@@ -20,7 +20,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return this;
 	}
 
-	public IAppInfoBuilder AddExtractor<T>(T extractor)
+	public IInputBuilder AddExtractor<T>(T extractor)
 		where T : IExtractor
 	{
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -40,7 +40,7 @@ public class AppInfoBuilder : IAppInfoBuilder
 		return this;
 	}
 
-	public IAppInfoBuilder AddExtractor<T>()
+	public IInputBuilder AddExtractor<T>()
 		where T : IExtractor, new()
 	{
 		try

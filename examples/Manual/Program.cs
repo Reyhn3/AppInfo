@@ -18,7 +18,7 @@ using AppInformation.Renderers;
 //
 
 // First, define what information to include
-var appInfoBuilder = new AppInfoBuilder();
+var appInfoBuilder = new InputBuilder();
 appInfoBuilder.UseCulture(CultureInfo.CreateSpecificCulture("sv-SE"));
 appInfoBuilder.AddExtractor(new StandardExtractor(Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()));
 appInfoBuilder.AddExtractor<TimestampExtractor>();

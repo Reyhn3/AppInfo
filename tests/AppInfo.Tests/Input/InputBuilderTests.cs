@@ -3,31 +3,31 @@ using AppInformation.Extractors;
 using AppInformation.Tests.TestHelpers;
 
 
-namespace AppInformation.Tests.Definition;
+namespace AppInformation.Tests.Input;
 
 
-public class AppInfoBuilderTests
+public class InputBuilderTests
 {
 	private const string CultureFieldName = "_culture";
 	private const string ExtractorsFieldName = "_extractors";
 
-	private AppInfoBuilder _sut;
+	private InputBuilder _sut;
 
 	[SetUp]
 	public void PreRun() =>
-		_sut = new AppInfoBuilder();
+		_sut = new InputBuilder();
 
 #region Ctor
 	[Test]
 	public void Ctor_should_populate_culture_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), CultureFieldName)
+		TestHelpers.Helpers.GetFieldValue(new InputBuilder(), CultureFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<CultureInfo>()
 			.ShouldBe(Constants.DefaultCulture);
 
 	[Test]
 	public void Ctor_should_populate_extractors_field() =>
-		TestHelpers.Helpers.GetFieldValue(new AppInfoBuilder(), ExtractorsFieldName)
+		TestHelpers.Helpers.GetFieldValue(new InputBuilder(), ExtractorsFieldName)
 			.ShouldNotBeNull()
 			.ShouldBeOfType<List<IExtractor>>()
 			.ShouldBeEmpty();
