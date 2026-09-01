@@ -17,12 +17,12 @@ public partial class AppInfo
 			.UseCulture(Constants.DefaultCulture)
 			.AddStandard();
 
-	internal static IAppInfoOutputBuilder CreateEmptyOutputBuilder(IAppInfo appInfo) =>
-		new AppInfoOutputBuilder()
+	internal static IOutputBuilder CreateEmptyOutputBuilder(IAppInfo appInfo) =>
+		new OutputBuilder()
 			.UseAppInfo(appInfo);
 
-	internal static IAppInfoOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>
-		new AppInfoOutputBuilder()
+	internal static IOutputBuilder CreateDefaultOutputBuilder(IAppInfo appInfo) =>
+		new OutputBuilder()
 			.UseAppInfo(appInfo)
 			.ToConsole();
 }

@@ -27,7 +27,7 @@ appInfoBuilder.AddExtractor<TimestampExtractor>();
 var appInfo = appInfoBuilder.Build();
 
 // Third, declare what to do with the AppInfo
-var appInfoOutputBuilder = new AppInfoOutputBuilder();
+var appInfoOutputBuilder = new OutputBuilder();
 appInfoOutputBuilder.UseAppInfo(appInfo);
 appInfoOutputBuilder.AddRenderer<ConsoleRenderer>();
 

@@ -20,7 +20,7 @@ public static class DefinitionExtensions
 			return appInfo;
 		}
 
-		public IAppInfo BuildAndWriteTo(Action<IAppInfoOutputBuilder> configure)
+		public IAppInfo BuildAndWriteTo(Action<IOutputBuilder> configure)
 		{
 			var appInfo = builder.Build();
 
