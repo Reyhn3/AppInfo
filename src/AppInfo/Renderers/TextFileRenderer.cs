@@ -13,10 +13,10 @@ public class TextFileRenderer(IFileNameProvider fileNameProvider, IFileWriter fi
 	{
 		var output = BuildPlainString(info);
 
-//TODO: Generate unique file name, or append to existing file
+//TODO: #30: Generate unique file name, or append to existing file
 		var path = fileNameProvider.GetPathAndFileName("txt");
 
-//TODO: Let the user choose encoding
+//TODO: #30: Let the user choose encoding
 		var file = fileWriter.WriteToFile(path, output);
 		InternalLogger.Log("Plain-text file written to {0}", file);
 	}

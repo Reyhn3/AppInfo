@@ -9,7 +9,7 @@ namespace AppInformation.Renderers;
 public class JsonFileRenderer(IFileNameProvider fileNameProvider, IFileWriter fileWriter)
 	: Renderer
 {
-//TODO: This should be configurable
+//TODO: #30: This should be configurable
 	private static readonly JsonSerializerOptions s_options = new()
 		{
 			WriteIndented = true,
@@ -23,7 +23,7 @@ public class JsonFileRenderer(IFileNameProvider fileNameProvider, IFileWriter fi
 	{
 		var container = BuildContainer(info);
 
-//TODO: Generate unique file name, or append to existing file
+//TODO: #30: Generate unique file name, or append to existing file
 		var path = fileNameProvider.GetPathAndFileName("json");
 
 		using var stream = new MemoryStream();
