@@ -1,3 +1,4 @@
+using System.Text;
 using AppInformation.Helpers;
 
 
@@ -17,7 +18,7 @@ public class FileWriterTests
 		Should.NotThrow(() => _sut.WriteToFile(Path.GetInvalidFileNameChars()[0].ToString(), "test"));
 
 	[Test]
-	public void WriteToFile_shall_write_the_content_to_the_specified_file()
+	public void WriteToFile_shall_write_the_string_content_to_the_specified_file()
 	{
 		var pathAndFileName = Path.GetTempFileName();
 		var result = _sut.WriteToFile(pathAndFileName, "test");
@@ -27,5 +28,21 @@ public class FileWriterTests
 
 		File.Exists(pathAndFileName).ShouldBeTrue();
 		File.ReadAllText(pathAndFileName).ShouldBe("test");
+	}
+
+	[Test]
+	public void WriteToFile_shall_write_the_stream_content_to_the_specified_file()
+	{
+		var pathAndFileName = Path.GetTempFileName();
+		using var stream = new MemoryStream();
+		stream.Write("{\"test\"}"u8);
+
+		var result = _sut.WriteToFile(pathAndFileName, stream);
+
+		result.ShouldNotBeNull();
+		Console.WriteLine(result);
+
+		File.Exists(pathAndFileName).ShouldBeTrue();
+		File.ReadAllText(pathAndFileName).ShouldBe("{\"test\"}");
 	}
 }

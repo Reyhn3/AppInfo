@@ -5,14 +5,14 @@ using AppInformation.Renderers;
 namespace AppInformation.Tests.Renderers;
 
 
-public class TextFileRendererTests
+public class JsonFileRendererTests
 {
-	private TextFileRenderer _sut;
+	private JsonFileRenderer _sut;
 	private IFileWriter _fileWriter;
 
 	[SetUp]
 	public void PreRun() =>
-		_sut = new TextFileRenderer(
+		_sut = new JsonFileRenderer(
 			A.Dummy<IFileNameProvider>(),
 			_fileWriter = A.Fake<IFileWriter>());
 
@@ -28,13 +28,13 @@ public class TextFileRendererTests
 	}
 
 	[Test]
-	public void Render_should_write_appinfo_to_a_plain_text_file()
+	public void Render_should_write_appinfo_to_a_JSON_text_file()
 	{
 		var appInfo = AppInfo.CreateDefaultBuilder().Build();
 
 		_sut.Render(appInfo);
 
-		A.CallTo(() => _fileWriter.WriteToFile(A<string>.Ignored, A<string?>.Ignored))
+		A.CallTo(() => _fileWriter.WriteToFile(A<string>.Ignored, A<Stream>.Ignored))
 			.MustHaveHappenedOnceExactly();
 	}
 
@@ -49,7 +49,7 @@ public class TextFileRendererTests
 			A.CallTo(() => ff.GetPathAndFileName(A<string?>.Ignored))
 				.Returns(filename)));
 
-		var sut = new TextFileRenderer(
+		var sut = new JsonFileRenderer(
 			fileNameProvider,
 			new FileWriter());
 		sut.Render(appInfo);

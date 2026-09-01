@@ -41,6 +41,10 @@ public static class OutputExtensions
 					new FileWriter()));
 
 		public IAppInfoOutputBuilder ToJsonFile() =>
-			builder.AddRenderer(new JsonFileRenderer());
+			builder.AddRenderer(
+				new JsonFileRenderer(
+//TODO: Make path and filename configurable
+					new TempFileNameProvider(),
+					new FileWriter()));
 	}
 }
