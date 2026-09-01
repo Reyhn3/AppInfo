@@ -1,11 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageId>AppInfo</PackageId>
     <AssemblyName>AppInfo</AssemblyName>
     <Product>AppInfo</Product>
-    <Description>Collects, displays and optionally saves information about the host application during startup.</Description>
+    <Description>Collect, display and optionally save information about the host application during startup.</Description>
     <RootNamespace>AppInformation</RootNamespace>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>AppInfo</PackageId>
+    <Title>AppInfo</Title>
+    <PackageReadmeFile>PackageReadMe.md</PackageReadmeFile>
+    <PackageTags>app info logging manifest</PackageTags>
+    <PackageProjectUrl>https://github.com/Reyhn3/AppInfo</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Reyhn3/AppInfo/blob/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Reyhn3/AppInfo</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="PackageReadMe.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>
