@@ -26,6 +26,9 @@ jobs:
       - name: Version
         run: echo "Using version ${{ env.VERSION }}"
 
+      - name: List
+        run: tree
+
       - name: Create package
         run: dotnet pack "./src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
 
