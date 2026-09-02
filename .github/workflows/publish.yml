@@ -27,7 +27,7 @@ jobs:
         run: echo "Using version ${{ env.VERSION }}"
 
       - name: Create package
-        run: dotnet pack "src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
+        run: dotnet pack "./src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
 
       - uses: actions/upload-artifact@v7
         with:
