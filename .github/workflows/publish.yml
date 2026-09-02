@@ -1,5 +1,6 @@
 name: Publish NuGet
 
+
 on:
   workflow_dispatch:
     inputs:
@@ -7,6 +8,7 @@ on:
         required: true
         type: boolean
         description: "Dry run (doesn't actually publish anything)"
+
 
 jobs:
   build:
