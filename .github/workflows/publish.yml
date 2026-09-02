@@ -1,0 +1,50 @@
+name: Publish NuGet
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        required: true
+        type: boolean
+        description: "Dry run (doesn't actually publish anything)"
+
+jobs:
+  build:
+    uses: ./.github/workflows/ci.yml
+
+  pack:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+
+    steps:
+      - name: Version
+        run: echo "Using version ${{ env.VERSION }}"
+
+      - name: Create package
+        run: dotnet pack "src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: "artifacts"
+
+  publish:
+    needs: pack
+
+    runs-on: ubuntu-latest
+
+    if: ${{ !inputs.dry-run }}
+
+    steps:
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1  # Get a short-lived NuGet API key
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+#      - name: Publish to NuGet
+#        run: dotnet nuget push artifacts/AppInfo.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
