@@ -27,12 +27,11 @@ jobs:
       - name: List
         run: ls -alR
 
-
   build:
     name: Build and Test
     uses: ./.github/workflows/ci.yml
     with:
-      version: ${{ vars.VERSION }}
+      version: ${{ github.event.inputs.version }}
 
   zip:
     name: Zip Source Code
@@ -52,7 +51,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: AppInfo-${{ vars.VERSION }}
+          name: AppInfo-${{ github.event.inputs.version }}
           path: artifacts/
 
   pack:
@@ -65,13 +64,21 @@ jobs:
 
     steps:
       - name: Version
-        run: echo "Using version ${{ vars.VERSION }}"
+        run: echo "Using version ${{ github.event.inputs.version }}"
 
-      - name: List
-        run: ls -alR
+      - name: Checkout
+        uses: actions/checkout@v7
 
       - name: Create package
-        run: dotnet pack "./src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ vars.VERSION }}" --output "artifacts"
+        run: >
+          dotnet pack \
+            "./src/AppInfo/AppInfo.csproj" \
+            --nologo \
+            --no-build \
+            --include-symbols \
+            --configuration Release \
+            -p:Version="${{ github.event.inputs.version }}" \
+            --output "artifacts"
 
       - uses: actions/upload-artifact@v7
         with:
