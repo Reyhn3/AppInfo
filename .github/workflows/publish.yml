@@ -24,13 +24,13 @@ jobs:
 
     steps:
       - name: Version
-        run: echo "Using version ${{ env.VERSION }}"
+        run: echo "Using version ${{ vars.VERSION }}"
 
       - name: List
-        run: tree
+        run: ls -alR
 
       - name: Create package
-        run: dotnet pack "./src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
+        run: dotnet pack "./src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ vars.VERSION }}" --output "artifacts"
 
       - uses: actions/upload-artifact@v7
         with:
