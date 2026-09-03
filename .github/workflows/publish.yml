@@ -124,14 +124,14 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: packages
-          path: "artifacts/*.nupgk"
+          path: "artifacts/*.nupkg"
           archive: false
 
       - name: Upload symbols to artifacts
         uses: actions/upload-artifact@v7
         with:
           name: packages
-          path: "artifacts/*.snupgk"
+          path: "artifacts/*.snupkg"
           archive: false
 
   publish:
