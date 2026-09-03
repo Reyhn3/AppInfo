@@ -12,8 +12,9 @@ on:
   workflow_call:
     inputs:
       version:
-        description: 'The SemVer version to set'
         required: true
+        type: string
+        description: 'The SemVer version to set'
 
 
 jobs:
