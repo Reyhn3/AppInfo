@@ -85,7 +85,7 @@ jobs:
           dotnet build \
             --no-restore \
             --configuration Release \
-            -p:Version="${VERSION}"
+            -p:Version="${{ github.event.inputs.version }}"
 
       - name: Test
         run: >
