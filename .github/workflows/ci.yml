@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VERSION: ${{ github.event.inputs.version || '0.0.0' }}
+      VERSION: ${{ github.event.inputs.version || '1.0.0' }}
 
     strategy:
       matrix:

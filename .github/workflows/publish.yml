@@ -11,6 +11,19 @@ on:
 
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Version
+        run: echo "Vars: ${{ vars.VERSION }} env: ${{ env.VERSION }}"
+
+      - name: List
+        run: ls -alR
+
+
   build:
     uses: ./.github/workflows/ci.yml
     with:
