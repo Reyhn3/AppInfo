@@ -45,14 +45,13 @@ jobs:
       - name: Zip Source Code
         run: |
           mkdir source
-          cp -r AppInfo/* source/
-          zip -r artifacts/AppInfo-${{ vars.VERSION }}-source.zip source
+          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: AppInfo-${{ github.event.inputs.version }}
-          path: artifacts/
+          path: source/
 
   pack:
     name: Pack NuGet Packages
@@ -62,12 +61,24 @@ jobs:
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
 
+    strategy:
+      matrix:
+        dotnet-version: [ '10.0.x', '8.0.x' ]
+
     steps:
       - name: Version
         run: echo "Using version ${{ github.event.inputs.version }}"
 
       - name: Checkout
         uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies
+        run: dotnet restore
 
       - name: Create package
         run: >
