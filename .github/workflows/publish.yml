@@ -14,6 +14,27 @@ jobs:
   build:
     uses: ./.github/workflows/ci.yml
 
+  zip:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Zip Source Code
+        run: |
+          mkdir source
+          cp -r AppInfo/* source/
+          zip -r artifacts/AppInfo-${{ vars.VERSION }}-source.zip source
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppInfo-${{ vars.VERSION }}
+          path: artifacts/
+
   pack:
     needs: build
 
