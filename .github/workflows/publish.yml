@@ -80,6 +80,13 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Build
+        run: >
+          dotnet build \
+          --no-restore \
+          --configuration Release \
+          -p:Version="${{ github.event.inputs.version }}"
+
       - name: Create package
         run: >
           dotnet pack \
