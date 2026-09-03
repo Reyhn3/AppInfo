@@ -15,27 +15,27 @@ on:
 
 
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Version
-        run: echo "vars ${{ vars.VERSION }} env ${{ env.VERSION }} input ${{ github.event.inputs.version }}"
-
-      - name: List
-        run: ls -alR
-
-  build:
-    name: Build and Test
-    uses: ./.github/workflows/ci.yml
-    with:
-      version: ${{ github.event.inputs.version }}
+#  debug:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v7
+#
+#      - name: Version
+#        run: echo "vars ${{ vars.VERSION }} env ${{ env.VERSION }} input ${{ github.event.inputs.version }}"
+#
+#      - name: List
+#        run: ls -alR
+#
+#  build:
+#    name: Build and Test
+#    uses: ./.github/workflows/ci.yml
+#    with:
+#      version: ${{ github.event.inputs.version }}
 
   zip:
     name: Zip Source Code
-    needs: build
+#    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -55,7 +55,7 @@ jobs:
 
   pack:
     name: Pack NuGet Packages
-    needs: build
+#    needs: build
     runs-on: ubuntu-latest
 
     permissions:
@@ -83,9 +83,25 @@ jobs:
       - name: Build
         run: >
           dotnet build \
-          --no-restore \
-          --configuration Release \
-          -p:Version="${{ github.event.inputs.version }}"
+            --no-restore \
+            --configuration Release \
+            -p:Version="${VERSION}"
+
+      - name: Test
+        run: >
+          dotnet test \
+            --no-build \
+            --configuration Release \
+            --verbosity normal \
+            --logger trx \
+            --results-directory "TestResults-${{ matrix.dotnet-version }}"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v7
+        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
+        with:
+          name: dotnet-results-${{ matrix.dotnet-version }}
+          path: TestResults-${{ matrix.dotnet-version }}
 
       - name: Create package
         run: >
