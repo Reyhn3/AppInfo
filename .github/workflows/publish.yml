@@ -7,6 +7,7 @@ on:
       version:
         required: true
         type: string
+        default: '0.0.0-pre-0'
         description: "Version to publish"
       dry-run:
         required: true
@@ -48,7 +49,7 @@ jobs:
 #          mkdir source
 #          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
 
-      - name: Upload Artifacts
+      - name: Upload source code to artifacts
         uses: actions/upload-artifact@v4
         with:
 #          name: AppInfo-${{ github.event.inputs.version }}-source.zip
@@ -60,9 +61,6 @@ jobs:
     name: Pack NuGet Packages
 #    needs: build
     runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write  # enable GitHub OIDC token issuance for this job
 
 #    strategy:
 #      matrix:
@@ -106,7 +104,7 @@ jobs:
         with:
 #          name: dotnet-results-${{ matrix.dotnet-version }}
 #          path: TestResults-${{ matrix.dotnet-version }}
-          name: dotnet-results-${{ github.event.inputs.version }}
+          name: test-results-${{ github.event.inputs.version }}.zip
           path: TestResults-${{ github.event.inputs.version }}
 
       - name: Create package
@@ -137,11 +135,14 @@ jobs:
   publish:
     name: Publish NuGet Packages
     needs: pack
-
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+      contents: read
+
     steps:
-      - name: NuGet login (OIDC → temp API key)
+      - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
         with:
