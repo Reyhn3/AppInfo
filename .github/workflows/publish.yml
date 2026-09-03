@@ -11,6 +11,7 @@ on:
       dry-run:
         required: true
         type: boolean
+        default: true
         description: "Dry run (doesn't actually publish anything)"
 
 
@@ -42,16 +43,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Zip Source Code
-        run: |
-          mkdir source
-          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
+#      - name: Zip Source Code
+#        run: |
+#          mkdir source
+#          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
+#          name: AppInfo-${{ github.event.inputs.version }}-source.zip
+#          path: source/
           name: AppInfo-${{ github.event.inputs.version }}-source.zip
-          path: source/
+          path: .
 
   pack:
     name: Pack NuGet Packages
@@ -117,11 +120,19 @@ jobs:
             -p:Version="${{ github.event.inputs.version }}" \
             --output "artifacts"
 
-      - name: Upload package to artifacts
+      - name: Upload NuGet to artifacts
         uses: actions/upload-artifact@v7
         with:
           name: packages
-          path: "artifacts/*"
+          path: "artifacts/*.nupgk"
+          archive: false
+
+      - name: Upload symbols to artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: "artifacts/*.snupgk"
+          archive: false
 
   publish:
     name: Publish NuGet Packages
