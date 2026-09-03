@@ -95,7 +95,6 @@ jobs:
             --configuration Release \
             --verbosity normal \
             --logger trx \
-#            --results-directory "TestResults-${{ matrix.dotnet-version }}"
             --results-directory "TestResults-${{ github.event.inputs.version }}"
 
       - name: Upload test results
