@@ -19,8 +19,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
-
+    name: Build
     runs-on: ubuntu-latest
 
     env:
@@ -49,6 +48,10 @@ jobs:
           --configuration Release \
           -p:Version="${VERSION}"
 
+  test:
+    name: Test
+    needs: build
+    steps:
     - name: Test
       run: >
         dotnet test \
