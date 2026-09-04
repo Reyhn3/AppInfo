@@ -50,7 +50,7 @@ jobs:
 #          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
 
       - name: Upload source code to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
 #          name: AppInfo-${{ github.event.inputs.version }}-source.zip
 #          path: source/
@@ -150,8 +150,11 @@ jobs:
         id: login
         with:
           user: ${{ secrets.NUGET_USER }}
-          environment: "production"
 
-      - name: Publish to NuGet
+      - name: Push package
         if: ${{ !inputs.dry-run }}
-        run: dotnet nuget push artifacts/AppInfo.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        run: >
+          dotnet nuget push \
+            artifacts/AppInfo.nupkg \
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
+            --source https://api.nuget.org/v3/index.json
