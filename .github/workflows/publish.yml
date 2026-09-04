@@ -94,14 +94,14 @@ jobs:
       - name: Upload NuGet to artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: packages
+          name: package
           path: "packages/AppInfo.${{ github.event.inputs.version }}.nupkg"
           archive: false
 
       - name: Upload symbols to artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: packages
+          name: symbols
           path: "packages/AppInfo.${{ github.event.inputs.version }}.snupkg"
           archive: false
 
@@ -115,10 +115,17 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/download-artifact@v8
+      - name: Download package from artifacts
+        uses: actions/download-artifact@v8
         with:
-          name: packages
-          path: "packages/AppInfo.${{ github.event.inputs.version }}.?nupkg"
+          name: package
+          path: "packages"
+
+      - name: Download symbols from artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: symbols
+          path: "packages"
 
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
