@@ -1,3 +1,6 @@
+# Build, test, pack NuGet then publish it to NuGet.org.
+
+
 name: Publish NuGet
 
 
@@ -17,54 +20,23 @@ on:
 
 
 jobs:
-#  debug:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v7
-#
-#      - name: Version
-#        run: echo "vars ${{ vars.VERSION }} env ${{ env.VERSION }} input ${{ github.event.inputs.version }}"
-#
-#      - name: List
-#        run: ls -alR
-#
-#  build:
-#    name: Build and Test
-#    uses: ./.github/workflows/ci.yml
-#    with:
-#      version: ${{ github.event.inputs.version }}
-
   zip:
     name: Zip Source Code
-#    needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
-#      - name: Zip Source Code
-#        run: |
-#          mkdir source
-#          zip -r source/AppInfo-${{ github.event.inputs.version }}-source.zip .
-
       - name: Upload source code to artifacts
         uses: actions/upload-artifact@v7
         with:
-#          name: AppInfo-${{ github.event.inputs.version }}-source.zip
-#          path: source/
           name: AppInfo-${{ github.event.inputs.version }}-source.zip
           path: .
 
   pack:
     name: Pack NuGet Packages
-#    needs: build
     runs-on: ubuntu-latest
-
-#    strategy:
-#      matrix:
-#        dotnet-version: [ '10.0.x', '8.0.x' ]
 
     steps:
       - name: Version
@@ -76,7 +48,6 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
         with:
-#          dotnet-version: ${{ matrix.dotnet-version }}
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
@@ -102,8 +73,6 @@ jobs:
         uses: actions/upload-artifact@v7
         if: ${{ always() }}  # Always run this step to publish test results when there are test failures
         with:
-#          name: dotnet-results-${{ matrix.dotnet-version }}
-#          path: TestResults-${{ matrix.dotnet-version }}
           name: test-results-${{ github.event.inputs.version }}.zip
           path: TestResults-${{ github.event.inputs.version }}
 
@@ -142,9 +111,6 @@ jobs:
       contents: read
 
     steps:
-      - name: Debug
-        run: echo "Publishing version ${{ github.event.inputs.version }} as ${{ secrets.NUGET_USER }}"
-
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
