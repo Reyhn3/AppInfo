@@ -77,13 +77,6 @@ jobs:
             --logger trx \
             --results-directory "TestResults-${{ github.event.inputs.version }}"
 
-#      - name: Upload test results
-#        uses: actions/upload-artifact@v7
-#        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
-#        with:
-#          name: test-results.${{ github.event.inputs.version }}.zip
-#          path: TestResults-${{ github.event.inputs.version }}
-
       - name: Create package
         run: >
           dotnet pack \
@@ -128,19 +121,14 @@ jobs:
       - name: Download package from artifacts
         uses: actions/download-artifact@v8
         with:
-#          name: package
           artifact-ids: ${{ env.PACKAGE_ARTIFACT }}
           path: "packages"
 
       - name: Download symbols from artifacts
         uses: actions/download-artifact@v8
         with:
-#          name: symbols
           artifact-ids: ${{ env.SYMBOLS_ARTIFACT }}
           path: "packages"
-
-      - name: Display structure of downloaded files
-        run: ls -R
 
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key

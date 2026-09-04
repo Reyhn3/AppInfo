@@ -2,6 +2,7 @@
 
 Collect, display and optionally save information about the host application during startup.
 
+
 Usage:
 
 ```csharp
@@ -28,3 +29,5 @@ Application created with context:
   ClrVersion:  8.0.29
   ProcessId:   2536696
 ```
+
+Read more about the package [in the repository](https://github.com/Reyhn3/AppInfo/blob/main/README.md).

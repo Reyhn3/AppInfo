@@ -6,11 +6,11 @@
     <Description>Collect, display and optionally save information about the host application during startup.</Description>
     <RootNamespace>AppInformation</RootNamespace>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageId>AppInfo</PackageId>
     <Title>AppInfo</Title>
-    <PackageReadmeFile>PackageReadMe.md</PackageReadmeFile>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
     <PackageTags>app info logging manifest</PackageTags>
     <PackageProjectUrl>https://github.com/Reyhn3/AppInfo</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/Reyhn3/AppInfo/blob/main/LICENSE</PackageLicenseUrl>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="PackageReadMe.md" Pack="true" PackagePath="\"/>
+    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
