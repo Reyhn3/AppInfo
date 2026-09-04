@@ -89,20 +89,20 @@ jobs:
             --include-symbols \
             --configuration Release \
             -p:Version="${{ github.event.inputs.version }}" \
-            --output "artifacts"
+            --output "packages"
 
       - name: Upload NuGet to artifacts
         uses: actions/upload-artifact@v7
         with:
           name: packages
-          path: "artifacts/*.nupkg"
+          path: "packages/AppInfo.${{ github.event.inputs.version }}.nupkg"
           archive: false
 
       - name: Upload symbols to artifacts
         uses: actions/upload-artifact@v7
         with:
           name: packages
-          path: "artifacts/*.snupkg"
+          path: "packages/AppInfo.${{ github.event.inputs.version }}.snupkg"
           archive: false
 
   publish:
@@ -115,6 +115,11 @@ jobs:
       contents: read
 
     steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: packages
+          path: "packages/AppInfo.${{ github.event.inputs.version }}.?nupkg"
+
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
