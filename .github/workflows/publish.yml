@@ -27,6 +27,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        ref: "${{ github.event.inputs.version }}"
 
       - name: Upload source code to artifacts
         uses: actions/upload-artifact@v7
@@ -44,6 +45,7 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
+        ref: "${{ github.event.inputs.version }}"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
@@ -121,6 +123,6 @@ jobs:
         if: ${{ !inputs.dry-run }}
         run: >
           dotnet nuget push \
-            artifacts/AppInfo.nupkg \
+            "artifacts/AppInfo.${{ github.event.inputs.version }}.nupkg" \
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
             --source https://api.nuget.org/v3/index.json
