@@ -142,11 +142,15 @@ jobs:
       contents: read
 
     steps:
+      - name: Debug
+        run: echo "Publishing version: ${{ github.event.inputs.version }} as ${{ secrets.NUGET_USER }}"
+
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
         with:
           user: ${{ secrets.NUGET_USER }}
+          environment: "production"
 
       - name: Publish to NuGet
         if: ${{ !inputs.dry-run }}

@@ -25,9 +25,9 @@ jobs:
 #    env:
 #      VERSION: ${{ github.event.inputs.version || '1.0.0' }}
 
-    strategy:
-      matrix:
-        dotnet-version: [ '10.0.x', '8.0.x' ]
+#    strategy:
+#      matrix:
+#        dotnet-version: [ '10.0.x', '8.0.x' ]
 
     steps:
     - name: Checkout
@@ -36,7 +36,8 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: ${{ matrix.dotnet-version }}
+#        dotnet-version: ${{ matrix.dotnet-version }}
+        dotnet-version: '10.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -45,8 +46,8 @@ jobs:
       run: >
         dotnet build \
           --no-restore \
-          --configuration Release \
-          -p:Version="${VERSION}"
+          --configuration Release
+#          -p:Version="${VERSION}"
 
     - name: Test
       run: >
@@ -55,11 +56,13 @@ jobs:
           --configuration Release \
           --verbosity normal \
           --logger trx \
-          --results-directory "TestResults-${{ matrix.dotnet-version }}"
+          --results-directory "TestResults-${{ github.event.inputs.version }}"
 
     - name: Upload test results
       uses: actions/upload-artifact@v7
       if: ${{ always() }}  # Always run this step to publish test results when there are test failures
       with:
-        name: dotnet-results-${{ matrix.dotnet-version }}
-        path: TestResults-${{ matrix.dotnet-version }}
+#        name: dotnet-results-${{ matrix.dotnet-version }}
+#        path: TestResults-${{ matrix.dotnet-version }}
+        name: test-results-${{ github.event.inputs.version }}.zip
+        path: TestResults-${{ github.event.inputs.version }}
