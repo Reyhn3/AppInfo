@@ -1,12 +1,17 @@
 using System.Reflection;
+using System.Text.RegularExpressions;
 using AppInformation.Extractors;
 
 
 namespace AppInformation.Tests.Extractors;
 
 
-public class AssemblyExtractorTests
+public partial class AssemblyExtractorTests
 {
+	// From: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+	[GeneratedRegex(@"^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\.(0|[1-9]\d*))?(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$")]
+	private static partial Regex VersionRegex();
+
 	private readonly Assembly _assembly = typeof(IAppInfo).Assembly;
 
 	[Test]
@@ -84,7 +89,7 @@ public class AssemblyExtractorTests
 		result.ShouldNotBeEmpty();
 		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
-		result.ShouldContain(v => ((string?)v).StartsWith("v1.0.0+"));
+		result.ShouldContain(v => VersionRegex().IsMatch((string?)v));
 	}
 
 	[Test]
@@ -96,6 +101,6 @@ public class AssemblyExtractorTests
 		result.ShouldNotBeEmpty();
 		TestHelpers.Helpers.PrintValues(result);
 		result.Length.ShouldBe(2);
-		result.ShouldContain(v => string.Equals("v1.0.0", (string?)v));
+		result.ShouldContain(v => VersionRegex().IsMatch((string?)v));
 	}
 }

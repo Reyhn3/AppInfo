@@ -1,50 +1,130 @@
+# Build, test, pack NuGet then publish it to NuGet.org.
+
+
 name: Publish NuGet
+
 
 on:
   workflow_dispatch:
     inputs:
+      version:
+        required: true
+        type: string
+        default: '0.0.0-pre-0'
+        description: "Version to publish (without 'v' prefix)"
       dry-run:
         required: true
         type: boolean
+        default: true
         description: "Dry run (doesn't actually publish anything)"
 
+
 jobs:
-  build:
-    uses: ./.github/workflows/ci.yml
+  zip:
+    name: Zip Source Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: "v${{ github.event.inputs.version }}"
+
+      - name: Upload source code to artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: AppInfo-${{ github.event.inputs.version }}-source.zip
+          path: .
 
   pack:
-    needs: build
+    name: Pack NuGet Packages
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Version
+        run: echo "Using version ${{ github.event.inputs.version }}"
+
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: "v${{ github.event.inputs.version }}"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: >
+          dotnet build \
+            --no-restore \
+            --configuration Release \
+            -p:Version="${{ github.event.inputs.version }}"
+
+      - name: Test
+        run: >
+          dotnet test \
+            --no-build \
+            --configuration Release \
+            --verbosity normal \
+            --logger trx \
+            --results-directory "TestResults-${{ github.event.inputs.version }}"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v7
+        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
+        with:
+          name: test-results-${{ github.event.inputs.version }}.zip
+          path: TestResults-${{ github.event.inputs.version }}
+
+      - name: Create package
+        run: >
+          dotnet pack \
+            "./src/AppInfo/AppInfo.csproj" \
+            --nologo \
+            --no-build \
+            --include-symbols \
+            --configuration Release \
+            -p:Version="${{ github.event.inputs.version }}" \
+            --output "artifacts"
+
+      - name: Upload NuGet to artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: "artifacts/*.nupkg"
+          archive: false
+
+      - name: Upload symbols to artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: "artifacts/*.snupkg"
+          archive: false
+
+  publish:
+    name: Publish NuGet Packages
+    needs: pack
     runs-on: ubuntu-latest
 
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
+      contents: read
 
     steps:
-      - name: Version
-        run: echo "Using version ${{ env.VERSION }}"
-
-      - name: Create package
-        run: dotnet pack "src/AppInfo/AppInfo.csproj" --nologo --no-build --include-symbols --configuration Release -p:Version="${{ env.VERSION }}" --output "artifacts"
-
-      - uses: actions/upload-artifact@v7
-        with:
-          name: packages
-          path: "artifacts"
-
-  publish:
-    needs: pack
-
-    runs-on: ubuntu-latest
-
-    if: ${{ !inputs.dry-run }}
-
-    steps:
-      - name: NuGet login (OIDC → temp API key)
+      - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
         with:
           user: ${{ secrets.NUGET_USER }}
 
-#      - name: Publish to NuGet
-#        run: dotnet nuget push artifacts/AppInfo.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Push package
+        if: ${{ !inputs.dry-run }}
+        run: >
+          dotnet nuget push \
+            "artifacts/AppInfo.${{ github.event.inputs.version }}.nupkg" \
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
+            --source https://api.nuget.org/v3/index.json
