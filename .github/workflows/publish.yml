@@ -120,11 +120,11 @@ jobs:
       id-token: write  # enable GitHub OIDC token issuance for this job
       contents: read
 
-    steps:
-      - env:
-          PACKAGE_ARTIFACT: ${{ needs.pack.outputs.package-artifact }}
-          SYMBOLS_ARTIFACT: ${{ needs.pack.outputs.symbols-artifact }}
+    env:
+      PACKAGE_ARTIFACT: ${{ needs.pack.outputs.package-artifact }}
+      SYMBOLS_ARTIFACT: ${{ needs.pack.outputs.symbols-artifact }}
 
+    steps:
       - name: Download package from artifacts
         uses: actions/download-artifact@v8
         with:
