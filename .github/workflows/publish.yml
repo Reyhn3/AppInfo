@@ -40,6 +40,10 @@ jobs:
     name: Pack NuGet Packages
     runs-on: ubuntu-latest
 
+    outputs:
+      package-artifact: ${{ steps.artifact-upload-package.outputs.artifact-id }}
+      symbols-artifact: ${{ steps.artifact-upload-symbols.outputs.artifact-id }}
+
     steps:
       - name: Version
         run: echo "Using version ${{ github.event.inputs.version }}"
@@ -73,13 +77,6 @@ jobs:
             --logger trx \
             --results-directory "TestResults-${{ github.event.inputs.version }}"
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v7
-        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
-        with:
-          name: test-results-${{ github.event.inputs.version }}.zip
-          path: TestResults-${{ github.event.inputs.version }}
-
       - name: Create package
         run: >
           dotnet pack \
@@ -89,20 +86,22 @@ jobs:
             --include-symbols \
             --configuration Release \
             -p:Version="${{ github.event.inputs.version }}" \
-            --output "artifacts"
+            --output "packages"
 
       - name: Upload NuGet to artifacts
+        id: "artifact-upload-package"
         uses: actions/upload-artifact@v7
         with:
-          name: packages
-          path: "artifacts/*.nupkg"
+          name: package
+          path: "packages/AppInfo.${{ github.event.inputs.version }}.nupkg"
           archive: false
 
       - name: Upload symbols to artifacts
+        id: "artifact-upload-symbols"
         uses: actions/upload-artifact@v7
         with:
-          name: packages
-          path: "artifacts/*.snupkg"
+          name: symbols
+          path: "packages/AppInfo.${{ github.event.inputs.version }}.snupkg"
           archive: false
 
   publish:
@@ -114,7 +113,23 @@ jobs:
       id-token: write  # enable GitHub OIDC token issuance for this job
       contents: read
 
+    env:
+      PACKAGE_ARTIFACT: ${{ needs.pack.outputs.package-artifact }}
+      SYMBOLS_ARTIFACT: ${{ needs.pack.outputs.symbols-artifact }}
+
     steps:
+      - name: Download package from artifacts
+        uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ env.PACKAGE_ARTIFACT }}
+          path: "packages"
+
+      - name: Download symbols from artifacts
+        uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ env.SYMBOLS_ARTIFACT }}
+          path: "packages"
+
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
         id: login
@@ -125,6 +140,6 @@ jobs:
         if: ${{ !inputs.dry-run }}
         run: >
           dotnet nuget push \
-            "artifacts/AppInfo.${{ github.event.inputs.version }}.nupkg" \
+            "packages/AppInfo.${{ github.event.inputs.version }}.nupkg" \
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
             --source https://api.nuget.org/v3/index.json
