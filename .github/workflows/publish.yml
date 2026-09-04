@@ -40,6 +40,10 @@ jobs:
     name: Pack NuGet Packages
     runs-on: ubuntu-latest
 
+    outputs:
+      package-artifact: ${{ steps.artifact-upload-package.outputs.artifact-id }}
+      symbols-artifact: ${{ steps.artifact-upload-symbols.outputs.artifact-id }}
+
     steps:
       - name: Version
         run: echo "Using version ${{ github.event.inputs.version }}"
@@ -92,6 +96,7 @@ jobs:
             --output "packages"
 
       - name: Upload NuGet to artifacts
+        id: "artifact-upload-package"
         uses: actions/upload-artifact@v7
         with:
           name: package
@@ -99,6 +104,7 @@ jobs:
           archive: false
 
       - name: Upload symbols to artifacts
+        id: "artifact-upload-symbols"
         uses: actions/upload-artifact@v7
         with:
           name: symbols
@@ -115,17 +121,26 @@ jobs:
       contents: read
 
     steps:
+      - env:
+          PACKAGE_ARTIFACT: ${{ needs.pack.outputs.package-artifact }}
+          SYMBOLS_ARTIFACT: ${{ needs.pack.outputs.symbols-artifact }}
+
       - name: Download package from artifacts
         uses: actions/download-artifact@v8
         with:
-          name: package
+#          name: package
+          artifact-ids: ${{ env.PACKAGE_ARTIFACT }}
           path: "packages"
 
       - name: Download symbols from artifacts
         uses: actions/download-artifact@v8
         with:
-          name: symbols
+#          name: symbols
+          artifact-ids: ${{ env.SYMBOLS_ARTIFACT }}
           path: "packages"
+
+      - name: Display structure of downloaded files
+        run: ls -R
 
       - name: NuGet login  # (OIDC → temp API key)
         uses: NuGet/login@v1  # Get a short-lived NuGet API key
