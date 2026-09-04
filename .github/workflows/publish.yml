@@ -27,8 +27,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: "v${{ github.event.inputs.version }}"
+#        with:
+#          ref: "v${{ github.event.inputs.version }}"
 
       - name: Upload source code to artifacts
         uses: actions/upload-artifact@v7
@@ -46,8 +46,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: "v${{ github.event.inputs.version }}"
+#        with:
+#          ref: "v${{ github.event.inputs.version }}"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
@@ -73,12 +73,12 @@ jobs:
             --logger trx \
             --results-directory "TestResults-${{ github.event.inputs.version }}"
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v7
-        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
-        with:
-          name: test-results-${{ github.event.inputs.version }}.zip
-          path: TestResults-${{ github.event.inputs.version }}
+#      - name: Upload test results
+#        uses: actions/upload-artifact@v7
+#        if: ${{ always() }}  # Always run this step to publish test results when there are test failures
+#        with:
+#          name: test-results.${{ github.event.inputs.version }}.zip
+#          path: TestResults-${{ github.event.inputs.version }}
 
       - name: Create package
         run: >
@@ -125,6 +125,6 @@ jobs:
         if: ${{ !inputs.dry-run }}
         run: >
           dotnet nuget push \
-            "artifacts/AppInfo.${{ github.event.inputs.version }}.nupkg" \
+            "packages/AppInfo.${{ github.event.inputs.version }}.nupkg" \
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
             --source https://api.nuget.org/v3/index.json
