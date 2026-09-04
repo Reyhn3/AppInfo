@@ -11,7 +11,7 @@ on:
         required: true
         type: string
         default: '0.0.0-pre-0'
-        description: "Version to publish"
+        description: "Version to publish (without 'v' prefix)"
       dry-run:
         required: true
         type: boolean
@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: "${{ github.event.inputs.version }}"
+          ref: "v${{ github.event.inputs.version }}"
 
       - name: Upload source code to artifacts
         uses: actions/upload-artifact@v7
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: "${{ github.event.inputs.version }}"
+          ref: "v${{ github.event.inputs.version }}"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
