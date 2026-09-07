@@ -11,7 +11,7 @@
     <PackageId>AppInfo</PackageId>
     <Title>AppInfo</Title>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-    <PackageReleaseNotes>(Package release notes are in CHANGELOG.md)</PackageReleaseNotes>
+    <PackageReleaseNotes>Package release notes are in [CHANGELOG](https://github.com/Reyhn3/AppInfo/blob/main/CHANGELOG.md).</PackageReleaseNotes>
     <PackageTags>app info logging manifest</PackageTags>
     <PackageProjectUrl>https://github.com/Reyhn3/AppInfo</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/Reyhn3/AppInfo/blob/main/LICENSE</PackageLicenseUrl>
