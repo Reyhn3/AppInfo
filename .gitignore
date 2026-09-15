@@ -658,3 +658,6 @@ tmp/
 
 *.bak
 **/* - Backup*.csproj
+
+# Rune
+*.rswp

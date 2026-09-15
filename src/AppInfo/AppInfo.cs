@@ -8,6 +8,7 @@ using AppInformation.Serializers;
 namespace AppInformation;
 
 
+[JsonConverter(typeof(AppInfoConverter))]
 public partial class AppInfo : IAppInfo
 {
 	private readonly ImmutableArray<Fragment> _fragments;

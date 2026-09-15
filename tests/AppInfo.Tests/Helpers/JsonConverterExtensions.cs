@@ -10,24 +10,24 @@ public static class JsonConverterExtensions
 {
 	extension<T>(JsonConverter<T> converter)
 	{
-		public T? Read(string value, JsonSerializerOptions? options = null)
+		public T? Read(string value, JsonSerializerOptions? options = null, JsonReaderOptions readerOptions = default)
 		{
 			options ??= JsonSerializerOptions.Default;
 
 			var bytes = Encoding.UTF8.GetBytes(value);
-			var reader = new Utf8JsonReader(bytes);
+			var reader = new Utf8JsonReader(bytes, readerOptions);
 			reader.Read();
 
 			var result = converter.Read(ref reader, typeof(T), options);
 			return result;
 		}
 
-		public string Write(T value, JsonSerializerOptions? options = null)
+		public string Write(T value, JsonSerializerOptions? options = null, JsonWriterOptions writerOptions = default)
 		{
 			options ??= JsonSerializerOptions.Default;
 
 			using var stream = new MemoryStream();
-			using var writer = new Utf8JsonWriter(stream);
+			using var writer = new Utf8JsonWriter(stream, writerOptions);
 
 			converter.Write(writer, value, options);
 			writer.Flush();
