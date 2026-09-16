@@ -47,7 +47,7 @@ public class AppInfo_StaticConvenienceMembersTests
 		lines.ShouldContain(line => line.StartsWith("  File Name:   "));
 		lines.ShouldContain(line => line.StartsWith("  Is Release:  "));
 		lines.ShouldContain(line => line.StartsWith("  Culture:     "));
-		lines.ShouldContain(line => line.StartsWith("  64-bit:      "));
+		lines.ShouldContain(line => line.StartsWith("  Is 64-bit:   "));
 		lines.ShouldContain(line => line.StartsWith("  Location:    "));
 		lines.ShouldContain(line => line.StartsWith("  Base:        "));
 		lines.ShouldContain(line => line.StartsWith("  Environment: "));
