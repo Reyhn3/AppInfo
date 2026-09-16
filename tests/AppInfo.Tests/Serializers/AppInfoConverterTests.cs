@@ -9,9 +9,9 @@ namespace AppInformation.Tests.Serializers;
 
 public class AppInfoConverterTests
 {
-	private static readonly JsonSerializerOptions s_jsonSerializerOptions = new()
+	private static readonly JsonWriterOptions s_jsonWriterOptions = new JsonWriterOptions
 		{
-			WriteIndented = true
+			Indented = true
 		};
 
 	private AppInfoConverter _sut;
@@ -19,6 +19,16 @@ public class AppInfoConverterTests
 	[SetUp]
 	public void PreRun() =>
 		_sut = new AppInfoConverter();
+
+	[Explicit("Intended for manual verification")]
+	[Test]
+	public void Build_AppInfo_and_serialize_to_JSON()
+	{
+		var appInfo = AppInfo.CreateDefaultBuilder().Build();
+		var result = _sut.Write((AppInfo)appInfo, writerOptions: s_jsonWriterOptions);
+		result.ShouldNotBeNullOrWhiteSpace();
+		TestHelpers.Helpers.PrintCapturedOutput(result);
+	}
 
 	[Description("Deserialization is not allowed")]
 	[Test]
@@ -102,11 +112,7 @@ public class AppInfoConverterTests
 
 		// Act
 
-		var jsonWriterOptions = new JsonWriterOptions
-			{
-				Indented = true
-			};
-		var result = _sut.Write(appInfo, writerOptions: jsonWriterOptions);
+		var result = _sut.Write(appInfo, writerOptions: s_jsonWriterOptions);
 
 		// Assert
 
