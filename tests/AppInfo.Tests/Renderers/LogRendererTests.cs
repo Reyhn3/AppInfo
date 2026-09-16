@@ -50,7 +50,7 @@ public class LogRendererTests
 		lines.ShouldContain(line => line.StartsWith("{FileName}"));
 		lines.ShouldContain(line => line.StartsWith("{IsRelease}"));
 		lines.ShouldContain(line => line.StartsWith("{Culture}"));
-		lines.ShouldContain(line => line.StartsWith("{64Bit}"));
+		lines.ShouldContain(line => line.StartsWith("{Is64Bit}"));
 		lines.ShouldContain(line => line.StartsWith("{Location}"));
 		lines.ShouldContain(line => line.StartsWith("{Base}"));
 		lines.ShouldContain(line => line.StartsWith("{Environment}"));

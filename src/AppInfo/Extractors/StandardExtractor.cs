@@ -23,7 +23,7 @@ public class StandardExtractor(Assembly assembly)
 	internal const string LabelForMachineName = "MachineName";
 	internal const string LabelForOSVersion = "OSVersion";
 	internal const string LabelForClrVersion = "ClrVersion";
-	internal const string LabelForArchitecture = "64-bit";
+	internal const string LabelForArchitecture = "Is 64-bit";
 	internal const string LabelForProcessId = "ProcessId";
 
 	protected override IEnumerable<Func<Fragment>> ProduceExtractors()
