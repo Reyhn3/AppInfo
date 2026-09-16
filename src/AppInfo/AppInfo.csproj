@@ -10,19 +10,14 @@
   <PropertyGroup>
     <PackageId>AppInfo</PackageId>
     <Title>AppInfo</Title>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>app info logging manifest</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>For a full changelog, please visit https://github.com/Reyhn3/AppInfo/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/Reyhn3/AppInfo</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/Reyhn3/AppInfo/blob/main/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/Reyhn3/AppInfo</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-
-  <Target Name="InjectPackageReleaseNotesFromFile" BeforeTargets="GenerateNuspec" Condition="Exists('$(MSBuildProjectDirectory)/../../CHANGELOG.md')">
-    <PropertyGroup>
-      <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../CHANGELOG.md"))</PackageReleaseNotes>
-    </PropertyGroup>
-  </Target>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
