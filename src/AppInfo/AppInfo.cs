@@ -1,11 +1,14 @@
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Text.Json.Serialization;
 using AppInformation.Helpers;
+using AppInformation.Serializers;
 
 
 namespace AppInformation;
 
 
+[JsonConverter(typeof(AppInfoConverter))]
 public partial class AppInfo : IAppInfo
 {
 	private readonly ImmutableArray<Fragment> _fragments;
@@ -31,6 +34,11 @@ public partial class AppInfo : IAppInfo
 		}
 	}
 
+	/// <summary>
+	///     This property is only used for rendering purposes. It is <b>not</b> used by the host.
+	/// </summary>
+	[JsonConverter(typeof(CultureInfoConverter))]
 	public CultureInfo Culture { get; }
+
 	public IEnumerable<Fragment> Fragments => _fragments.AsEnumerable();
 }

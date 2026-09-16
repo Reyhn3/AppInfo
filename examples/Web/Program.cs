@@ -18,6 +18,6 @@ app.UseHttpsRedirection();
 app.MapGet("/", context =>
 //TODO: #28: Consider adding a web renderer
 	context.Response.WriteAsJsonAsync(
-		context.RequestServices.GetRequiredService<IAppInfo>().Fragments));
+		context.RequestServices.GetRequiredService<IAppInfo>() as AppInfo));
 
 app.Run();

@@ -1,6 +1,11 @@
+using System.Text.Json.Serialization;
+using AppInformation.Serializers;
+
+
 namespace AppInformation;
 
 
+[JsonConverter(typeof(FragmentConverter))]
 public sealed class Fragment
 {
 	public Fragment(string label, object? value)

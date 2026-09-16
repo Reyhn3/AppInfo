@@ -6,6 +6,7 @@ namespace AppInformation.Tests;
 
 public class AppInfoTests
 {
+#region Ctor
 	[Test]
 	public void Ctor_should_not_throw_exception_if_culture_is_null() =>
 		Should.NotThrow(() => new AppInfo(null, A.CollectionOfDummy<Fragment>(1)));
@@ -17,4 +18,5 @@ public class AppInfoTests
 	[Test]
 	public void Ctor_should_not_throw_exception_if_fragments_are_empty() =>
 		Should.NotThrow(() => new AppInfo(A.Dummy<CultureInfo>(), Enumerable.Empty<Fragment>()));
+#endregion
 }
